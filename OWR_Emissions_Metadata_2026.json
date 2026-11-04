@@ -1,0 +1,140 @@
+{
+  "dataset_title": "Okapi Wildlife Reserve monthly gross greenhouse-gas emissions data status",
+  "dataset_id": "OWR-EMISSIONS-2026-01-10",
+  "version": "1.0.0",
+  "created_utc": "2026-11-04",
+  "reporting_period": {
+    "start": "2026-01-01",
+    "end": "2026-10-31",
+    "timezone": "UTC date boundaries"
+  },
+  "spatial_scope": {
+    "name": "Okapi Wildlife Reserve",
+    "site_id": "124389",
+    "boundary_file": "RFO Limit.json",
+    "boundary_source": "Repository WDPA/RFO GeoJSON",
+    "geometry_applied": "Reserve polygon; no external buffer included",
+    "area_km2_geodesic": 13939.55493440135
+  },
+  "measurement_status": "NOT_QUANTIFIABLE",
+  "interpretation": "Emission values are unknown, not zero. All three requested emission fields are deliberately blank for every month because the available satellite observations do not constitute measured greenhouse-gas flux or a validated activity-data × emission-factor inventory.",
+  "fields": {
+    "gross_emissions_co2e_all_gases__Mg": {
+      "type": "number|null",
+      "unit": "Mg CO2e",
+      "definition": "Gross emissions from all included greenhouse gases, expressed as carbon-dioxide equivalent for the specified month and reserve polygon. Null means not quantifiable from evidence reviewed; it is not zero."
+    },
+    "gross_emissions_co2e_non_co2__Mg": {
+      "type": "number|null",
+      "unit": "Mg CO2e",
+      "definition": "Gross non-CO2 emissions (for example CH4 and N2O, if included by the documented inventory boundary) expressed as CO2e. Null means not quantifiable; no RFO-specific gas flux/activity data and factors were available."
+    },
+    "gross_emissions_co2e_co2_only__Mg": {
+      "type": "number|null",
+      "unit": "Mg CO2e",
+      "definition": "Gross CO2 emissions only for the specified month and reserve polygon. Null means not quantifiable; no validated emission event area, carbon-stock loss, or combustion estimate was available."
+    },
+    "data_status": {
+      "type": "string",
+      "allowed": [
+        "NOT_QUANTIFIABLE"
+      ],
+      "definition": "The reporting month was assessed but no defensible gross-emissions amount can be calculated from the data reviewed."
+    },
+    "satellite_observation_columns": {
+      "definition": "Contextual scene counts and Sentinel-2 vegetation indices for that month. These are not emission factors, event areas, or flux measurements."
+    }
+  },
+  "satellite_data_inventory": [
+    {
+      "sensor": "Sentinel-2 L2A",
+      "coverage": "666 STAC items intersecting reserve query; 60 least-cloudy tile-month scenes processed, six MGRS tiles per month",
+      "measurement_use": "100 m cloud-masked monthly NDVI/EVI mosaics; vegetation-condition context only",
+      "limitation": "NDVI/EVI do not identify or quantify emitted carbon; no validated change-to-emissions model was applied.",
+      "source_url": "https://planetarycomputer.microsoft.com/dataset/sentinel-2-l2a"
+    },
+    {
+      "sensor": "Landsat Collection 2 Level-2",
+      "coverage": "70 STAC items in Jan-Oct 2026",
+      "measurement_use": "Scene inventory only",
+      "limitation": "No Landsat raster metrics or disturbance areas processed.",
+      "source_url": "https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2"
+    },
+    {
+      "sensor": "Sentinel-1 RTC",
+      "coverage": "231 STAC items in Jan-Oct 2026",
+      "measurement_use": "Scene inventory only",
+      "limitation": "No backscatter, disturbance areas, or biomass changes processed.",
+      "source_url": "https://planetarycomputer.microsoft.com/dataset/sentinel-1-rtc"
+    },
+    {
+      "sensor": "GEDI L2A V003",
+      "coverage": "9 CMR granule footprints intersect reserve, Jan-Mar",
+      "measurement_use": "Footprint metadata only",
+      "limitation": "Measurement HDF5 files and waveforms were not processed; footprints are not emissions.",
+      "source_url": "https://cmr.earthdata.nasa.gov/search/granules?short_name=GEDI02_A"
+    },
+    {
+      "sensor": "NISAR L2 GCOV provisional",
+      "coverage": "95 CMR footprints intersect reserve, Jun-Oct",
+      "measurement_use": "Footprint metadata only",
+      "limitation": "Measurement rasters were not processed; radar backscatter is not directly an emissions estimate.",
+      "source_url": "https://cmr.earthdata.nasa.gov/search/granules?short_name=NISAR_L2_GCOV_PROVISIONAL_V1"
+    },
+    {
+      "sensor": "OCO-2 L2 Lite FP",
+      "coverage": "315 granules returned by surrounding-box query; zero returned footprint polygons intersected reserve",
+      "measurement_use": "No local observations used",
+      "limitation": "Atmospheric XCO2 sampling is not a reserve-scale gross flux measurement.",
+      "source_url": "https://cmr.earthdata.nasa.gov/search/granules?short_name=OCO2_L2_Lite_FP"
+    },
+    {
+      "sensor": "OCO-3 L2 Lite FP",
+      "coverage": "219 granules returned by surrounding-box query; zero returned footprint polygons intersected reserve",
+      "measurement_use": "No local observations used",
+      "limitation": "Atmospheric XCO2 sampling is not a reserve-scale gross flux measurement.",
+      "source_url": "https://cmr.earthdata.nasa.gov/search/granules?short_name=OCO3_L2_Lite_FP"
+    },
+    {
+      "sensor": "GOSAT / GOSAT-2",
+      "coverage": "No 2026 intersecting granules found in queried CMR collections",
+      "measurement_use": "No local observations used",
+      "limitation": "No matching local retrievals identified; atmospheric concentration is not reserve-scale gross flux.",
+      "source_url": "https://cmr.earthdata.nasa.gov/search/collections.json?keyword=GOSAT"
+    },
+    {
+      "sensor": "TanSat",
+      "coverage": "No 2026 granules; queried CMR collection ends in 2020",
+      "measurement_use": "No 2026 local observations used",
+      "limitation": "No reporting-period data found in queried collection.",
+      "source_url": "https://cmr.earthdata.nasa.gov/search/collections.json?keyword=TanSat"
+    },
+    {
+      "sensor": "ESA Biomass Mission",
+      "coverage": "Mission data access opened in 2026; no RFO acquisition was queried or processed",
+      "measurement_use": "No local data used",
+      "limitation": "Mission availability is not evidence of an RFO acquisition or measured gas flux.",
+      "source_url": "https://www.esa.int/Applications/Observing_the_Earth/FutureEO/Biomass"
+    }
+  ],
+  "calculation_method": {
+    "current": "No monthly gross-emissions values are calculated. The requested fields remain null rather than inserting zero or applying an unsupported conversion from vegetation indices to flux.",
+    "required_for_quantification": [
+      "Validate monthly disturbed/burned/conversion area against optical and radar time series and reference data.",
+      "Determine affected land-use/pool transitions and pre-disturbance carbon stocks with appropriate biomass/soil datasets and field or validated model support.",
+      "Apply DRC- and ecosystem-appropriate emission factors with explicit carbon pools, combustion/decay, and uncertainty.",
+      "Quantify CH4 and N2O where applicable using activity data and appropriate factors; convert gases to CO2e using an explicitly cited IPCC assessment basis and time horizon.",
+      "Document gross accounting boundary; prevent double-counting between CO2-only and non-CO2 components; reconcile all-gases total.",
+      "Report uncertainty and validation results."
+    ]
+  },
+  "csv_file": "OWR_Emissions_2026.csv",
+  "related_files": [
+    "OWR_Satellite_2026.csv",
+    "OWR_Satellite_Scenes_2026.csv",
+    "OWR_Mission_Catalog_2026.csv",
+    "OWR_Carbon_2026.md",
+    "OWR_Carbon_2026.sqlite"
+  ],
+  "citation": "NASA CMR and Microsoft Planetary Computer STAC catalog metadata; see per-sensor source URLs and limitations. Satellite data availability and vegetation-condition indices are not direct greenhouse-gas flux measurements."
+}

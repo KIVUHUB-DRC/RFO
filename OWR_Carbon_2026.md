@@ -100,6 +100,29 @@ Coverage is especially low in September, so that month’s mean represents a lim
 
 The STAC inventory also contains 70 Landsat Collection 2 Level-2 items and 231 Sentinel-1 RTC items intersecting the RFO query. These were inventoried but not raster-processed. NASA CMR metadata searches identified nine GEDI L2A and 95 provisional NISAR L2 GCOV granule footprints intersecting the boundary; their measurement files were not analyzed. OCO-2 and OCO-3 surrounding-box searches returned 315 and 219 granules, respectively, but none of the returned granule polygons intersected the reserve. No 2026 GOSAT, GOSAT-2, or TanSat granules were found for the queried collections and area; the queried TanSat archive ends in 2020. ESA announced open access to Biomass mission data on 26 January 2026, but no RFO Biomass acquisition was queried or processed. Atmospheric concentration and footprint metadata are not substitutes for reserve-scale carbon flux.
 
+## Gross greenhouse-gas emissions requested
+
+The requested monthly fields—`gross_emissions_co2e_all_gases__Mg`, `gross_emissions_co2e_non_co2__Mg`, and `gross_emissions_co2e_co2_only__Mg`—are **not quantifiable from the satellite evidence assembled**. The monthly values are deliberately blank in the CSV and SQL table; blank means unknown/not measured, **not zero**. A satellite acquisition count, canopy index, or atmospheric CO₂ concentration is not an emitted mass.
+
+| Month (2026) | All gases (Mg CO₂e) | Non-CO₂ gases (Mg CO₂e) | CO₂ only (Mg CO₂e) | Status |
+|---|---:|---:|---:|---|
+| Jan | — | — | — | Not quantifiable |
+| Feb | — | — | — | Not quantifiable |
+| Mar | — | — | — | Not quantifiable |
+| Apr | — | — | — | Not quantifiable |
+| May | — | — | — | Not quantifiable |
+| Jun | — | — | — | Not quantifiable |
+| Jul | — | — | — | Not quantifiable |
+| Aug | — | — | — | Not quantifiable |
+| Sep | — | — | — | Not quantifiable |
+| Oct | — | — | — | Not quantifiable |
+
+Sentinel-2 NDVI/EVI can help screen vegetation condition but do not by themselves establish land conversion, affected biomass, or flux. Landsat and Sentinel-1 scenes and GEDI/NISAR granules were inventoried but not processed into disturbance areas or stock changes. OCO-2/3 are not reserve-scale emission-flux instruments; no intersecting footprint polygons were identified in the metadata query. GOSAT/TanSat and ESA Biomass did not yield processed reserve-specific observations for these fields. No validated fire/burn area, disturbance activity data, reserve-specific carbon pools, CH₄/N₂O fluxes, or applicable local emission factors were assembled.
+
+Quantification would require validated monthly activity data (including land-use transitions and fire), pre-event carbon stocks by pool, documented emission factors, applicable CH₄/N₂O factors and CO₂e conversion basis, and uncertainty/quality controls. Gross all-gases emissions must have a defined gas/accounting boundary and reconcile CO₂-only and non-CO₂ components without double-counting. Until those inputs exist, reporting a numerical emissions value would imply unsupported precision.
+
+The accompanying [`OWR_Emissions_2026.csv`](OWR_Emissions_2026.csv) preserves all ten requested months and satellite-coverage context. [`OWR_Emissions_Metadata_2026.json`](OWR_Emissions_Metadata_2026.json) defines the requested fields, units, measurement status, per-mission data availability, limitations, and requirements for a future quantification. The corresponding SQLite table is `monthly_gross_emissions`; it is separate from carbon-accounting records.
+
 ## Carbon stocks
 
 ### What is and is not known
@@ -177,5 +200,6 @@ The reserve’s large area and intact Ituri forest make it important for maintai
 14. **Microsoft Planetary Computer.** Sentinel-1 RTC catalogue. Scene-inventory source; no reserve backscatter metrics calculated. [https://planetarycomputer.microsoft.com/dataset/sentinel-1-rtc](https://planetarycomputer.microsoft.com/dataset/sentinel-1-rtc).
 15. **NASA Earthdata Common Metadata Repository (CMR).** Granule and collection metadata searches for GEDI, NISAR, OCO-2, OCO-3, GOSAT, GOSAT-2, and TanSat. Search-result polygons were checked against the RFO boundary; metadata footprints are not measurement values. [Granule search API](https://cmr.earthdata.nasa.gov/search/granules); [collection search API](https://cmr.earthdata.nasa.gov/search/collections).
 16. **European Space Agency.** “Biomass mission.” Mission description and data-access announcement; mission availability alone does not establish an RFO observation. [https://www.esa.int/Applications/Observing_the_Earth/FutureEO/Biomass](https://www.esa.int/Applications/Observing_the_Earth/FutureEO/Biomass).
+17. **OWR monthly emissions data and metadata.** `OWR_Emissions_2026.csv` and `OWR_Emissions_Metadata_2026.json` (repository files). Ten monthly rows with all requested emissions quantities explicitly unquantified; the files record satellite coverage and explain the missing activity data, emission factors, and gas-flux measurements.
 
 **Citation and interpretation note.** Peer-reviewed regional studies and global products provide methods, historical context, or candidate inputs; none is represented here as an OWR measurement unless explicitly stated. All reserve-wide derived figures are calculated from the local RFO geometry. The screening scenarios are not a substitute for an IPCC-consistent inventory or project-level measurement, reporting, and verification.
