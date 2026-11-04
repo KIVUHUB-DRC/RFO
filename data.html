@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#123c32">
-  <meta name="description" content="Interactive 2 km October 2026 Sentinel-2 NDVI screening zones and downloadable Okapi Wildlife Reserve data.">
+  <meta name="description" content="Interactive Sentinel-2 vegetation screening and NASA MODIS carbon-uptake estimates for the Okapi Wildlife Reserve.">
   <title>Map & Downloads | Okapi Wildlife Reserve</title>
   <link rel="preconnect" href="https://unpkg.com">
   <link rel="preconnect" href="https://tile.openstreetmap.org">
@@ -30,7 +30,7 @@
 </head>
 <body>
   <header><div class="shell nav"><a class="brand" href="index.html">Okapi Wildlife Reserve</a><nav class="links" aria-label="Main navigation"><a href="index.html#emissions">Carbon emissions</a><a href="method.html">Methods</a><a href="data.html" aria-current="page">Map & downloads</a></nav></div></header>
-  <div class="hero"><div class="shell"><div class="eyebrow">Boundary-based open data</div><h1>Explore the reserve.<br>Download the evidence.</h1><p>October 2026 Sentinel-2 vegetation-condition zones, clipped to the RFO boundary, alongside the monthly observations, catalog inventory, and emissions data status.</p></div></div>
+  <div class="hero"><div class="shell"><div class="eyebrow">Boundary-based open data</div><h1>Explore the reserve.<br>Download the evidence.</h1><p>October 2026 Sentinel-2 vegetation-condition zones and NASA MODIS photosynthetic carbon-uptake estimates, clipped and summarized for the RFO boundary.</p></div></div>
   <main class="shell">
     <section class="panel" aria-labelledby="map-title">
       <div class="map-head"><div><h2 id="map-title">October 2026 relative NDVI zones</h2><p>2 km grid · polygons clipped to RFO reserve boundary</p></div><div class="status" id="status" role="status">Loading zone data…</div></div>
@@ -45,13 +45,15 @@
       <a class="download" href="OWR_Emissions_2026.csv" download><span class="type">Emissions status · CSV</span><strong>Monthly gross-emissions fields</strong><span>January–October 2026 values and satellite context; quantities remain unknown where unquantifiable.</span></a>
       <a class="download" href="OWR_Emissions_Metadata_2026.json" download><span class="type">Metadata · JSON</span><strong>Field definitions & provenance</strong><span>Units, data sources, limitations, and requirements for emission estimates.</span></a>
       <a class="download" href="OWR_Satellite_2026.csv" download><span class="type">Monthly indicators · CSV</span><strong>Sentinel-2 NDVI/EVI</strong><span>Monthly 100 m area means, cloud-free coverage, and optical/radar scene counts.</span></a>
+      <a class="download" href="OWR_MODIS_Carbon_2026.csv" download><span class="type">NASA MODIS · CSV</span><strong>Photosynthetic carbon uptake</strong><span>GPP and net photosynthesis in Mg C, with QA coverage; October data end on October 15. Not emissions or net sequestration.</span></a>
       <a class="download" href="OWR_Satellite_Scenes_2026.csv" download><span class="type">Scene inventory · CSV</span><strong>Satellite and footprint records</strong><span>Catalog metadata for Sentinel-2, Landsat, Sentinel-1, GEDI, and NISAR.</span></a>
       <a class="download" href="OWR_Mission_Catalog_2026.csv" download><span class="type">Mission inventory · CSV</span><strong>Mission catalog status</strong><span>Mission-level coverage, RFO footprint intersections, and processing limitations.</span></a>
-      <a class="download" href="OWR_Carbon_2026.csv" download><span class="type">Carbon accounting · CSV</span><strong>Original monthly accounting table</strong><span>Boundary context and original carbon fields, left blank wherever unmeasured.</span></a>
+      <a class="download" href="OWR_Carbon_2026.csv" download><span class="type">Carbon accounting · CSV</span><strong>Monthly accounting table</strong><span>MODIS uptake indicators are separated from unmeasured stock, sequestration, emissions, and balance fields.</span></a>
       <a class="download" href="OWR_Carbon_2026.sqlite" download><span class="type">Database · SQLite</span><strong>Monthly carbon & satellite tables</strong><span>Accounting records, observations, source registry, and gross-emissions status.</span></a>
       <a class="download" href="OWR_Carbon_2026.md"><span class="type">Report · Markdown</span><strong>Full assessment</strong><span>Evidence synthesis, calculation methods, references, and caveats.</span></a>
       <a class="download" href="OWR_Carbon_2026.docx" download><span class="type">Report · Word</span><strong>Formatted assessment</strong><span>Download the professional report document.</span></a>
       <a class="download" href="scripts/build_rfo_zones.py" download><span class="type">Reproducibility · Script</span><strong>Zone-generation script</strong><span>Python code for querying the October imagery and building the derived zone GeoJSON.</span></a>
+      <a class="download" href="scripts/build_modis_carbon_2026.py" download><span class="type">Reproducibility · Script</span><strong>MODIS carbon-processing script</strong><span>Python code for NASA Terra GPP/PSN zonal summaries and monthly coverage.</span></a>
       <a class="download" href="README.md"><span class="type">Repository guide</span><strong>README & project documentation</strong><span>Start here for the project pages, data dictionary, source links, and methods.</span></a>
       <a class="download" href="DATA_DICTIONARY.md"><span class="type">Documentation · Markdown</span><strong>Data dictionary</strong><span>Column definitions, units, spatial classes, database tables, and null-value policy.</span></a>
     </div>

@@ -46,6 +46,17 @@
       <p>Both indices are dimensionless. NDVI contrasts near-infrared and red reflectance; EVI also uses blue reflectance and adjusts for background and atmospheric effects. Their usefulness and sensitivity vary with canopy, clouds, soil, water, and acquisition conditions.</p>
     </section>
     <section>
+      <h2>NASA MODIS photosynthetic carbon estimates</h2>
+      <p>NASA Terra MOD17A2H.061 provides 500 m cumulative eight-day estimates of gross primary productivity (GPP) and net photosynthesis (PSN). PSN is GPP minus plant maintenance respiration; it does not account for heterotrophic respiration, disturbance emissions, deadwood, or soil-carbon changes. These are modelled photosynthesis estimates, not measured reserve carbon stocks or net ecosystem sequestration.</p>
+      <ol>
+        <li><strong>Clip.</strong> Project the RFO polygon to the MODIS sinusoidal equal-area grid and select pixel centers inside the reserve.</li>
+        <li><strong>Quality-screen.</strong> Keep MODLAND-QC-good pixels and product values in their valid ranges; retain the monthly valid-area coverage so missing pixels remain visible.</li>
+        <li><strong>Integrate.</strong> Apply the product scale factor, 0.0001 kg C m<sup>−2</sup> per eight-day composite, multiply by pixel area, and convert kg to Mg C.</li>
+        <li><strong>Assign to months.</strong> Allocate composite totals by the number of days overlapping each calendar month, assuming a uniform daily rate within each composite. A separate area-expanded estimate divides each composite's valid-pixel sum by its valid-area fraction; this is a simple spatial extrapolation, not validated gap filling.</li>
+      </ol>
+      <p>Full date coverage is available for January–September 2026. The latest RFO-intersecting composite ends on <strong>15 October 2026</strong>, so October contains only 15 observed days. Valid-area coverage on observed dates ranges from 28.2% to 99.8%; October's combined date-and-area coverage is 27.8% of the full month. September's estimate is especially uncertain because only 28.2% of the reserve had valid pixels. Download the <a href="OWR_MODIS_Carbon_2026.csv">monthly MODIS values and coverage</a> or see the <a href="scripts/build_modis_carbon_2026.py">calculation script</a>.</p>
+    </section>
+    <section>
       <h2>What the 2 km map zones mean</h2>
       <p>Each mapped shape is a 2 km grid cell clipped to the reserve boundary. Its October NDVI and EVI are means of valid, clear-land 100 m observations within that cell. Cell colors indicate <strong>relative quartiles of October NDVI among included cells</strong>: Q1 is the lower quarter and Q4 the upper quarter of this month’s observed values. The actual numeric cut-points are in the GeoJSON metadata and are generated from the data.</p>
       <p>These are relative spectral classes—not official ecological zones, forest types, biomass classes, or evidence that low-NDVI cells were deforested. Missing/low-coverage areas are left transparent instead of being assigned a class. A cell’s GeoJSON emissions fields are null because no cell-level emissions estimate exists.</p>
@@ -58,7 +69,7 @@
         <tr><td><code>gross_emissions_co2e_non_co2__Mg</code></td><td>Non-CO₂ gases (such as CH₄/N₂O) expressed as CO₂e under a defined conversion basis.</td><td>No local gas flux/activity data and appropriate emission factors.</td></tr>
         <tr><td><code>gross_emissions_co2e_co2_only__Mg</code></td><td>Gross CO₂ emissions only, expressed as CO₂e.</td><td>No validated disturbed/burned area tied to carbon-stock loss or combustion.</td></tr>
       </tbody></table></div>
-      <p>Zero would mean a measured or defensibly estimated absence of emissions; that was not established. Therefore missing values must not be changed to zero. If future values are produced, the all-gases total must use a documented boundary and avoid double-counting CO₂ and non-CO₂ components.</p>
+      <p>Zero would mean a measured or defensibly estimated absence of emissions; that was not established. Therefore missing values must not be changed to zero. If future values are produced, the all-gases total must use a documented boundary and avoid double-counting CO₂ and non-CO₂ components. NASA MODIS photosynthesis estimates are separate uptake indicators and do not fill these emissions fields.</p>
       <h3>Open-data fire-emissions check · 4 November 2026</h3>
       <p>The <a href="https://ads.atmosphere.copernicus.eu/datasets/cams-global-fire-emissions-gfas">CAMS GFAS v1.4.2 dataset</a> advertises 2026 daily/hourly modeled fire emissions on a 0.1° grid, including CO₂, CH₄ and N₂O. GFAS estimates emissions from satellite fire-radiative power, dry matter burned, and biome-specific emission factors. The open dataset was assessed, but no GFAS files were retrieved: the official <a href="https://cds.climate.copernicus.eu/how-to-api">CDS API instructions</a> require an account, personal access token, and manual acceptance of the dataset terms; no token was configured in this environment.</p>
       <p>With authenticated access, monthly fire-only masses could be spatially and temporally integrated over RFO grid-cell intersections and converted to CO₂e using a declared IPCC global-warming-potential basis. This would be a coarse-resolution model estimate for fires only—not a complete reserve gross-emissions inventory—and cannot fill the requested all-source totals by itself. The monthly data files record this source review and retrieval status.</p>
@@ -69,7 +80,8 @@
     <section>
       <h2>Sensor coverage and interpretation</h2>
       <div style="overflow-x:auto"><table><thead><tr><th>Mission/product</th><th>What this repository contains</th><th>Not established by these data</th></tr></thead><tbody>
-        <tr><td>Sentinel-2 L2A</td><td>60 processed tile-month scenes; 100 m monthly NDVI/EVI mosaics.</td><td>Carbon stocks, flux, or validated disturbance area.</td></tr>
+        <tr><td>Sentinel-2 L2A</td><td>60 processed tile-month scenes; 100 m monthly NDVI/EVI mosaics.</td><td>Carbon stocks, emissions, or validated disturbance area.</td></tr>
+        <tr><td>NASA Terra MODIS MOD17A2H.061</td><td>36 RFO-intersecting 500 m eight-day composites; modelled GPP and net photosynthesis processed for Jan 1–Oct 15.</td><td>Carbon stock, net ecosystem sequestration, emissions, or full October total; QA coverage varies.</td></tr>
         <tr><td>Landsat Collection 2 L2</td><td>70 scene catalog entries.</td><td>No Landsat rasters or change areas were processed.</td></tr>
         <tr><td>Sentinel-1 RTC</td><td>231 scene catalog entries.</td><td>No radar backscatter or disturbance analysis was processed.</td></tr>
         <tr><td>GEDI L2A V003 / NISAR L2 GCOV</td><td>9 / 95 intersecting CMR footprint metadata records.</td><td>Measurement files, biomass estimates, or emissions were not processed.</td></tr>
@@ -83,9 +95,11 @@
       <ul>
         <li><a href="OWR_Carbon_2026.md">Full assessment, citations, and uncertainty discussion</a></li>
         <li><a href="OWR_Emissions_Metadata_2026.json">Machine-readable emissions and satellite metadata</a></li>
+        <li><a href="OWR_MODIS_Carbon_2026.csv">NASA MODIS GPP/net-photosynthesis values and coverage</a></li>
         <li><a href="OWR_Mission_Catalog_2026.csv">Mission catalog coverage and limitations</a></li>
         <li><a href="scripts/build_rfo_zones.py">Reproducible script for the October NDVI zone GeoJSON</a></li>
-        <li><a href="https://planetarycomputer.microsoft.com/dataset/sentinel-2-l2a">Sentinel-2 L2A collection</a> · <a href="https://cmr.earthdata.nasa.gov/search/granules">NASA CMR granule search</a> · <a href="https://www.ipcc-nggip.iges.or.jp/public/2019rf/vol4.html">IPCC AFOLU guidance</a></li>
+        <li><a href="scripts/build_modis_carbon_2026.py">Reproducible NASA MODIS carbon script</a></li>
+        <li><a href="https://planetarycomputer.microsoft.com/dataset/sentinel-2-l2a">Sentinel-2 L2A collection</a> · <a href="https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-17A2H-061">NASA MODIS MOD17A2H.061 collection</a> · <a href="https://cmr.earthdata.nasa.gov/search/granules">NASA CMR granule search</a> · <a href="https://www.ipcc-nggip.iges.or.jp/public/2019rf/vol4.html">IPCC AFOLU guidance</a></li>
       </ul>
     </section>
   </main>

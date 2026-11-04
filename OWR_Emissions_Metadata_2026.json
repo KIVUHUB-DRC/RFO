@@ -43,7 +43,7 @@
       "definition": "The reporting month was assessed but no defensible gross-emissions amount can be calculated from the data reviewed."
     },
     "satellite_observation_columns": {
-      "definition": "Contextual scene counts and Sentinel-2 vegetation indices for that month. These are not emission factors, event areas, or flux measurements."
+      "definition": "Contextual scene counts, Sentinel-2 vegetation indices, and separate NASA MODIS photosynthesis estimates. Sentinel-2 indices are not carbon flux; MODIS photosynthesis is modelled carbon uptake, not emissions."
     }
   },
   "satellite_data_inventory": [
@@ -53,6 +53,13 @@
       "measurement_use": "100 m cloud-masked monthly NDVI/EVI mosaics; vegetation-condition context only",
       "limitation": "NDVI/EVI do not identify or quantify emitted carbon; no validated change-to-emissions model was applied.",
       "source_url": "https://planetarycomputer.microsoft.com/dataset/sentinel-2-l2a"
+    },
+    {
+      "sensor": "NASA Terra MODIS MOD17A2H.061",
+      "coverage": "36 reserve-intersecting 500 m Terra composites from 2026-01-01 through 2026-10-15; October data cover October 1-15 only",
+      "measurement_use": "Eight-day modelled gross primary productivity (GPP) and net photosynthesis (PSN) summarized monthly as Mg C",
+      "limitation": "Not carbon stock, net ecosystem sequestration, net ecosystem exchange, or emissions. Values are area-expanded from MODLAND-QC-good pixels; monthly QA coverage ranges from 28.248% to 99.796%, and October has only 15 of 31 days.",
+      "source_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-17A2H-061"
     },
     {
       "sensor": "Landsat Collection 2 Level-2",
@@ -118,6 +125,26 @@
       "source_url": "https://www.esa.int/Applications/Observing_the_Earth/FutureEO/Biomass"
     }
   ],
+  "satellite_carbon_assessment": {
+    "source": "NASA Terra MODIS MOD17A2H.061",
+    "collection_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-17A2H-061",
+    "product_description": "500 m cumulative eight-day estimates of gross primary productivity (GPP) and net photosynthesis (PSN); PSN is GPP minus maintenance respiration.",
+    "source_window": {
+      "first_observation": "2026-01-01",
+      "latest_observation_end": "2026-10-15",
+      "monthly_reporting_period": "2026-01-01/2026-10-31",
+      "retrieval_cutoff_utc": "2026-11-04"
+    },
+    "units": "Mg C per RFO and observed reporting period",
+    "scale_factor": "0.0001 kg C m-2 per eight-day composite; multiplied by equal-area pixel area and converted from kg to Mg",
+    "spatial_method": "The RFO polygon is projected to the MODIS sinusoidal equal-area grid. Pixel centers inside the polygon are retained. Data values outside their documented valid ranges and pixels without MODLAND-QC-good status are excluded.",
+    "monthly_method": "Each cumulative eight-day composite is proportionally assigned to calendar months by the number of overlapping days, assuming a uniform daily rate within that composite. Reported area-expanded values scale each composite's valid-pixel sum by the inverse of its valid-area fraction.",
+    "coverage": "Full calendar-date coverage is available for January-September. The latest RFO-intersecting Terra composite covers 2026-10-08 through 2026-10-15, so October has 15/31 observed days. Valid-area coverage over observed dates ranges from 28.248% to 99.796%; October's combined date-and-valid-area coverage is 27.786% of the full month.",
+    "quality_and_uncertainty": "The area expansion assumes MODLAND-QC-good pixels represent the full reserve for each composite. It is a simple spatial extrapolation, not a validated gap-filling model; low-coverage months are especially uncertain. The output also preserves unexpanded valid-pixel sums and coverage percentages.",
+    "interpretation": "GPP and PSN are modelled photosynthetic carbon-uptake indicators. They do not measure reserve carbon stocks, net ecosystem sequestration, net ecosystem exchange, carbon-dioxide-equivalent removals, or greenhouse-gas emissions. Do not use them to populate the gross-emissions, biomass-stock, gross-sequestration, or net-balance fields.",
+    "output_file": "OWR_MODIS_Carbon_2026.csv",
+    "reproduction_script": "scripts/build_modis_carbon_2026.py"
+  },
   "open_data_assessment": {
     "assessment_date_utc": "2026-11-04",
     "candidate_dataset": "CAMS global biomass burning emissions based on fire radiative power (GFAS)",
@@ -155,6 +182,11 @@
     ]
   },
   "other_open_data_reviewed": [
+    {
+      "source": "NASA Terra MODIS MOD17A2H.061",
+      "url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-17A2H-061",
+      "review_result": "Public 500 m eight-day GPP and net-photosynthesis COG assets were retrieved and summarized over the RFO. Monthly estimates and spatial/time coverage are in OWR_MODIS_Carbon_2026.csv. The products are modelled uptake indicators, not stock, net ecosystem sequestration, or emissions; October data end on October 15."
+    },
     {
       "source": "NASA FIRMS VIIRS/MODIS active fire products",
       "url": "https://firms.modaps.eosdis.nasa.gov/api/area/",
@@ -201,7 +233,7 @@
     "method.html",
     "data.html"
   ],
-  "citation": "NASA CMR, Microsoft Planetary Computer STAC, CAMS GFAS, NASA FIRMS, ESA CCI FireCCI, Hansen/UMD Global Forest Change, and Global Forest Watch catalog/API documentation; see source-specific retrieval status and limitations. Catalog coverage and model availability are not evidence of retrieved RFO values.",
+  "citation": "NASA CMR, NASA Terra MODIS MOD17A2H.061, Microsoft Planetary Computer STAC, CAMS GFAS, NASA FIRMS, ESA CCI FireCCI, Hansen/UMD Global Forest Change, and Global Forest Watch catalog/API documentation; see source-specific retrieval status and limitations. Catalog coverage and model availability are not evidence of retrieved RFO values.",
   "spatial_satellite_layer": {
     "file": "RFO_Oct2026_NDVI_Zones.geojson",
     "reporting_month": "2026-10",

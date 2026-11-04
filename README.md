@@ -22,9 +22,10 @@ Public, preliminary, boundary-based screening of the Okapi Wildlife Reserve (RFO
 | [`OWR_Emissions_2026.csv`](OWR_Emissions_2026.csv) | Ten monthly records with the requested gross emissions fields, status, satellite coverage, and reporting dates. |
 | [`OWR_Emissions_Metadata_2026.json`](OWR_Emissions_Metadata_2026.json) | Data dictionary, units, spatial/time scope, source inventory, limitations, and requirements for future emission estimates. |
 | [`OWR_Satellite_2026.csv`](OWR_Satellite_2026.csv) | Monthly Sentinel-2 NDVI/EVI and clear-pixel coverage; Landsat/Sentinel-1 scene counts and GEDI/NISAR footprint counts. |
+| [`OWR_MODIS_Carbon_2026.csv`](OWR_MODIS_Carbon_2026.csv) | NASA Terra MODIS 500 m eight-day GPP and net-photosynthesis estimates, valid-area coverage, and observed dates. October is available only through 15 October. |
 | [`OWR_Satellite_Scenes_2026.csv`](OWR_Satellite_Scenes_2026.csv) | Satellite scene and selected NASA CMR granule-footprint inventory. Catalog records do not necessarily represent processed measurements. |
 | [`OWR_Mission_Catalog_2026.csv`](OWR_Mission_Catalog_2026.csv) | Mission-specific catalog/footprint counts, processing state, sources, and limitations. |
-| [`OWR_Carbon_2026.csv`](OWR_Carbon_2026.csv) | Original monthly carbon-accounting export. Unmeasured fields remain blank. |
+| [`OWR_Carbon_2026.csv`](OWR_Carbon_2026.csv) | Monthly accounting export with separate MODIS uptake indicators; unmeasured stock, sequestration, emissions, and balance fields remain blank. |
 
 ### Requested gross-emissions fields
 
@@ -50,11 +51,17 @@ It reads `RFO Limit.json` and writes `RFO_Oct2026_NDVI_Zones.geojson`. Cloud ava
 
 ## Database additions
 
-The SQLite database includes separate `satellite_monthly`, `satellite_scene_inventory`, `satellite_mission_catalog`, `satellite_zone_cells`, `monthly_gross_emissions`, and `emissions_source_audit` tables. `satellite_zone_cells` contains the clipped October grid geometries as GeoJSON text with their NDVI/EVI and quartile attributes. The gross-emissions table retains the requested field names and SQL `NULL` values rather than replacing unknowns with zero; it also records the dated CAMS GFAS candidate-source status. `emissions_source_audit`, `metadata`, and `sources` document product coverage, variables, provenance, retrieval requirements, scope, and limitations. Existing monthly carbon-accounting values are preserved.
+The SQLite database includes separate `satellite_monthly`, `satellite_scene_inventory`, `satellite_mission_catalog`, `satellite_zone_cells`, `modis_carbon_monthly`, `monthly_gross_emissions`, and `emissions_source_audit` tables. `satellite_zone_cells` contains clipped October grid geometries with NDVI/EVI and quartile attributes. `modis_carbon_monthly` records NASA MODIS modelled GPP and net photosynthesis with QA/date coverage; these are not net sequestration or emissions. The gross-emissions table retains the requested fields as SQL `NULL` rather than replacing unknowns with zero and records the dated CAMS GFAS candidate-source status. `emissions_source_audit`, `metadata`, and `sources` document provenance and limitations.
 
 ## Evidence and limits
 
 - Sentinel-2 is the only imagery used to calculate spatial vegetation indices in this repository. Landsat and Sentinel-1 were catalogued but not raster-processed.
+- NASA Terra MOD17A2H.061 500 m GPP and net-photosynthesis composites were raster-processed. These are modelled photosynthetic uptake indicators, not carbon stocks, net ecosystem sequestration, or emissions; October data end on 15 October and spatial QA coverage is variable. [`scripts/build_modis_carbon_2026.py`](scripts/build_modis_carbon_2026.py) reproduces the calculation:
+
+  ```bash
+  python scripts/build_modis_carbon_2026.py
+  ```
+
 - GEDI and NISAR records are footprint metadata, not analyzed height/biomass/backscatter observations.
 - OCO-2/3 are atmospheric concentration missions; no matching local intersecting footprint polygons were identified in the checked catalog responses. GOSAT/TanSat results and ESA Biomass mission availability do not constitute processed RFO data.
 - CAMS GFAS v1.4.2 is a promising 2026 fire-only model, but no files were retrieved because authenticated CDS/ADS API access and manual terms acceptance are needed. It would not measure all-source gross emissions even if obtained.
@@ -68,6 +75,7 @@ The SQLite database includes separate `satellite_monthly`, `satellite_scene_inve
 The full bibliography is in [`OWR_Carbon_2026.md`](OWR_Carbon_2026.md). Key source catalogs and guidance:
 
 - [Microsoft Planetary Computer Sentinel-2 L2A](https://planetarycomputer.microsoft.com/dataset/sentinel-2-l2a)
+- [NASA Terra MODIS MOD17A2H.061 collection](https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-17A2H-061)
 - [Microsoft Planetary Computer Landsat Collection 2 L2](https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2)
 - [Microsoft Planetary Computer Sentinel-1 RTC](https://planetarycomputer.microsoft.com/dataset/sentinel-1-rtc)
 - [NASA Earthdata CMR granule search](https://cmr.earthdata.nasa.gov/search/granules)
