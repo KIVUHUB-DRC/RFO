@@ -66,6 +66,8 @@ This register distinguishes data products and regional research from results act
 
 The source resolutions and study extents above describe the cited products/publications, not a completed OWR raster analysis. A product’s global availability does not establish that its estimate is accurate at the reserve scale.
 
+The accompanying [monthly CSV export](OWR_Monthly_Carbon_Data_Jan-Oct_2026.csv) and [SQLite database](OWR_Monthly_Carbon_Database_2026.sqlite) include a `source_url` field linking each monthly record to this assessment’s published methods and evidence limitations. That link documents the provenance of the monthly record; it is not a claim that the listed scientific sources provide measured monthly OWR values.
+
 ## Carbon stocks
 
 ### What is and is not known
