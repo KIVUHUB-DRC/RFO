@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#183b31">
+  <meta name="description" content="Monthly greenhouse-gas emissions status and evidence limitations for the Okapi Wildlife Reserve.">
+  <title>Emissions Status | Okapi Wildlife Reserve</title>
+  <style>
+    :root{--ink:#20343b;--muted:#657579;--forest:#183b31;--green:#397267;--clay:#c47a54;--paper:#f4f6f2;--line:#dfe7e3;--white:#fff}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}a{color:var(--green)}.shell{width:min(1200px,calc(100% - 32px));margin:auto}
+    header{background:var(--forest);color:#fff}.nav{min-height:60px;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{color:#fff;text-decoration:none;font-weight:750;white-space:nowrap}.links{display:flex;align-items:center;gap:clamp(8px,1.5vw,20px);flex-wrap:wrap;font-size:12px}.links a{color:#dbe8df;text-decoration:none}.links a:hover,.links a[aria-current=page]{color:#fff;text-decoration:underline;text-underline-offset:5px}
+    .hero{padding:42px 0 38px;background:linear-gradient(120deg,#203e43,#386c5a);color:#fff}.eyebrow{color:#e1ad87;font-size:10px;font-weight:800;letter-spacing:.15em;text-transform:uppercase}h1{max-width:780px;margin:9px 0;font-size:clamp(36px,6vw,58px);letter-spacing:-.055em;line-height:1.04}.hero p{max-width:760px;margin:0;color:#e0e9e4}
+    main{padding:26px 0 56px}.alert{padding:18px 20px;border:1px solid #e7cbbb;border-left:4px solid var(--clay);border-radius:11px;background:#fbf1eb}.alert strong{display:block;color:#714c3b;font-size:17px}.alert p{margin:5px 0 0;color:#714c3b;font-size:13px}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:13px}.card,.panel{background:var(--white);border:1px solid var(--line);border-radius:13px;box-shadow:0 8px 26px #20343b0a}.card{padding:16px}.card h2{margin:0 0 5px;font-size:13px}.card p{margin:0;color:var(--muted);font-size:12px}.panel{margin-top:14px;padding:18px}.panel h2{margin:0;font-size:19px;letter-spacing:-.03em}.panel>p{margin:5px 0 13px;color:var(--muted);font-size:12px}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:9px}table{width:100%;border-collapse:collapse;min-width:760px;font-size:12px}th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}th{background:#f0f3ee;color:#4b5e56;font-size:10px;letter-spacing:.06em;text-transform:uppercase}tbody tr:nth-child(even){background:#fafbf9}.status{display:inline-block;padding:4px 7px;border:1px solid #e7cbbb;border-radius:99px;background:#fbf1eb;color:#89553d;font-size:9px;font-weight:800;letter-spacing:.04em}.links-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:13px}.button{display:inline-flex;padding:9px 12px;border:1px solid #cbd9d1;border-radius:8px;background:#fff;color:#315b56;font-size:11px;font-weight:700;text-decoration:none}.button:hover{background:#f1f6f2}footer{padding:18px 0 24px;border-top:1px solid var(--line);color:var(--muted);font-size:11px}
+    @media(max-width:720px){.shell{width:calc(100% - 24px)}.nav{align-items:flex-start;flex-direction:column;padding:11px 0}.links{gap:9px 14px}.cards{grid-template-columns:1fr}.hero{padding:32px 0}.panel{padding:13px}}
+  </style>
+</head>
+<body>
+  <header><div class="shell nav"><a class="brand" href="index.html">Okapi Wildlife Reserve</a><nav class="links" aria-label="Main navigation"><a href="index.html">Overview</a><a href="data.html">Map & data</a><a href="evidence.html">Evidence</a><a href="emissions.html" aria-current="page">Emissions status</a><a href="method.html">Methods</a><a href="assessment.html">Full assessment</a></nav></div></header>
+  <section class="hero"><div class="shell"><div class="eyebrow">Greenhouse-gas accounting · January–October 2026</div><h1>Gross emissions are not quantifiable</h1><p>The evidence currently supports satellite screening indicators, not a reserve-wide estimate of greenhouse-gas emissions or net balance.</p></div></section>
+  <main class="shell">
+    <section class="alert" role="note"><strong>Unknown—not zero</strong><p>All-gases, CO₂-only, and non-CO₂ gross-emissions quantities are blank because validated activity data, carbon-pool losses, and gas-specific emission factors are not available. Blank values are not zero-emission findings.</p></section>
+    <div class="cards">
+      <article class="card"><h2>Required activity evidence is incomplete</h2><p>No validated monthly inventory of disturbance, biomass loss, or combustion is available for the full reserve boundary.</p></article>
+      <article class="card"><h2>Photosynthesis is not emissions</h2><p>MODIS GPP/PSN are modelled plant-uptake indicators. They do not measure releases, all ecosystem pools, or net greenhouse-gas balance.</p></article>
+      <article class="card"><h2>Fire data have limits</h2><p>MODIS found no QA-valid burned pixels Jan–Aug; Sep–Oct products were unavailable in the queried catalog. This does not prove no fire occurred.</p></article>
+    </div>
+    <section class="panel" aria-labelledby="table-title"><h2 id="table-title">Monthly reporting status</h2><p>Source: the monthly emissions accounting CSV. Context indicators remain separate from the unknown emissions quantities.</p>
+      <div id="emissions-status" role="status" aria-live="polite">Loading monthly status…</div>
+      <div class="table-wrap"><table><thead><tr><th>Month</th><th>Gross emissions · all gases</th><th>CO₂-only</th><th>Non-CO₂</th><th>Accounting status</th><th>MODIS GPP context · Mt C</th></tr></thead><tbody id="emissions-rows"></tbody></table></div>
+      <div class="links-row"><a class="button" href="data/processed/OWR_Emissions_2026.csv">Download emissions CSV</a><a class="button" href="data/processed/OWR_Emissions_Metadata_2026.json">View source metadata</a><a class="button" href="method.html">Review the methods</a></div>
+    </section>
+    <section class="panel"><h2>What would be needed to quantify emissions?</h2><p>A defensible estimate requires validated disturbance or activity data; carbon stocks and pool-specific losses; suitable emission factors for CO₂, CH₄, and N₂O; temporal alignment; and uncertainty assessment. A fire-only model, vegetation index, or photosynthesis estimate cannot replace this evidence.</p></section>
+  </main>
+  <footer><div class="shell">Preliminary boundary-based screening · <a href="assessment.html">Read the full assessment</a></div></footer>
+  <script>
+    function parseCsv(text) {
+      const lines = text.trim().split(/\r?\n/);
+      return lines.map(line => {
+        const cells = [];
+        let value = '', quoted = false;
+        for (let i = 0; i < line.length; i++) {
+          const char = line[i];
+          if (char === '"' && quoted && line[i + 1] === '"') { value += '"'; i++; }
+          else if (char === '"') quoted = !quoted;
+          else if (char === ',' && !quoted) { cells.push(value); value = ''; }
+          else value += char;
+        }
+        cells.push(value);
+        return cells;
+      });
+    }
+    async function readCsv(path) {
+      const response = await fetch(path);
+      if (!response.ok) throw new Error(`${path}: HTTP ${response.status}`);
+      const [header, ...rows] = parseCsv(await response.text());
+      return rows.map(row => Object.fromEntries(header.map((key, index) => [key, row[index] ?? ''])));
+    }
+    const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct'];
+    const formatMt = value => value === '' || !Number.isFinite(Number(value)) ? '—' : `${(Number(value) / 1e6).toFixed(2)} Mt C`;
+    async function renderStatus() {
+      const status = document.getElementById('emissions-status');
+      try {
+        const rows = await readCsv('data/processed/OWR_Emissions_2026.csv');
+        const body = document.getElementById('emissions-rows');
+        rows.forEach((record, index) => {
+          const cells = [
+            monthNames[index] || record.month,
+            record.gross_emissions_co2e_all_gases__Mg || 'Not quantified',
+            record.gross_emissions_co2e_co2_only__Mg || 'Not quantified',
+            record.gross_emissions_co2e_non_co2__Mg || 'Not quantified',
+            record.data_status || 'Status unavailable',
+            formatMt(record.modis_gpp_area_expanded_Mg_C_observed_days)
+          ];
+          const row = document.createElement('tr');
+          cells.forEach((value, cellIndex) => {
+            const cell = document.createElement('td');
+            if (cellIndex === 4) {
+              const badge = document.createElement('span');
+              badge.className = 'status';
+              badge.textContent = value.replaceAll('_', ' ');
+              cell.append(badge);
+            } else cell.textContent = value;
+            row.append(cell);
+          });
+          body.append(row);
+        });
+        status.textContent = 'Monthly emissions status loaded. Emissions values are not quantified; MODIS GPP is shown only as separate context.';
+      } catch (error) {
+        status.textContent = 'Monthly status data could not be loaded. Download the source CSV or try again from the published site.';
+        console.error('Unable to load monthly emissions status:', error);
+      }
+    }
+    renderStatus();
+  </script>
+</body>
+</html>
