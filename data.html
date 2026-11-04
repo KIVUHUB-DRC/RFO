@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#123c32">
+  <meta name="theme-color" content="#183b31">
   <meta name="description" content="Interactive Sentinel-2 vegetation screening and NASA MODIS carbon-uptake estimates for the Okapi Wildlife Reserve.">
   <title>Map & Downloads | Okapi Wildlife Reserve</title>
   <link rel="preconnect" href="https://unpkg.com">
@@ -11,18 +11,18 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
   <style>
-    :root{--ink:#17352e;--muted:#62736c;--forest:#123c32;--green:#235d4a;--paper:#f5f6f0;--line:#e4e9e1;--white:#fff}
+    :root{--ink:#1c3029;--muted:#65736c;--forest:#183b31;--green:#315e4b;--paper:#f5f4ef;--line:#e3e5de;--white:#fff}
     *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
     a{color:var(--green)}.shell{width:min(1120px,calc(100% - 40px));margin:auto}
     header{background:var(--forest);color:#fff;padding:19px 0}.nav{display:flex;justify-content:space-between;align-items:center;gap:15px}.brand{font-weight:750;color:#fff;text-decoration:none}.links{display:flex;gap:20px;flex-wrap:wrap;font-size:13px}.links a{color:#dbe8df;text-decoration:none}
-    .hero{background:linear-gradient(120deg,#123c32,#215640);color:#fff;padding:52px 0 42px}.eyebrow{text-transform:uppercase;letter-spacing:.14em;color:#d9c188;font-size:11px;font-weight:750}h1{font-size:clamp(34px,5vw,51px);letter-spacing:-.05em;line-height:1.08;margin:9px 0}.hero p{margin:0;color:#d7e3dc;max-width:740px}
-    main{padding:27px 0 65px}.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:17px;box-shadow:0 12px 36px #17352e0b}.map-head{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:1px 3px 14px}.map-head h2{margin:0;font-size:18px;letter-spacing:-.025em}.map-head p{margin:3px 0 0;color:var(--muted);font-size:12px}.status{font-size:11px;color:var(--muted);white-space:nowrap}#map{height:570px;border-radius:10px;background:#e8eee6}.caption{font-size:11px;color:var(--muted);padding:11px 3px 0}
+    .hero{background:linear-gradient(120deg,#183b31,#315e4b);color:#fff;padding:52px 0 42px}.eyebrow{text-transform:uppercase;letter-spacing:.14em;color:#e3c39e;font-size:11px;font-weight:750}h1{font-size:clamp(34px,5vw,51px);letter-spacing:-.05em;line-height:1.08;margin:9px 0}.hero p{margin:0;color:#e1e9e2;max-width:740px}
+    main{padding:27px 0 65px}.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:17px;box-shadow:0 12px 36px #1c30290b}.map-head{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:1px 3px 14px}.map-head h2{margin:0;font-size:18px;letter-spacing:-.025em}.map-head p{margin:3px 0 0;color:var(--muted);font-size:12px}.status{font-size:11px;color:var(--muted);white-space:nowrap}#map{height:570px;border-radius:10px;background:#e9ece5}.caption{font-size:11px;color:var(--muted);padding:11px 3px 0}
     .legend{position:absolute;z-index:500;left:28px;bottom:28px;background:#fff;padding:12px 14px;border:1px solid #dfe6dc;border-radius:9px;box-shadow:0 4px 18px #20352b20;min-width:190px;font-size:11px}.legend-title{font-weight:750;margin-bottom:6px;color:var(--ink)}.legend-row{display:flex;align-items:center;gap:8px;margin:5px 0;color:#52655c}.swatch{width:13px;height:13px;border:1px solid #fff;box-shadow:0 0 0 1px #cbd4c8;border-radius:3px;flex:none}.na-swatch{background:repeating-linear-gradient(135deg,#fff,#fff 3px,#cbd3ca 3px,#cbd3ca 5px)}
     .notice{margin:17px 0 0;border-radius:10px;background:#fff7e9;border:1px solid #ead8b8;color:#654f2e;padding:14px 16px;font-size:12px}.notice strong{color:#493616}
     .section-heading{margin:42px 0 14px}.section-heading h2{margin:4px 0;font-size:27px;letter-spacing:-.04em}.section-heading p{margin:0;color:var(--muted);font-size:13px}
-    .downloads{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.download{background:#fff;border:1px solid var(--line);border-radius:12px;padding:17px;text-decoration:none;box-shadow:0 5px 18px #17352e08}.download:hover{border-color:#b9cbb8;transform:translateY(-1px)}.download .type{font-size:10px;text-transform:uppercase;letter-spacing:.11em;font-weight:750;color:#52785a}.download strong{display:block;color:var(--ink);font-size:14px;margin:5px 0 3px}.download span:last-child{font-size:11px;color:var(--muted)}
-    .charts{display:grid;grid-template-columns:1fr 1fr;gap:14px}.chart-card{min-width:0;background:#fff;border:1px solid var(--line);border-radius:12px;padding:17px}.chart-card h3{margin:0;font-size:16px;letter-spacing:-.02em}.chart-card p{margin:4px 0 10px;color:var(--muted);font-size:11px}.chart{display:block;width:100%;height:auto;overflow:visible}.chart text{font:11px ui-sans-serif,system-ui,sans-serif;fill:#62736c}.chart .axis{stroke:#dce4dc;stroke-width:1}.chart .gridline{stroke:#edf1ec;stroke-width:1}.chart .gpp-line{stroke:#2b7654;stroke-width:3;fill:none}.chart .psn-line{stroke:#d39c35;stroke-width:3;fill:none}.chart .gpp-point{fill:#2b7654}.chart .psn-point{fill:#d39c35}.chart .zero-point{fill:#2b7654;stroke:#fff;stroke-width:2}.chart .missing-point{stroke:#9aa69c;stroke-width:2}.chart-key{display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin:7px 0}.chart-key span{display:inline-flex;align-items:center;gap:6px}.key-dot{width:9px;height:9px;border-radius:50%;display:inline-block}.chart-note{border-top:1px solid var(--line);padding-top:10px;margin-top:8px!important}
-    .table-wrap{overflow:auto;background:#fff;border:1px solid var(--line);border-radius:12px}table{width:100%;border-collapse:collapse;font-size:12px;min-width:700px}th,td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}th{background:#f4f7f2;color:#53675d;text-transform:uppercase;font-size:10px;letter-spacing:.06em}code{font-size:.92em;overflow-wrap:anywhere}
+    .downloads{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.download{background:#fff;border:1px solid var(--line);border-radius:12px;padding:17px;text-decoration:none;box-shadow:0 5px 18px #1c302908}.download:hover{border-color:#c4cbbd;transform:translateY(-1px)}.download .type{font-size:10px;text-transform:uppercase;letter-spacing:.11em;font-weight:750;color:#536f5b}.download strong{display:block;color:var(--ink);font-size:14px;margin:5px 0 3px}.download span:last-child{font-size:11px;color:var(--muted)}
+    .charts{display:grid;grid-template-columns:1fr 1fr;gap:14px}.chart-card{min-width:0;background:#fff;border:1px solid var(--line);border-radius:12px;padding:17px}.chart-card h3{margin:0;font-size:16px;letter-spacing:-.02em}.chart-card p{margin:4px 0 10px;color:var(--muted);font-size:11px}.chart{display:block;width:100%;height:auto;overflow:visible}.chart text{font:11px ui-sans-serif,system-ui,sans-serif;fill:#65736c}.chart .axis{stroke:#d8ded7;stroke-width:1}.chart .gridline{stroke:#eceee8;stroke-width:1}.chart .gpp-line{stroke:#3b7158;stroke-width:3;fill:none}.chart .psn-line{stroke:#bb7447;stroke-width:3;fill:none}.chart .gpp-point{fill:#3b7158}.chart .psn-point{fill:#bb7447}.chart .zero-point{fill:#3b7158;stroke:#fff;stroke-width:2}.chart .missing-point{stroke:#989f97;stroke-width:2}.chart-key{display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin:7px 0}.chart-key span{display:inline-flex;align-items:center;gap:6px}.key-dot{width:9px;height:9px;border-radius:50%;display:inline-block}.chart-note{border-top:1px solid var(--line);padding-top:10px;margin-top:8px!important}
+    .table-wrap{overflow:auto;background:#fff;border:1px solid var(--line);border-radius:12px}table{width:100%;border-collapse:collapse;font-size:12px;min-width:700px}th,td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}th{background:#f0f1eb;color:#45574d;text-transform:uppercase;font-size:10px;letter-spacing:.06em}tbody tr:nth-child(even){background:#faf9f5}tbody tr:hover{background:#f2f4ee}code{font-size:.92em;overflow-wrap:anywhere}
     footer{padding:22px 0 32px;border-top:1px solid var(--line);color:var(--muted);font-size:11px}footer a{text-decoration:none;font-weight:650}
     .leaflet-popup-content-wrapper{border-radius:9px}.leaflet-popup-content{font-size:12px;line-height:1.5}.popup-title{font-weight:750;color:var(--forest)}.popup-muted{color:#617168}
     @media(max-width:720px){.shell{width:calc(100% - 28px)}.downloads,.charts{grid-template-columns:1fr}.map-head{align-items:flex-start}#map{height:470px}.legend{left:18px;bottom:18px}.links{gap:11px;font-size:11px}}
@@ -44,14 +44,14 @@
       <article class="chart-card" aria-labelledby="carbon-chart-title">
         <h3 id="carbon-chart-title">Photosynthetic carbon estimates</h3>
         <p>Area-expanded GPP and net photosynthesis · million Mg C for observed dates</p>
-        <div class="chart-key" aria-hidden="true"><span><i class="key-dot" style="background:#2b7654"></i>GPP</span><span><i class="key-dot" style="background:#d39c35"></i>Net photosynthesis</span></div>
+        <div class="chart-key" aria-hidden="true"><span><i class="key-dot" style="background:#3b7158"></i>GPP</span><span><i class="key-dot" style="background:#bb7447"></i>Net photosynthesis</span></div>
         <div id="carbon-chart" role="status">Loading MODIS carbon data…</div>
         <p class="chart-note">October covers 1–15 only; estimates are spatially expanded using valid-pixel coverage. September and October have low spatial coverage. These indicators are not carbon stocks, net ecosystem sequestration, removals, or emissions. <a href="data/processed/OWR_MODIS_Carbon_2026.csv">Download source CSV</a>.</p>
       </article>
       <article class="chart-card" aria-labelledby="burn-chart-title">
         <h3 id="burn-chart-title">MODIS burned-area screening</h3>
         <p>QA-valid burned area detected inside the reserve · hectares</p>
-        <div class="chart-key" aria-hidden="true"><span><i class="key-dot" style="background:#2b7654"></i>0 ha detected</span><span><i class="key-dot" style="background:#9aa69c"></i>Product unavailable</span></div>
+        <div class="chart-key" aria-hidden="true"><span><i class="key-dot" style="background:#3b7158"></i>0 ha detected</span><span><i class="key-dot" style="background:#989f97"></i>Product unavailable</span></div>
         <div id="burn-chart" role="status">Loading MODIS burned-area data…</div>
         <p class="chart-note">No QA-valid burned pixels were detected in available January–August scenes. September–October products were absent from the queried catalog; they are shown as unavailable, not zero. Zero detections do not rule out small or obscured fires and do not quantify emissions. <a href="data/processed/OWR_MODIS_Burned_Area_2026.csv">Download source CSV</a>.</p>
       </article>
@@ -91,7 +91,7 @@
   <footer><div class="shell">Preliminary spatial screening only · <a href="index.html">Home</a> · <a href="method.html">Methods</a></div></footer>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script>
-    const colors = ['#33694c', '#84ad73', '#e4b85c', '#164b37'];
+    const colors = ['#547d66', '#a5b88a', '#c18a57', '#264d3e'];
     const map = L.map('map', { scrollWheelZoom: false });
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 18,
