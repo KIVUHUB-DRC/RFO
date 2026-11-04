@@ -101,6 +101,65 @@
         <tr><td>GOSAT / GOSAT-2 / TanSat / ESA Biomass</td><td>Queried archive status and mission availability are documented.</td><td>No analyzed, reserve-specific emissions estimate from these missions.</td></tr>
       </tbody></table></div>
     </section>
+    <section id="glossary">
+      <h2>Technical terms, explained</h2>
+      <p>This glossary explains the satellite, mapping, and emissions terms used on this page.</p>
+      <div style="overflow-x:auto"><table><thead><tr><th>Term</th><th>Plain-language meaning</th></tr></thead><tbody>
+        <tr><td>RFO</td><td>Réserve de Faune à Okapis, also called the Okapi Wildlife Reserve.</td></tr>
+        <tr><td>WDPA</td><td>World Database on Protected Areas, the global register used here to identify reserve site 124389.</td></tr>
+        <tr><td>GeoJSON / polygon</td><td>GeoJSON is a text format for geographic data. A polygon is a mapped outline enclosing an area.</td></tr>
+        <tr><td>STAC / catalog</td><td>SpatioTemporal Asset Catalog: a searchable index describing satellite scenes, dates, locations, and downloadable files. A catalog entry does not necessarily mean every image file was processed.</td></tr>
+        <tr><td>NASA CMR / granule</td><td>NASA's Common Metadata Repository is a search index for Earth-science data. A granule is one dated data unit or file, often covering a particular place.</td></tr>
+        <tr><td>Landsat Collection 2 Level-2</td><td>A versioned set of USGS Landsat products processed into surface reflectance or surface temperature. A catalog search is not the same as processing imagery.</td></tr>
+        <tr><td>Sentinel-1 RTC</td><td>Radar imagery from Sentinel-1 processed with radiometric and terrain corrections. Radar can observe through clouds, but no radar change analysis was performed here.</td></tr>
+        <tr><td>Sentinel-2 L2A</td><td>European satellite imagery processed to Level 2A, including surface-reflectance estimates and a scene-classification layer.</td></tr>
+        <tr><td>Surface reflectance</td><td>An estimate of the light reflected from the ground or vegetation after correcting for the atmosphere; it is not a direct measurement of biomass.</td></tr>
+        <tr><td>B02, B04, B08</td><td>Sentinel-2 spectral bands: blue (B02), red (B04), and near-infrared (B08). Vegetation reflects these wavelengths differently, which enables vegetation indices.</td></tr>
+        <tr><td>MGRS tile</td><td>A fixed geographic tile in the Military Grid Reference System, used to organize Sentinel-2 imagery.</td></tr>
+        <tr><td>SCL</td><td>Scene Classification Layer: per-pixel labels such as vegetation, bare soil, cloud, shadow, or water. This workflow retains vegetation and bare-soil classes for its clear-land summaries.</td></tr>
+        <tr><td>NDVI</td><td>Normalized Difference Vegetation Index, calculated from red and near-infrared reflectance. It indicates relative green vegetation conditions, not carbon stocks or emissions.</td></tr>
+        <tr><td>EVI</td><td>Enhanced Vegetation Index, a related reflectance-based vegetation index that also uses blue reflectance to reduce some background and atmospheric effects.</td></tr>
+        <tr><td>100 m / 2 km grid</td><td>Analysis cell sizes. Sentinel-2 observations are summarized on 100-metre cells; the October zone map aggregates them into 2-kilometre cells.</td></tr>
+        <tr><td>Clear-land coverage</td><td>The share of a mapped area with usable pixels after excluding clouds, shadows, water, and other invalid observations. Low coverage means less of the area contributed data.</td></tr>
+        <tr><td>MODIS / Terra</td><td>MODIS is NASA's Moderate Resolution Imaging Spectroradiometer instrument. Terra is the NASA satellite carrying the instrument used for the products described here.</td></tr>
+        <tr><td>MODIS sinusoidal projection</td><td>The native map-coordinate system used by MODIS imagery. Reprojecting the reserve into that same grid aligns its boundary with product pixels.</td></tr>
+        <tr><td>MOD17A2H.061</td><td>A NASA Terra MODIS product providing modelled gross primary productivity and net photosynthesis in cumulative eight-day intervals at about 500-metre resolution; “061” identifies its collection version.</td></tr>
+        <tr><td>Eight-day composite</td><td>A product summarizing observations and model results over an eight-day interval. Monthly values are apportioned by overlapping days, assuming a uniform daily rate within each interval.</td></tr>
+        <tr><td>GPP</td><td>Gross primary productivity: modelled carbon fixed through plant photosynthesis before subtracting plant respiration.</td></tr>
+        <tr><td>PSN</td><td>Net photosynthesis in the MODIS product: GPP minus the modelled maintenance respiration of plants. It is not net ecosystem carbon balance.</td></tr>
+        <tr><td>Heterotrophic respiration</td><td>Carbon released when microbes and other organisms decompose dead organic material in soils and vegetation; it is not included in the MODIS PSN definition used here.</td></tr>
+        <tr><td>MODLAND QC / QA</td><td>Quality-control or quality-assurance flags stored with satellite pixels. The processing uses these flags to reject pixels that the product marks as unsuitable.</td></tr>
+        <tr><td>Scale factor</td><td>A multiplier specified by a satellite product to convert stored pixel numbers into physical units.</td></tr>
+        <tr><td>kg C m⁻²</td><td>Kilograms of carbon per square metre. Multiplying by pixel area converts this surface density to a carbon mass.</td></tr>
+        <tr><td>Valid-area coverage</td><td>The proportion of the reserve area represented by pixels that passed the product's quality checks.</td></tr>
+        <tr><td>Area-expanded estimate</td><td>A model-based extrapolation that scales the valid-pixel total to account for areas without valid pixels. It is not a direct observation of the full reserve.</td></tr>
+        <tr><td>Area-time coverage</td><td>Coverage accounting for both how much area has valid observations and how much of the reporting period was observed. It exposes partial dates and missing areas together.</td></tr>
+        <tr><td>MCD64A1.061 / Burn_Date</td><td>A monthly 500-metre MODIS burned-area product. Burn_Date records the estimated day of year when a pixel burned; “061” identifies the collection version.</td></tr>
+        <tr><td>Day of year (1–366)</td><td>The calendar-day number within a year used in the Burn_Date layer; values outside the valid range do not identify a mapped burn date.</td></tr>
+        <tr><td>QA bits 0 and 1</td><td>Two binary flags in the burned-area product indicating land and a valid observation, respectively. Both must be set for a burned-pixel count in this analysis.</td></tr>
+        <tr><td>Pixel center / clipped raster</td><td>The pixel center is its geographic midpoint. The analysis keeps pixels whose centers fall inside the reserve; a clipped raster is an image dataset limited to that mapped area.</td></tr>
+        <tr><td>Sinusoidal equal-area grid</td><td>The map projection used by these MODIS products. Its cells are designed to represent equal ground areas, which makes pixel-area totals more consistent.</td></tr>
+        <tr><td>CO₂, CH₄, N₂O</td><td>Carbon dioxide, methane, and nitrous oxide—greenhouse gases with different sources and warming effects.</td></tr>
+        <tr><td>Mg C</td><td>Megagrams (metric tonnes) of carbon. It is a carbon-mass unit, not a mass of carbon dioxide.</td></tr>
+        <tr><td>CO₂e / Mg CO₂e</td><td>Carbon-dioxide equivalent: a way of expressing different greenhouse gases on a common warming-impact basis. Mg CO₂e means megagrams (metric tonnes) of CO₂-equivalent.</td></tr>
+        <tr><td>Emission factor</td><td>A documented multiplier that converts an activity amount—such as burned biomass—into estimated gas emissions.</td></tr>
+        <tr><td>GWP / IPCC / AFOLU</td><td>Global warming potential compares a gas's warming effect with CO₂ over a stated time horizon. The IPCC is the Intergovernmental Panel on Climate Change; AFOLU means Agriculture, Forestry and Other Land Use, a section of its inventory guidance.</td></tr>
+        <tr><td>GFAS / FRP</td><td>The Global Fire Assimilation System estimates fire emissions using satellite fire-radiative power (FRP), a measure related to the heat energy released by fires. Its estimates cover fires, not every reserve emission source.</td></tr>
+        <tr><td>Biome / dry matter burned</td><td>A biome is a broad ecological region, such as tropical forest. Dry matter burned is the mass of vegetation fuel consumed; fire models combine this with gas-specific factors to estimate emissions.</td></tr>
+        <tr><td>CAMS / CDS / ADS</td><td>CAMS is the Copernicus Atmosphere Monitoring Service. Its data are accessed through the Copernicus Climate Data Store (CDS) or Atmosphere Data Store (ADS), which may require an account and accepted terms.</td></tr>
+        <tr><td>FIRMS / MAP_KEY</td><td>NASA's Fire Information for Resource Management System reports satellite active-fire detections. MAP_KEY is an access credential for its API; a detection is not a measured emissions amount.</td></tr>
+        <tr><td>Gross emissions / removals / net balance</td><td>Gross emissions are gases released before subtracting uptake. Removals transfer greenhouse gases out of the atmosphere. Net balance combines releases and removals; these satellite indicators alone do not measure it.</td></tr>
+        <tr><td>NULL / NOT_QUANTIFIABLE</td><td>NULL means no numeric value is supplied. NOT_QUANTIFIABLE records that available evidence is insufficient. Neither means zero emissions.</td></tr>
+        <tr><td>COG / Cloud-Optimized GeoTIFF</td><td>A georeferenced raster-image format arranged so software can retrieve only the image portions it needs over the internet.</td></tr>
+        <tr><td>EPSG:32635</td><td>A standard coordinate reference system code for WGS 84 / UTM zone 35N, used to place and measure the Sentinel-2 analysis grid consistently.</td></tr>
+        <tr><td>Quartile / Q1–Q4</td><td>A quartile divides ranked values into four equal-sized groups. The map's classes are relative to the included October cells, not fixed ecological thresholds.</td></tr>
+        <tr><td>FireCCI / Global Forest Change</td><td>FireCCI is an ESA burned-area data series; Global Forest Change is a satellite-based annual forest-loss dataset. Their publication periods and definitions may not match the monthly reserve analysis.</td></tr>
+        <tr><td>GEDI L2A / NISAR L2 GCOV</td><td>GEDI L2A contains lidar waveform observations; NISAR L2 GCOV is a radar global-coherence product. The catalog entries noted here are not processed carbon-stock measurements.</td></tr>
+        <tr><td>OCO-2 / OCO-3 / XCO₂</td><td>NASA's Orbiting Carbon Observatory missions measure atmospheric column-average carbon dioxide (XCO₂). Atmospheric concentration is not the same as a local forest-emissions flux.</td></tr>
+        <tr><td>GOSAT / TanSat</td><td>Satellite missions that observe greenhouse gases in the atmosphere. Mission or catalog availability alone does not provide a reserve-scale emissions estimate.</td></tr>
+        <tr><td>Uncertainty / validation</td><td>Uncertainty describes the range of plausible values given incomplete data and model assumptions. Validation checks a result against independent, reliable observations.</td></tr>
+      </tbody></table></div>
+    </section>
     <section>
       <h2>Sources and further detail</h2>
       <p>The <a href="index.html">bilingual landing page</a> presents compact, interactive monthly charts for Sentinel-2 NDVI, MODIS GPP/PSN, MODIS observation coverage, and burned-area availability. Charts are generated from the downloadable CSVs, expose per-month detail, and preserve the distinction between zero detections and unavailable products. Use the <strong>FR · Français</strong> control to switch the landing-page interface to French; the underlying datasets and technical report remain in their original formats.</p>
