@@ -8,7 +8,7 @@ Public, preliminary, boundary-based screening of the Okapi Wildlife Reserve (RFO
 - **[Map-focused landing page](https://kivuhub-drc.github.io/RFO/landing.html)** — full-screen reserve boundary and October relative-NDVI zone map, with a dated emissions-source status.
 - **[Carbon-emissions section](https://kivuhub-drc.github.io/RFO/#emissions)** — monthly all-gases, non-CO₂, and CO₂-only data status.
 - **[Methods](https://kivuhub-drc.github.io/RFO/method.html)** — plain-language and scientific description of boundary handling, remote-sensing processing, emissions-data limits, and zone interpretation.
-- **[Interactive map and downloads](https://kivuhub-drc.github.io/RFO/data.html)** — October 2026 NDVI relative-quartile map and repository data downloads.
+- **[Interactive map, MODIS charts, and downloads](https://kivuhub-drc.github.io/RFO/data.html)** — October 2026 NDVI relative-quartile map, monthly MODIS GPP/net-photosynthesis and burned-area charts, and source data downloads.
 - **[Data dictionary](docs/DATA_DICTIONARY.md)** — CSV/GeoJSON column definitions, SQLite tables, units, map classes, and null semantics.
 - **[Full assessment](reports/OWR_Carbon_2026.md)** — detailed evidence synthesis, references, assumptions, and limitations.
 - [Word report](reports/OWR_Carbon_2026.docx) · [SQLite database](data/processed/OWR_Carbon_2026.sqlite)

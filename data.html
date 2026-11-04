@@ -21,16 +21,17 @@
     .notice{margin:17px 0 0;border-radius:10px;background:#fff7e9;border:1px solid #ead8b8;color:#654f2e;padding:14px 16px;font-size:12px}.notice strong{color:#493616}
     .section-heading{margin:42px 0 14px}.section-heading h2{margin:4px 0;font-size:27px;letter-spacing:-.04em}.section-heading p{margin:0;color:var(--muted);font-size:13px}
     .downloads{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.download{background:#fff;border:1px solid var(--line);border-radius:12px;padding:17px;text-decoration:none;box-shadow:0 5px 18px #17352e08}.download:hover{border-color:#b9cbb8;transform:translateY(-1px)}.download .type{font-size:10px;text-transform:uppercase;letter-spacing:.11em;font-weight:750;color:#52785a}.download strong{display:block;color:var(--ink);font-size:14px;margin:5px 0 3px}.download span:last-child{font-size:11px;color:var(--muted)}
+    .charts{display:grid;grid-template-columns:1fr 1fr;gap:14px}.chart-card{min-width:0;background:#fff;border:1px solid var(--line);border-radius:12px;padding:17px}.chart-card h3{margin:0;font-size:16px;letter-spacing:-.02em}.chart-card p{margin:4px 0 10px;color:var(--muted);font-size:11px}.chart{display:block;width:100%;height:auto;overflow:visible}.chart text{font:11px ui-sans-serif,system-ui,sans-serif;fill:#62736c}.chart .axis{stroke:#dce4dc;stroke-width:1}.chart .gridline{stroke:#edf1ec;stroke-width:1}.chart .gpp-line{stroke:#2b7654;stroke-width:3;fill:none}.chart .psn-line{stroke:#d39c35;stroke-width:3;fill:none}.chart .gpp-point{fill:#2b7654}.chart .psn-point{fill:#d39c35}.chart .zero-point{fill:#2b7654;stroke:#fff;stroke-width:2}.chart .missing-point{stroke:#9aa69c;stroke-width:2}.chart-key{display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin:7px 0}.chart-key span{display:inline-flex;align-items:center;gap:6px}.key-dot{width:9px;height:9px;border-radius:50%;display:inline-block}.chart-note{border-top:1px solid var(--line);padding-top:10px;margin-top:8px!important}
     .table-wrap{overflow:auto;background:#fff;border:1px solid var(--line);border-radius:12px}table{width:100%;border-collapse:collapse;font-size:12px;min-width:700px}th,td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}th{background:#f4f7f2;color:#53675d;text-transform:uppercase;font-size:10px;letter-spacing:.06em}code{font-size:.92em;overflow-wrap:anywhere}
     footer{padding:22px 0 32px;border-top:1px solid var(--line);color:var(--muted);font-size:11px}footer a{text-decoration:none;font-weight:650}
     .leaflet-popup-content-wrapper{border-radius:9px}.leaflet-popup-content{font-size:12px;line-height:1.5}.popup-title{font-weight:750;color:var(--forest)}.popup-muted{color:#617168}
-    @media(max-width:720px){.shell{width:calc(100% - 28px)}.downloads{grid-template-columns:1fr}.map-head{align-items:flex-start}#map{height:470px}.legend{left:18px;bottom:18px}.links{gap:11px;font-size:11px}}
+    @media(max-width:720px){.shell{width:calc(100% - 28px)}.downloads,.charts{grid-template-columns:1fr}.map-head{align-items:flex-start}#map{height:470px}.legend{left:18px;bottom:18px}.links{gap:11px;font-size:11px}}
     @media(max-width:480px){.nav{align-items:flex-start}.map-head{display:block}.status{display:block;margin-top:8px}#map{height:430px}.hero{padding:38px 0 32px}}
   </style>
 </head>
 <body>
   <header><div class="shell nav"><a class="brand" href="index.html">Okapi Wildlife Reserve</a><nav class="links" aria-label="Main navigation"><a href="index.html#emissions">Carbon emissions</a><a href="method.html">Methods</a><a href="data.html" aria-current="page">Map & downloads</a></nav></div></header>
-  <div class="hero"><div class="shell"><div class="eyebrow">Boundary-based open data</div><h1>Explore the reserve.<br>Download the evidence.</h1><p>October 2026 Sentinel-2 vegetation-condition zones and NASA MODIS photosynthetic carbon-uptake estimates, clipped and summarized for the RFO boundary.</p></div></div>
+  <div class="hero"><div class="shell"><div class="eyebrow">Boundary-based open data</div><h1>Explore the reserve.<br>Download the evidence.</h1>  <p>October 2026 Sentinel-2 vegetation-condition zones, interactive NASA MODIS indicator charts, and data downloads for the RFO boundary.</p></div></div>
   <main class="shell">
     <section class="panel" aria-labelledby="map-title">
       <div class="map-head"><div><h2 id="map-title">October 2026 relative NDVI zones</h2><p>2 km grid · polygons clipped to RFO reserve boundary</p></div><div class="status" id="status" role="status">Loading zone data…</div></div>
@@ -38,6 +39,23 @@
       <div class="caption">Basemap © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap contributors</a> · Analysis boundary: WDPA site 124389 · Data source: Sentinel-2 L2A, Microsoft Planetary Computer</div>
     </section>
     <div class="notice"><strong>Map interpretation:</strong> Colors show relative quartiles of October NDVI in retained 2 km cells—not emissions, carbon stocks, forest condition classes, or confirmed disturbance. Gray/hatched is not mapped because cloud-free observation coverage was below 25%. The thresholds are specific to this month and are shown in the legend.</div>
+    <section class="section-heading" aria-labelledby="modis-heading"><div class="eyebrow" style="color:#567860">NASA / USGS MODIS · 2026</div><h2 id="modis-heading">Monthly satellite indicators</h2><p>Charts use the processed reserve-level CSVs below. They show modeled photosynthesis and burned-area screening—not greenhouse-gas emissions.</p></section>
+    <div class="charts">
+      <article class="chart-card" aria-labelledby="carbon-chart-title">
+        <h3 id="carbon-chart-title">Photosynthetic carbon estimates</h3>
+        <p>Area-expanded GPP and net photosynthesis · million Mg C for observed dates</p>
+        <div class="chart-key" aria-hidden="true"><span><i class="key-dot" style="background:#2b7654"></i>GPP</span><span><i class="key-dot" style="background:#d39c35"></i>Net photosynthesis</span></div>
+        <div id="carbon-chart" role="status">Loading MODIS carbon data…</div>
+        <p class="chart-note">October covers 1–15 only; estimates are spatially expanded using valid-pixel coverage. September and October have low spatial coverage. These indicators are not carbon stocks, net ecosystem sequestration, removals, or emissions. <a href="data/processed/OWR_MODIS_Carbon_2026.csv">Download source CSV</a>.</p>
+      </article>
+      <article class="chart-card" aria-labelledby="burn-chart-title">
+        <h3 id="burn-chart-title">MODIS burned-area screening</h3>
+        <p>QA-valid burned area detected inside the reserve · hectares</p>
+        <div class="chart-key" aria-hidden="true"><span><i class="key-dot" style="background:#2b7654"></i>0 ha detected</span><span><i class="key-dot" style="background:#9aa69c"></i>Product unavailable</span></div>
+        <div id="burn-chart" role="status">Loading MODIS burned-area data…</div>
+        <p class="chart-note">No QA-valid burned pixels were detected in available January–August scenes. September–October products were absent from the queried catalog; they are shown as unavailable, not zero. Zero detections do not rule out small or obscured fires and do not quantify emissions. <a href="data/processed/OWR_MODIS_Burned_Area_2026.csv">Download source CSV</a>.</p>
+      </article>
+    </div>
     <section class="section-heading"><div class="eyebrow" style="color:#567860">Downloads</div><h2>Data and documentation</h2><p>The RFO boundary remains the source geometry; the derived GeoJSON adds satellite indicators per grid cell. Missing emission values are left blank, not set to zero.</p></section>
     <div class="downloads">
       <a class="download" href="data/processed/RFO_Oct2026_NDVI_Zones.geojson" download><span class="type">Spatial data · GeoJSON</span><strong>October NDVI zones</strong><span>2 km RFO-clipped cells, NDVI/EVI, clear-pixel coverage, relative quartile, and null emissions fields.</span></a>
@@ -82,6 +100,18 @@
     map.setView([1.7, 28.5], 8);
 
     Promise.all([
+      fetch('data/processed/OWR_MODIS_Carbon_2026.csv').then(readText),
+      fetch('data/processed/OWR_MODIS_Burned_Area_2026.csv').then(readText)
+    ]).then(([carbonCsv, burnedCsv]) => {
+      renderCarbonChart(parseCsv(carbonCsv));
+      renderBurnedAreaChart(parseCsv(burnedCsv));
+    }).catch(error => {
+      chartError('carbon-chart', 'MODIS data could not be loaded.');
+      chartError('burn-chart', 'MODIS data could not be loaded.');
+      console.error('Unable to load MODIS chart data:', error);
+    });
+
+    Promise.all([
       fetch('data/processed/RFO_Oct2026_NDVI_Zones.geojson').then(readJson),
       fetch('data/raw/RFO%20Limit.json').then(readJson)
     ]).then(([zones, boundary]) => {
@@ -124,6 +154,83 @@
     function readJson(response) {
       if (!response.ok) throw new Error(`Request failed (${response.status})`);
       return response.json();
+    }
+    function readText(response) {
+      if (!response.ok) throw new Error(`Request failed (${response.status})`);
+      return response.text();
+    }
+    function parseCsv(text) {
+      const rows = [];
+      let row = [], field = '', quoted = false;
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        if (quoted && char === '"' && text[i + 1] === '"') { field += '"'; i++; }
+        else if (char === '"') quoted = !quoted;
+        else if (char === ',' && !quoted) { row.push(field); field = ''; }
+        else if ((char === '\n' || char === '\r') && !quoted) {
+          if (char === '\r' && text[i + 1] === '\n') i++;
+          row.push(field); field = '';
+          if (row.some(value => value !== '')) rows.push(row);
+          row = [];
+        } else field += char;
+      }
+      if (field || row.length) { row.push(field); rows.push(row); }
+      const headers = rows.shift() || [];
+      return rows.map(values => Object.fromEntries(headers.map((key, index) => [key, values[index] || ''])));
+    }
+    function chartError(id, message) {
+      const element = document.getElementById(id);
+      element.textContent = message;
+      element.setAttribute('role', 'alert');
+    }
+    function renderCarbonChart(rows) {
+      const values = rows.map(row => ({
+        month: row.month,
+        gpp: row.modis_gpp_area_expanded_Mg_C_observed_days === '' ? null : Number(row.modis_gpp_area_expanded_Mg_C_observed_days),
+        psn: row.modis_psn_area_expanded_Mg_C_observed_days === '' ? null : Number(row.modis_psn_area_expanded_Mg_C_observed_days),
+        days: Number(row.observed_days),
+        coverage: Number(row.gpp_spatiotemporal_coverage_pct_full_month)
+      }));
+      if (values.length < 2 || values.some(row => !Number.isFinite(row.gpp) || !Number.isFinite(row.psn))) {
+        chartError('carbon-chart', 'MODIS carbon chart data is invalid.');
+        return;
+      }
+      const width = 720, height = 260, left = 60, right = 18, top = 14, bottom = 40;
+      const plotWidth = width - left - right, plotHeight = height - top - bottom, max = 4_000_000;
+      const x = index => left + index * plotWidth / (values.length - 1);
+      const y = value => top + plotHeight * (1 - value / max);
+      const line = key => values.map((value, index) => `${index ? 'L' : 'M'}${x(index).toFixed(1)},${y(value[key]).toFixed(1)}`).join(' ');
+      const grid = [0, 1_000_000, 2_000_000, 3_000_000, 4_000_000].map(tick =>
+        `<line class="gridline" x1="${left}" x2="${width - right}" y1="${y(tick)}" y2="${y(tick)}"/><text x="${left - 8}" y="${y(tick) + 4}" text-anchor="end">${tick ? `${tick / 1e6}M` : '0'}</text>`
+      ).join('');
+      const months = values.map((value, index) =>
+        `<text x="${x(index)}" y="${height - 13}" text-anchor="middle">${new Date(`${value.month}-01T00:00:00Z`).toLocaleString('en', {month:'short',timeZone:'UTC'})}</text>`
+      ).join('');
+      const points = key => values.map((value, index) =>
+        `<circle class="${key === 'gpp' ? 'gpp-point' : 'psn-point'}" cx="${x(index)}" cy="${y(value[key])}" r="4"><title>${value.month}: ${key === 'gpp' ? 'GPP' : 'Net photosynthesis'} ${value[key].toLocaleString()} Mg C; ${value.days} observed days; ${value.coverage}% spatiotemporal coverage</title></circle>`
+      ).join('');
+      document.getElementById('carbon-chart').innerHTML =
+        `<svg class="chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="Monthly MODIS GPP and net photosynthesis estimates from January through October 2026, in million megagrams of carbon. October covers 15 days."><line class="axis" x1="${left}" x2="${left}" y1="${top}" y2="${height - bottom}"/>${grid}${months}<path class="gpp-line" d="${line('gpp')}"/><path class="psn-line" d="${line('psn')}"/>${points('gpp')}${points('psn')}</svg>`;
+    }
+    function renderBurnedAreaChart(rows) {
+      const values = rows.map(row => ({month:row.month, area:row.modis_burned_area_ha === '' ? null : Number(row.modis_burned_area_ha)}));
+      if (!values.length || values.some(row => row.area !== null && !Number.isFinite(row.area))) {
+        chartError('burn-chart', 'MODIS burned-area chart data is invalid.');
+        return;
+      }
+      const width = 720, height = 260, left = 60, right = 18, top = 18, bottom = 40;
+      const plotWidth = width - left - right, plotHeight = height - top - bottom;
+      const step = plotWidth / values.length, x = index => left + step * (index + .5);
+      const baseline = top + plotHeight, upper = top + plotHeight * .15;
+      const months = values.map((value, index) =>
+        `<text x="${x(index)}" y="${height - 13}" text-anchor="middle">${new Date(`${value.month}-01T00:00:00Z`).toLocaleString('en', {month:'short',timeZone:'UTC'})}</text>`
+      ).join('');
+      const marks = values.map((value, index) => value.area === null
+        ? `<path class="missing-point" d="M${x(index)-5},${baseline-5}l10,10m0,-10l-10,10"><title>${value.month}: unavailable; product not in queried catalog</title></path>`
+        : `<circle class="zero-point" cx="${x(index)}" cy="${baseline}" r="5"><title>${value.month}: ${value.area} ha detected</title></circle>`
+      ).join('');
+      document.getElementById('burn-chart').innerHTML =
+        `<svg class="chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="MODIS burned area screening: zero hectares detected January through August 2026; September and October data unavailable."><line class="axis" x1="${left}" x2="${width-right}" y1="${baseline}" y2="${baseline}"/><line class="gridline" x1="${left}" x2="${width-right}" y1="${upper}" y2="${upper}"/><text x="${left-8}" y="${upper+4}" text-anchor="end">1 ha</text><text x="${left-8}" y="${baseline+4}" text-anchor="end">0</text>${months}${marks}</svg>`;
     }
     function addLegend(breaks, labels) {
       const legend = L.control({ position: 'bottomleft' });
