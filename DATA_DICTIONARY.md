@@ -25,6 +25,15 @@
 | `boundary_site_id`, `boundary_file` | Text | Site identifier and boundary filename applied. |
 | `reporting_period_start`, `reporting_period_end` | ISO date | Inclusive month start and end. |
 | `source_metadata` | Filename | Companion machine-readable metadata JSON. |
+| `candidate_fire_emissions_source` | Text | Open-data candidate reviewed for fire-only modeling; currently `CAMS GFAS v1.4.2`. |
+| `candidate_fire_emissions_status` | Category | Retrieval status for the candidate model. `NOT_RETRIEVED_AUTHENTICATION_AND_TERMS_ACCEPTANCE_REQUIRED` means no model estimate was downloaded or calculated; it does not mean zero emissions. |
+| `source_review_date_utc` | ISO date | Date the open-data candidate and access requirements were checked. |
+
+### Open 2026 fire-emissions source assessment
+
+CAMS GFAS v1.4.2 advertises hourly/daily modelled biomass-burning emissions from 2026 onward at 0.1° resolution, including CO₂, CH₄, and N₂O flux variables. It is an experimental candidate for fire-only emissions, not total gross reserve emissions. Data retrieval requires a Copernicus CDS/ADS account, personal API token, and manual acceptance of the dataset terms. No token was configured for the 4 November 2026 assessment, so no RFO-clipped values were calculated. See the `open_data_assessment` object in `OWR_Emissions_Metadata_2026.json` and the `emissions_source_audit` SQLite table.
+
+Other sources checked: NASA FIRMS active-fire API retrieval requires a MAP_KEY and detections are not emission masses; ESA CCI FireCCI51 ends in 2020; Hansen/UMD Global Forest Change v1.13 covers annual loss through 2025; and the previously checked Global Forest Watch alerts API required a key. None yielded retrieved 2026 RFO gross-emission amounts.
 
 ## `RFO_Oct2026_NDVI_Zones.geojson`
 
@@ -47,7 +56,7 @@ The top-level `metadata.classification` object records numeric quartile threshol
 
 ## SQLite tables
 
-`monthly_gross_emissions` stores the three emissions fields as SQL `NULL`, the status/reason, monthly sensor indicators, boundary reference, and metadata filename. `satellite_zone_cells` stores the clipped October cell attributes and GeoJSON geometry text. Other satellite tables are `satellite_monthly`, `satellite_scene_inventory`, and `satellite_mission_catalog`. `monthly_accounting` remains the original carbon-accounting export and is not overwritten by satellite indices.
+`monthly_gross_emissions` stores the three emissions fields as SQL `NULL`, the status/reason, monthly sensor indicators, boundary reference, metadata filename, and dated GFAS candidate-source status. `emissions_source_audit` records the CAMS GFAS product, variables, coverage, retrieval status, and fire-only scope. `satellite_zone_cells` stores the clipped October cell attributes and GeoJSON geometry text. Other satellite tables are `satellite_monthly`, `satellite_scene_inventory`, and `satellite_mission_catalog`. `monthly_accounting` remains the original carbon-accounting export and is not overwritten by satellite indices.
 
 ## Interpretation and limitations
 

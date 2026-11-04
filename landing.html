@@ -293,7 +293,7 @@
     .map-heading { padding: 2px 3px 8px; }
     .map-heading h2 { font-size: 14px; }
     .map-heading p { font-size: 10px; }
-    #map { height: calc(100dvh - 156px); min-height: 320px; border-radius: 8px; }
+    #map { height: calc(100dvh - 205px); min-height: 280px; border-radius: 8px; }
     .map-caption { padding-top: 6px; font-size: 9px; }
     .legend { position: static; min-width: 190px; padding: 11px 13px; border: 1px solid #dfe6dc; border-radius: 9px; background: #fff; box-shadow: 0 4px 18px #20352b20; font-size: 11px; }
     .legend-title { margin-bottom: 6px; color: var(--ink); font-weight: 750; }
@@ -302,13 +302,16 @@
     .na-swatch { background: repeating-linear-gradient(135deg,#fff,#fff 3px,#cbd3ca 3px,#cbd3ca 5px); }
     .map-note { position: absolute; z-index: 500; left: 54px; top: 12px; max-width: min(390px, calc(100% - 66px)); padding: 9px 11px; border: 1px solid #dfe6dc; border-radius: 8px; background: rgba(255,255,255,.95); color: #52655c; box-shadow: 0 3px 14px #20352b1a; font-size: 10px; line-height: 1.4; }
     .map-note strong { color: var(--ink); }
+    .map-data-note { margin: 7px 3px 0; color: #52655c; font-size: 10px; line-height: 1.4; }
+    .map-data-note strong { color: var(--ink); }
+    .map-data-note a { color: #356447; font-weight: 650; }
     main { padding-bottom: 0; }
     footer { display: none; }
     @media (max-width: 560px) {
       .hero, .topbar { height: 64px; }
       .content { padding: 8px 8px 0; }
       .map-card { padding: 8px; }
-      #map { height: calc(100dvh - 148px); min-height: 300px; }
+      #map { height: calc(100dvh - 192px); min-height: 260px; }
     }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
@@ -346,7 +349,7 @@
             <h2 id="map-title">Okapi Wildlife Reserve · October NDVI zones</h2>
             <p>2 km cells clipped to WDPA 124389 boundary · toggle layers with the map control</p>
           </div>
-          <div class="map-status"><span class="status-dot" aria-hidden="true"></span><span id="map-status" role="status">Loading boundary…</span></div>
+          <div class="map-status"><span class="status-dot" aria-hidden="true"></span><span id="map-status" role="status">Loading map data…</span></div>
         </div>
         <div id="map" role="region" aria-label="Interactive map of the Okapi Wildlife Reserve boundary and satellite zones">
           <div class="map-note"><strong>Map interpretation:</strong> Colors show relative October NDVI quartiles only—not emissions, carbon stocks, or confirmed disturbance. Gray indicates cells below the 25% clear-observation threshold.</div>
@@ -355,6 +358,7 @@
           <span>NDVI: Sentinel-2 L2A · 100 m pixels summarized in 2 km cells</span>
           <span>Basemap © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap contributors</a></span>
         </div>
+        <p class="map-data-note"><strong>Emissions data check · 4 Nov 2026:</strong> CAMS GFAS v1.4.2 provides a candidate 2026 fire-only model (0.1° daily CO₂/CH₄/N₂O), but download needs a CDS/ADS account, personal API token, and manual terms acceptance. It was not retrievable here and would not cover all gross-emission sources. Requested totals remain unknown, not zero. <a href="OWR_Emissions_Metadata_2026.json">Details</a> · <a href="https://ads.atmosphere.copernicus.eu/datasets/cams-global-fire-emissions-gfas" target="_blank" rel="noopener noreferrer">CAMS GFAS</a>.</p>
       </section>
 
       <section id="overview" aria-labelledby="overview-title">
