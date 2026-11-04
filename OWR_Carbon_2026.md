@@ -12,7 +12,7 @@
 
 The RFO boundary is a valid polygon for the Okapi Wildlife Reserve. Its WGS84 geodesic area is **13,939.55 km²** (1,393,955 ha), consistent with the GeoJSON `GIS_AREA` attribute. The same feature reports `REP_AREA = 13,726.25 km²`, a 1.55% difference. Spatial calculations below use the polygon as requested, not the smaller reported-area attribute [1].
 
-No plot inventory, biomass raster, soil-carbon layer, or boundary-clipped annual loss/alert series is included in the repository. Consequently, a defensible observed reserve-wide carbon stock, 2026 emissions total, or net greenhouse-gas balance cannot be calculated from the evidence available here. The numerical stock and uptake values below are **sensitivity illustrations**, not measurements or creditable removals.
+Sentinel-2 surface-reflectance imagery was retrieved and analyzed for monthly vegetation-condition indices. No plot inventory, biomass raster, soil-carbon layer, or boundary-clipped annual loss/alert series is available. The imagery therefore does not support a defensible observed reserve-wide carbon stock, 2026 emissions total, or net greenhouse-gas balance. The numerical stock and uptake values below are **sensitivity illustrations**, not measurements or creditable removals.
 
 The strongest local evidence is about ecosystem and pressure context: UNESCO describes the reserve as predominantly Ituri forest, including evergreen, semi-evergreen and swamp forests, and identifies agricultural encroachment along roads and artisanal mining among management challenges [2]. Global Forest Watch’s integrated-alert catalogue had a 4 November 2026 version covering “present” alerts, but its spatial query endpoint requires an API key. No alert counts or loss areas are therefore attributed to the reserve in this report [11].
 
@@ -27,6 +27,7 @@ The strongest local evidence is about ecosystem and pressure context: UNESCO des
 | African intact-forest sink reference | 0.66 (95% CI: 0.53–0.79) Mg C ha⁻¹ yr⁻¹ | Mean from 244 plots across 11 African countries for 1985–2015; not OWR-specific [3] |
 | Area-scaled gross uptake scenario, annual | 0.92 (0.74–1.10) Mt C yr⁻¹ | Regional sink rate multiplied by all RFO hectares; not a measurement of reserve uptake |
 | Area-scaled gross uptake scenario, Jan–Oct | 0.77 (0.62–0.92) Mt C | 304/365 prorating of the regional rate; excludes emissions and other carbon pools |
+| Sentinel-2 vegetation-condition indices | Monthly mean NDVI 0.424–0.481; clear-land coverage 23.7–97.3% | 60 selected tile-month scenes, 100 m grid; not biomass or carbon flux [12] |
 | Observed OWR 2026 net carbon balance | Not quantified | No complete, boundary-clipped activity data and carbon-pool change estimates available |
 
 Stock values are in metric tonnes of carbon (C); CO₂-equivalent mass is calculated using 44/12. Results should not be read as verified stocks, annual emissions, offset claims, or REDD+ credits.
@@ -44,15 +45,15 @@ Area was measured geodesically on the WGS84 ellipsoid. For the requested 15 km l
 | 15 km buffer including reserve | 22,622.01 km² |
 | 15 km external ring only | 8,683.79 km² |
 
-The 15 km ring is a computed analysis zone, not an independently supplied or legally designated boundary. UNESCO describes a wider 50 km buffer zone; the two should not be conflated [2]. No satellite or socioeconomic layer was spatially summarized within either the reserve or external ring.
+The 15 km ring is a computed analysis zone, not an independently supplied or legally designated boundary. UNESCO describes a wider 50 km buffer zone; the two should not be conflated [2]. Sentinel-2 was summarized within the reserve only; the external ring and socioeconomic layers were not analyzed.
 
 ## Data inventory and evidence register
 
-This register distinguishes data products and regional research from results actually measured for the reserve. “Not extracted” means the source was reviewed or identified but its pixels or observations were not analyzed against the RFO polygon.
+This register distinguishes processed pixels, scene/footprint inventories, and regional research. Catalogued scenes or footprint metadata do not imply that their measurement files were downloaded or analyzed.
 
 | Dataset or study | Coverage and role | OWR extraction and limitation |
 |---|---|---|
-| RFO GeoJSON [1] | WDPA site 124389; reserve polygon and basis for the 15 km external buffer | Polygon validated and measured; this is the sole spatial layer analyzed |
+| RFO GeoJSON [1] | WDPA site 124389; reserve polygon and basis for the 15 km external buffer | Polygon validated and measured; Sentinel-2 pixels were also analyzed against this boundary |
 | UNESCO site description [2] | Site-level habitat, management context, and documented pressure pathways | Context only; not a 2026 monitoring dataset |
 | Hubau et al. [3] | 244 structurally intact African forest plots in 11 countries; 1968–2015 observations; regional live-biomass sink rate | No OWR plot-level estimate; rate used only as a labeled scenario |
 | Saatchi et al. [4] | Pantropical early-2000s live-biomass carbon map; 1 km; above- and belowground biomass | Not clipped to RFO boundary; not an OWR stock estimate |
@@ -63,16 +64,47 @@ This register distinguishes data products and regional research from results act
 | SoilGrids 2.0 [9] | Global soil predictions at 250 m, six depth intervals to 200 cm, with uncertainty | No SOC stock extracted; wetland/peat conditions need local checks |
 | IPCC AFOLU guidance [10] | National greenhouse-gas inventory methods | Methodological reference, not a local dataset |
 | GFW integrated alerts [11] | Catalogue version v20261104; archive described from 2019 to present | Spatial query required an API key; no alert counts or areas used |
+| Sentinel-2 L2A [12] | 666 STAC items intersecting the RFO query; six MGRS tiles represented each month | 60 least-cloudy tile-month scenes processed to 100 m NDVI/EVI; vegetation indices only |
+| Landsat Collection 2 L2 [13] | 70 STAC items intersecting the RFO query | Acquisition inventory only; no Landsat raster metrics calculated |
+| Sentinel-1 RTC [14] | 231 STAC items intersecting the RFO query | Acquisition inventory only; no radar backscatter metrics calculated |
+| GEDI L2A V003 [15] | 9 CMR granule footprints intersect the RFO (Jan–Mar) | Footprint metadata only; GEDI HDF5 measurements not analyzed |
+| NISAR L2 GCOV provisional [15] | 95 CMR granule footprints intersect the RFO (Jun–Oct) | Footprint metadata only; raster/backscatter data not analyzed |
+| OCO-2 / OCO-3 [15] | 315 / 219 granules returned for surrounding-box searches; zero footprint polygons intersected the RFO | No local atmospheric retrievals used; XCO₂ concentration is not reserve-scale carbon flux |
+| GOSAT / GOSAT-2 / TanSat [15] | No 2026 CMR granules found for the queried collections and area | No reserve measurements used; the queried TanSat archive ends in 2020 |
+| ESA Biomass [16] | Mission data availability opened 26 January 2026 | No reserve acquisition was queried or processed |
 
-The source resolutions and study extents above describe the cited products/publications, not a completed OWR raster analysis. A product’s global availability does not establish that its estimate is accurate at the reserve scale.
+For NASA CMR entries, the surrounding-box result was further checked against each returned granule polygon. Scene counts are catalog metadata, not necessarily unique acquisition dates or independent spatial samples.
 
-The accompanying [monthly CSV export](OWR_Carbon_2026.csv) and [SQLite database](OWR_Carbon_2026.sqlite) include a `source_url` field linking each monthly record to this assessment’s published methods and evidence limitations. That link documents the provenance of the monthly record; it is not a claim that the listed scientific sources provide measured monthly OWR values.
+The [carbon-accounting CSV](OWR_Carbon_2026.csv) and its SQLite table retain blank values for unmeasured carbon quantities. Separate files provide the processed [monthly satellite indices](OWR_Satellite_2026.csv), [scene/granule inventory](OWR_Satellite_Scenes_2026.csv), and [mission catalog status](OWR_Mission_Catalog_2026.csv). The SQLite database stores these in separate satellite tables and does not substitute NDVI/EVI for carbon flux.
+
+## Satellite observations: January–October 2026
+
+Sentinel-2 L2A surface-reflectance assets were queried from the Microsoft Planetary Computer STAC catalog using the RFO geometry. Of 666 returned items, one least-cloudy acquisition was selected for each of the six intersecting MGRS tiles in each month (60 scenes total). The rasters were aligned to a 100 m EPSG:32635 grid; tile overlaps were filled in ascending scene-cloud order so a grid cell was represented once. Reserve coverage is rasterized by grid-cell center. Sentinel-2 Scene Classification Layer classes 4 (vegetation) and 5 (bare soil) were retained; clouds, shadows, water, and other classes were excluded. Nonpositive reflectance, non-finite indices, NDVI outside −1 to 1, and EVI outside −1 to 2 were excluded as invalid. Surface reflectance used the collection scale factor of 0.0001.
+
+NDVI was calculated as `(NIR − red) / (NIR + red)` and EVI as `2.5 × (NIR − red) / (NIR + 6 × red − 7.5 × blue + 1)`, using bands B08, B04, and B02. The coverage column is the share of the reserve’s 100 m grid cells with a valid clear-land observation in that monthly mosaic. Scene cloud cover is the mean catalog cloud percentage of the six selected scenes; it is not the measured cloud fraction over the reserve. Monthly scenes may have different acquisition dates across tiles.
+
+| Month | Scenes | Clear-land coverage | Mean NDVI | Mean EVI |
+|---|---:|---:|---:|---:|
+| Jan | 6 | 86.185% | 0.433769 | 0.431366 |
+| Feb | 6 | 97.268% | 0.448474 | 0.443533 |
+| Mar | 6 | 88.606% | 0.423853 | 0.439760 |
+| Apr | 6 | 82.734% | 0.474717 | 0.501987 |
+| May | 6 | 96.869% | 0.479097 | 0.504465 |
+| Jun | 6 | 65.070% | 0.434487 | 0.497680 |
+| Jul | 6 | 81.871% | 0.457373 | 0.476656 |
+| Aug | 6 | 95.357% | 0.456134 | 0.473179 |
+| Sep | 6 | 23.657% | 0.464063 | 0.478540 |
+| Oct | 6 | 74.337% | 0.480665 | 0.510248 |
+
+Coverage is especially low in September, so that month’s mean represents a limited subset of the reserve. The monthly index differences should not be interpreted as a trend in biomass, growth, sequestration, or carbon loss: they are affected by cloud masking, acquisition timing, canopy/soil reflectance, and the limited scene selection. NDVI/EVI are vegetation-condition proxies and do not quantify aboveground biomass, soil carbon, or greenhouse-gas flux.
+
+The STAC inventory also contains 70 Landsat Collection 2 Level-2 items and 231 Sentinel-1 RTC items intersecting the RFO query. These were inventoried but not raster-processed. NASA CMR metadata searches identified nine GEDI L2A and 95 provisional NISAR L2 GCOV granule footprints intersecting the boundary; their measurement files were not analyzed. OCO-2 and OCO-3 surrounding-box searches returned 315 and 219 granules, respectively, but none of the returned granule polygons intersected the reserve. No 2026 GOSAT, GOSAT-2, or TanSat granules were found for the queried collections and area; the queried TanSat archive ends in 2020. ESA announced open access to Biomass mission data on 26 January 2026, but no RFO Biomass acquisition was queried or processed. Atmospheric concentration and footprint metadata are not substitutes for reserve-scale carbon flux.
 
 ## Carbon stocks
 
 ### What is and is not known
 
-No reserve-specific estimate of aboveground biomass, belowground biomass, deadwood, litter, or soil organic carbon can be verified from the local data. The reserve’s swamp forests and other wet areas make soil and wetland carbon particularly important; they also mean that an aboveground-tree-only estimate would not represent total ecosystem carbon. There are no local soil cores, peat-depth measurements, or mapped soil-carbon results in the evidence reviewed. SoilGrids 2.0 offers global soil organic carbon predictions at 250 m and six depth intervals, but these data have not been clipped to the boundary and would require wetland-specific validation [9].
+No reserve-specific estimate of aboveground biomass, belowground biomass, deadwood, litter, or soil organic carbon can be verified from the local data. The Sentinel-2 vegetation indices reported above do not estimate these carbon pools. The reserve’s swamp forests and other wet areas make soil and wetland carbon particularly important; they also mean that an aboveground-tree-only estimate would not represent total ecosystem carbon. There are no local soil cores, peat-depth measurements, or mapped soil-carbon results in the evidence reviewed. SoilGrids 2.0 offers global soil organic carbon predictions at 250 m and six depth intervals, but these data have not been clipped to the boundary and would require wetland-specific validation [9].
 
 Pantropical biomass maps such as Saatchi et al. (2011) demonstrate how live biomass carbon can be estimated by combining plot inventories, lidar and satellite imagery [4]. Spawn et al. later harmonized above- and belowground biomass-carbon products globally at 300 m for 2010 and reported spatial uncertainty [5]. These are potential inputs for a boundary-clipped analysis, but neither publication’s regional totals nor unprocessed map values are an estimate for this reserve. A raster must actually be intersected with the RFO polygon and its uncertainty propagated before reporting an OWR stock.
 
@@ -121,7 +153,7 @@ The reserve’s large area and intact Ituri forest make it important for maintai
 
 ### Evidence needed to complete a quantitative assessment
 
-1. Intersect the RFO polygon and computed 15 km ring with annual forest-cover/loss data for 2015–2025 and alerts dated through 31 October 2026; validate disturbance classes using Sentinel-2/Landsat imagery and local monitoring [7, 8, 11].
+1. Intersect the RFO polygon and computed 15 km ring with annual forest-cover/loss data for 2015–2025 and alerts dated through 31 October 2026; validate disturbance classes using the retrieved Sentinel-2 imagery, Landsat time series, and local monitoring [7, 8, 11–14].
 2. Clip a biomass-carbon map to the same geometry; compare a historical benchmark such as the 2010 harmonized product with newer observations, and report forest area, pool definitions, resolution, uncertainty, and area-weighted totals [4, 5].
 3. Add soil organic-carbon and wetland/peat information, with field sampling where product uncertainty or wetland extent is material [9].
 4. Obtain geometries for the reserve’s management zones and analyze them separately; distinguish road-accessible/development areas from intact forest interiors.
@@ -140,5 +172,10 @@ The reserve’s large area and intact Ituri forest make it important for maintai
 9. **Poggio, L., et al. (2021).** “SoilGrids 2.0: producing soil information for the globe with quantified spatial uncertainty.” *SOIL*, 7, 217–240. Global soil-property predictions at 250 m and six depths to 200 cm, including soil organic carbon. [https://doi.org/10.5194/soil-7-217-2021](https://doi.org/10.5194/soil-7-217-2021).
 10. **IPCC (2019).** *2019 Refinement to the 2006 IPCC Guidelines for National Greenhouse Gas Inventories, Volume 4: Agriculture, Forestry and Other Land Use.* Inventory methods, land representation, and uncertainty treatment. [https://www.ipcc-nggip.iges.or.jp/public/2019rf/vol4.html](https://www.ipcc-nggip.iges.or.jp/public/2019rf/vol4.html).
 11. **Global Forest Watch Data API.** Integrated alerts dataset, version `v20261104`; catalogue metadata and API documentation. The dataset metadata describes an alert archive from 2019 to present; spatial query access requires an API key. [Dataset](https://data-api.globalforestwatch.org/dataset/gfw_integrated_alerts/v20261104); [API documentation](https://data-api.globalforestwatch.org/docs).
+12. **Microsoft Planetary Computer.** Sentinel-2 Level-2A collection catalogue and STAC assets. Scene discovery and the 2026 clipped surface-reflectance analysis described above. [https://planetarycomputer.microsoft.com/dataset/sentinel-2-l2a](https://planetarycomputer.microsoft.com/dataset/sentinel-2-l2a).
+13. **Microsoft Planetary Computer.** Landsat Collection 2 Level-2 catalogue. Scene-inventory source; no reserve reflectance indices calculated. [https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2](https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2).
+14. **Microsoft Planetary Computer.** Sentinel-1 RTC catalogue. Scene-inventory source; no reserve backscatter metrics calculated. [https://planetarycomputer.microsoft.com/dataset/sentinel-1-rtc](https://planetarycomputer.microsoft.com/dataset/sentinel-1-rtc).
+15. **NASA Earthdata Common Metadata Repository (CMR).** Granule and collection metadata searches for GEDI, NISAR, OCO-2, OCO-3, GOSAT, GOSAT-2, and TanSat. Search-result polygons were checked against the RFO boundary; metadata footprints are not measurement values. [Granule search API](https://cmr.earthdata.nasa.gov/search/granules); [collection search API](https://cmr.earthdata.nasa.gov/search/collections).
+16. **European Space Agency.** “Biomass mission.” Mission description and data-access announcement; mission availability alone does not establish an RFO observation. [https://www.esa.int/Applications/Observing_the_Earth/FutureEO/Biomass](https://www.esa.int/Applications/Observing_the_Earth/FutureEO/Biomass).
 
 **Citation and interpretation note.** Peer-reviewed regional studies and global products provide methods, historical context, or candidate inputs; none is represented here as an OWR measurement unless explicitly stated. All reserve-wide derived figures are calculated from the local RFO geometry. The screening scenarios are not a substitute for an IPCC-consistent inventory or project-level measurement, reporting, and verification.
