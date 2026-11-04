@@ -28,6 +28,7 @@ The strongest local evidence is about ecosystem and pressure context: UNESCO des
 | Area-scaled gross uptake scenario, annual | 0.92 (0.74–1.10) Mt C yr⁻¹ | Regional sink rate multiplied by all RFO hectares; not a measurement of reserve uptake |
 | Area-scaled gross uptake scenario, Jan–Oct | 0.77 (0.62–0.92) Mt C | 304/365 prorating of the regional rate; excludes emissions and other carbon pools |
 | Sentinel-2 vegetation-condition indices | Monthly mean NDVI 0.424–0.481; clear-land coverage 23.7–97.3% | 60 selected tile-month scenes, 100 m grid; not biomass or carbon flux [12] |
+| NASA MODIS burned-area screening | No QA-valid burned pixels detected Jan–Aug; Sep–Oct product not yet in catalog | 500 m monthly burned-area product; not proof of no small/under-canopy fires or unburned disturbance [25] |
 | NASA MODIS modelled GPP | 3.04–3.92 Mt C per full month, Jan–Sep; 1.84 Mt C for Oct 1–15 | 500 m eight-day GPP, spatially expanded from quality-screened pixels; not net sequestration [17] |
 | NASA MODIS net photosynthesis (PSN) | 1.81–3.08 Mt C per full month, Jan–Sep; 1.29 Mt C for Oct 1–15 | GPP minus maintenance respiration; coverage varies, and this is not net ecosystem uptake [17] |
 | Observed OWR 2026 net carbon balance | Not quantified | No complete, boundary-clipped activity data and carbon-pool change estimates available |
@@ -68,6 +69,7 @@ This register distinguishes processed pixels, scene/footprint inventories, and r
 | GFW integrated alerts [11] | Catalogue version v20261104; archive described from 2019 to present | Spatial query required an API key; no alert counts or areas used |
 | Sentinel-2 L2A [12] | 666 STAC items intersecting the RFO query; six MGRS tiles represented each month | 60 least-cloudy tile-month scenes processed to 100 m NDVI/EVI; vegetation indices only |
 | NASA Terra MODIS MOD17A2H.061 [17] | 36 500 m Terra composites intersect the RFO from 1 January through 15 October 2026 | Eight-day GPP and net-photosynthesis data processed; pixel QA coverage ranges 28.2–99.8%; October covers only 1–15 October |
+| NASA/USGS MODIS MCD64A1.061 [25] | Monthly 500 m burned-area imagery available for January–August 2026 | Eight RFO-clipped Burn_Date/QA images processed; no QA-valid burned pixels detected; Sep–Oct not in catalog |
 | Landsat Collection 2 L2 [13] | 70 STAC items intersecting the RFO query | Acquisition inventory only; no Landsat raster metrics calculated |
 | Sentinel-1 RTC [14] | 231 STAC items intersecting the RFO query | Acquisition inventory only; no radar backscatter metrics calculated |
 | GEDI L2A V003 [15] | 9 CMR granule footprints intersect the RFO (Jan–Mar) | Footprint metadata only; GEDI HDF5 measurements not analyzed |
@@ -78,7 +80,7 @@ This register distinguishes processed pixels, scene/footprint inventories, and r
 
 For NASA CMR entries, the surrounding-box result was further checked against each returned granule polygon. Scene counts are catalog metadata, not necessarily unique acquisition dates or independent spatial samples.
 
-The [carbon-accounting CSV](OWR_Carbon_2026.csv) and its SQLite table retain blank values for unmeasured carbon stocks, sequestration, emissions, and net balance while carrying separate MODIS GPP/PSN indicators. Separate files provide the processed [monthly satellite indices](OWR_Satellite_2026.csv), [MODIS carbon-uptake estimates](OWR_MODIS_Carbon_2026.csv), [scene/granule inventory](OWR_Satellite_Scenes_2026.csv), and [mission catalog status](OWR_Mission_Catalog_2026.csv). The SQLite database stores MODIS values separately and does not substitute NDVI/EVI or photosynthesis for emissions or carbon-stock change.
+The [carbon-accounting CSV](OWR_Carbon_2026.csv) and its SQLite table retain blank values for unmeasured carbon stocks, sequestration, emissions, and net balance while carrying separate MODIS GPP/PSN and burned-area screening fields. Separate files provide [monthly satellite indices](OWR_Satellite_2026.csv), [MODIS carbon-uptake estimates](OWR_MODIS_Carbon_2026.csv), [burned-area results](OWR_MODIS_Burned_Area_2026.csv), [RFO-clipped MODIS imagery](OWR_MODIS_Burned_Area_Rasters_2026.zip), [scene/granule inventory](OWR_Satellite_Scenes_2026.csv), and [mission catalog status](OWR_Mission_Catalog_2026.csv). Satellite photosynthesis and burned area are not substituted for emissions or carbon-stock change.
 
 ## Satellite observations: January–October 2026
 
@@ -124,6 +126,12 @@ The output reports both (1) the unexpanded sum over valid pixels and (2) a spati
 
 The October spatiotemporal coverage is **27.786%** of the full month (15/31 days combined with the valid-area mask). September has very low valid-area coverage, so its spatially expanded estimate is particularly uncertain. October is a partial-period value, not a calendar-month estimate. Full unexpanded and expanded totals, exact coverage fields, periods, and methods are in [`OWR_MODIS_Carbon_2026.csv`](OWR_MODIS_Carbon_2026.csv). None of these GPP/PSN values may be used as biomass stock, gross sequestration, CO₂e removals, or emissions.
 
+### NASA MODIS burned-area screening
+
+The public NASA/USGS MCD64A1.061 monthly 500 m Burn_Date and QA imagery was queried through Microsoft Planetary Computer and clipped to the RFO boundary. The product reports **zero QA-valid burned pixels within the RFO for January–August 2026** (99.991–99.992% valid land-pixel coverage in the clipped reserve grids). This is a satellite product result, not proof that no small, obscured, low-intensity, or under-canopy fire occurred. Each 500 m burned pixel is counted at the product's equal-area grid-cell area; no spatial extrapolation was applied.
+
+As of **4 November 2026**, the catalog search returned no September or October MCD64A1 image for the RFO. Those months are marked unavailable, not zero. The [monthly CSV](OWR_MODIS_Burned_Area_2026.csv), [RFO-clipped GeoTIFF archive](OWR_MODIS_Burned_Area_Rasters_2026.zip), and [`scripts/build_modis_burned_area_2026.py`](scripts/build_modis_burned_area_2026.py) preserve the screening values, coverage, source granules, and image subsets. Burned area alone does not provide affected biomass, combustion completeness, decay, or gas-specific emission factors, so it does not support a CO₂ or CO₂e emissions estimate.
+
 The STAC inventory also contains 70 Landsat Collection 2 Level-2 items and 231 Sentinel-1 RTC items intersecting the RFO query. These were inventoried but not raster-processed. NASA CMR metadata searches identified nine GEDI L2A and 95 provisional NISAR L2 GCOV granule footprints intersecting the boundary; their measurement files were not analyzed. OCO-2 and OCO-3 surrounding-box searches returned 315 and 219 granules, respectively, but none of the returned granule polygons intersected the reserve. No 2026 GOSAT, GOSAT-2, or TanSat granules were found for the queried collections and area; the queried TanSat archive ends in 2020. ESA announced open access to Biomass mission data on 26 January 2026, but no RFO Biomass acquisition was queried or processed. Atmospheric concentration and footprint metadata are not substitutes for reserve-scale carbon flux.
 
 ### October spatial screening layer
@@ -134,7 +142,7 @@ For cartographic screening only, included cell NDVI means were divided into four
 
 ## Gross greenhouse-gas emissions requested
 
-The requested monthly fields—`gross_emissions_co2e_all_gases__Mg`, `gross_emissions_co2e_non_co2__Mg`, and `gross_emissions_co2e_co2_only__Mg`—are **not quantifiable from the evidence assembled**. The monthly values are deliberately blank in the CSV and SQL table; blank means unknown/not measured, **not zero**. A satellite acquisition count, canopy index, or atmospheric CO₂ concentration is not an emitted mass.
+The requested monthly fields—`gross_emissions_co2e_all_gases__Mg`, `gross_emissions_co2e_non_co2__Mg`, and `gross_emissions_co2e_co2_only__Mg`—are **not quantifiable from the evidence assembled**. The monthly values are deliberately blank in the CSV and SQL table; blank means unknown/not measured, **not zero**. The MCD64A1 product found no QA-valid burned pixels during January–August and is not yet available for September–October, but burned-area screening alone cannot establish combustion emissions or other carbon losses. A satellite acquisition count, canopy index, or atmospheric CO₂ concentration is not an emitted mass.
 
 | Month (2026) | All gases (Mg CO₂e) | Non-CO₂ gases (Mg CO₂e) | CO₂ only (Mg CO₂e) | Status |
 |---|---:|---:|---:|---|
@@ -246,5 +254,6 @@ The reserve’s large area and intact Ituri forest make it important for maintai
 22. **NASA Fire Information for Resource Management System (FIRMS).** Area API documentation. The API requires a free MAP_KEY; active-fire locations are detections, not emission mass. [https://firms.modaps.eosdis.nasa.gov/api/area/](https://firms.modaps.eosdis.nasa.gov/api/area/).
 23. **European Space Agency Climate Change Initiative Fire_cci.** MODIS FireCCI51 monthly burned-area dataset catalog. Cataloged coverage ends in December 2020. [Dataset documentation](https://developers.google.com/earth-engine/datasets/catalog/ESA_CCI_FireCCI_5_1); [DOI](https://doi.org/10.5285/58f00d8814064b79a0c49662ad3af537).
 24. **Hansen/UMD/Google/USGS/NASA.** Global Forest Change 2025 v1.13. Annual loss-year band covers 2001–2025; it cannot represent 2026 observations. [Dataset documentation](https://developers.google.com/earth-engine/datasets/catalog/UMD_hansen_global_forest_change_2025_v1_13); [Hansen et al. (2013)](https://doi.org/10.1126/science.1244693).
+25. **NASA/USGS.** *MCD64A1 MODIS/Terra+Aqua Burned Area Monthly L3 Global 500 m SIN Grid, Version 6.1.* Burn_Date and QA data accessed as public Cloud-Optimized GeoTIFFs through Microsoft Planetary Computer. [https://doi.org/10.5067/MODIS/MCD64A1.061](https://doi.org/10.5067/MODIS/MCD64A1.061); [Planetary Computer STAC collection](https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-64A1-061).
 
 **Citation and interpretation note.** Peer-reviewed regional studies and global products provide methods, historical context, or candidate inputs; none is represented here as an OWR measurement unless explicitly stated. All reserve-wide derived figures are calculated from the local RFO geometry. The screening scenarios are not a substitute for an IPCC-consistent inventory or project-level measurement, reporting, and verification.

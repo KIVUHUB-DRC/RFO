@@ -23,9 +23,11 @@ Public, preliminary, boundary-based screening of the Okapi Wildlife Reserve (RFO
 | [`OWR_Emissions_Metadata_2026.json`](OWR_Emissions_Metadata_2026.json) | Data dictionary, units, spatial/time scope, source inventory, limitations, and requirements for future emission estimates. |
 | [`OWR_Satellite_2026.csv`](OWR_Satellite_2026.csv) | Monthly Sentinel-2 NDVI/EVI and clear-pixel coverage; Landsat/Sentinel-1 scene counts and GEDI/NISAR footprint counts. |
 | [`OWR_MODIS_Carbon_2026.csv`](OWR_MODIS_Carbon_2026.csv) | NASA Terra MODIS 500 m eight-day GPP and net-photosynthesis estimates, valid-area coverage, and observed dates. October is available only through 15 October. |
+| [`OWR_MODIS_Burned_Area_2026.csv`](OWR_MODIS_Burned_Area_2026.csv) | NASA/USGS 500 m monthly burned-area screening; zero QA-valid burned pixels detected Jan–Aug. Sep–Oct products were not in the catalog on 4 Nov 2026. |
+| [`OWR_MODIS_Burned_Area_Rasters_2026.zip`](OWR_MODIS_Burned_Area_Rasters_2026.zip) | Eight RFO-clipped, two-band Burn_Date/QA GeoTIFFs from the available January–August MCD64A1 imagery. |
 | [`OWR_Satellite_Scenes_2026.csv`](OWR_Satellite_Scenes_2026.csv) | Satellite scene and selected NASA CMR granule-footprint inventory. Catalog records do not necessarily represent processed measurements. |
 | [`OWR_Mission_Catalog_2026.csv`](OWR_Mission_Catalog_2026.csv) | Mission-specific catalog/footprint counts, processing state, sources, and limitations. |
-| [`OWR_Carbon_2026.csv`](OWR_Carbon_2026.csv) | Monthly accounting export with separate MODIS uptake indicators; unmeasured stock, sequestration, emissions, and balance fields remain blank. |
+| [`OWR_Carbon_2026.csv`](OWR_Carbon_2026.csv) | Monthly accounting export with MODIS uptake and burned-area screening; unmeasured stock, sequestration, emissions, and balance fields remain blank. |
 
 ### Requested gross-emissions fields
 
@@ -51,7 +53,7 @@ It reads `RFO Limit.json` and writes `RFO_Oct2026_NDVI_Zones.geojson`. Cloud ava
 
 ## Database additions
 
-The SQLite database includes separate `satellite_monthly`, `satellite_scene_inventory`, `satellite_mission_catalog`, `satellite_zone_cells`, `modis_carbon_monthly`, `monthly_gross_emissions`, and `emissions_source_audit` tables. `satellite_zone_cells` contains clipped October grid geometries with NDVI/EVI and quartile attributes. `modis_carbon_monthly` records NASA MODIS modelled GPP and net photosynthesis with QA/date coverage; these are not net sequestration or emissions. The gross-emissions table retains the requested fields as SQL `NULL` rather than replacing unknowns with zero and records the dated CAMS GFAS candidate-source status. `emissions_source_audit`, `metadata`, and `sources` document provenance and limitations.
+The SQLite database includes separate `satellite_monthly`, `satellite_scene_inventory`, `satellite_mission_catalog`, `satellite_zone_cells`, `modis_carbon_monthly`, `modis_burned_area_monthly`, `monthly_gross_emissions`, and `emissions_source_audit` tables. `modis_burned_area_monthly` records monthly QA-screened burned area and clipped imagery references; no burned pixels were detected in available Jan–Aug scenes, while Sep–Oct products were not yet catalogued. This is not a fire-emissions estimate. Gross-emissions fields remain SQL `NULL`, not zero.
 
 ## Evidence and limits
 
@@ -62,13 +64,19 @@ The SQLite database includes separate `satellite_monthly`, `satellite_scene_inve
   python scripts/build_modis_carbon_2026.py
   ```
 
+- NASA/USGS MCD64A1.061 500 m monthly Burn_Date/QA imagery was retrieved from the public Planetary Computer catalog and clipped to the RFO. The current catalog contained Jan–Aug products; no QA-valid burned pixels were detected in those months. The data are not evidence that no small or obscured fires occurred and cannot quantify emissions. Reproduce the CSV and clipped GeoTIFFs with:
+
+  ```bash
+  python scripts/build_modis_burned_area_2026.py
+  ```
+
 - GEDI and NISAR records are footprint metadata, not analyzed height/biomass/backscatter observations.
 - OCO-2/3 are atmospheric concentration missions; no matching local intersecting footprint polygons were identified in the checked catalog responses. GOSAT/TanSat results and ESA Biomass mission availability do not constitute processed RFO data.
 - CAMS GFAS v1.4.2 is a promising 2026 fire-only model, but no files were retrieved because authenticated CDS/ADS API access and manual terms acceptance are needed. It would not measure all-source gross emissions even if obtained.
 - Other open products were checked: NASA FIRMS active-fire API requires a MAP_KEY and reports detections, not emissions; ESA FireCCI51 ends in 2020; Hansen Global Forest Change v1.13 covers annual loss through 2025; and the previously checked Global Forest Watch alerts API required a key. None provided retrieved RFO monthly emissions for 2026.
 - NDVI/EVI are vegetation-condition proxies, not biomass change, carbon sequestration, or greenhouse-gas flux.
 - The reserve boundary is used for the mapped area; a separate 15 km external ring is documented in the assessment and is not included in the reserve zone dataset.
-- No local emission factors, verified disturbance activity series, burn-area totals, gas-flux measurements, or pool-specific carbon changes are available in this repository. Therefore gross emissions and net carbon balance are not quantified.
+- NASA/USGS MCD64A1.061 supplies QA-screened burned-area screening through August only; no burned pixels were detected at 500 m, and September–October products are not in the queried catalog. This does not rule out all fire or establish zero emissions. Local emission factors, verified disturbance activity, gas-flux measurements, and pool-specific carbon changes remain unavailable, so gross emissions and net carbon balance are not quantified.
 
 ## Scientific sources
 
@@ -76,6 +84,7 @@ The full bibliography is in [`OWR_Carbon_2026.md`](OWR_Carbon_2026.md). Key sour
 
 - [Microsoft Planetary Computer Sentinel-2 L2A](https://planetarycomputer.microsoft.com/dataset/sentinel-2-l2a)
 - [NASA Terra MODIS MOD17A2H.061 collection](https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-17A2H-061)
+- [NASA/USGS MODIS MCD64A1.061 burned-area collection](https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-64A1-061)
 - [Microsoft Planetary Computer Landsat Collection 2 L2](https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2)
 - [Microsoft Planetary Computer Sentinel-1 RTC](https://planetarycomputer.microsoft.com/dataset/sentinel-1-rtc)
 - [NASA Earthdata CMR granule search](https://cmr.earthdata.nasa.gov/search/granules)

@@ -57,6 +57,16 @@
       <p>Full date coverage is available for January–September 2026. The latest RFO-intersecting composite ends on <strong>15 October 2026</strong>, so October contains only 15 observed days. Valid-area coverage on observed dates ranges from 28.2% to 99.8%; October's combined date-and-area coverage is 27.8% of the full month. September's estimate is especially uncertain because only 28.2% of the reserve had valid pixels. Download the <a href="OWR_MODIS_Carbon_2026.csv">monthly MODIS values and coverage</a> or see the <a href="scripts/build_modis_carbon_2026.py">calculation script</a>.</p>
     </section>
     <section>
+      <h2>NASA/USGS MODIS burned-area screening</h2>
+      <p>The public MCD64A1.061 monthly product supplies 500 m Burn_Date and QA imagery. The Planetary Computer catalog returned RFO-intersecting products for January–August 2026; no September or October product was available as of 4 November 2026. Those missing months are unknown, not zero.</p>
+      <ol>
+        <li><strong>Clip.</strong> Retrieve the public Cloud-Optimized GeoTIFF Burn_Date and QA assets and clip them to the RFO polygon on the MODIS sinusoidal equal-area grid, using pixel centers within the boundary.</li>
+        <li><strong>Quality-screen.</strong> Count a pixel as burned only when Burn_Date is 1–366 and both QA bit 0 (land) and bit 1 (valid observation) are set.</li>
+        <li><strong>Calculate area.</strong> Multiply valid burned-pixel count by the equal-area grid-cell area. No extrapolation is applied. The clipped imagery is retained as two-band GeoTIFFs.</li>
+      </ol>
+      <p>No QA-valid burned pixels were detected in the available January–August products (99.991–99.992% valid land-pixel coverage). This coarse product cannot prove the absence of small, obscured, under-canopy, or low-intensity fire. Burned area alone does not establish biomass affected, combustion, carbon-pool loss, or emissions. Download the <a href="OWR_MODIS_Burned_Area_2026.csv">monthly results</a> and <a href="OWR_MODIS_Burned_Area_Rasters_2026.zip">RFO-clipped imagery</a>, or reproduce them with the <a href="scripts/build_modis_burned_area_2026.py">processing script</a>.</p>
+    </section>
+    <section>
       <h2>What the 2 km map zones mean</h2>
       <p>Each mapped shape is a 2 km grid cell clipped to the reserve boundary. Its October NDVI and EVI are means of valid, clear-land 100 m observations within that cell. Cell colors indicate <strong>relative quartiles of October NDVI among included cells</strong>: Q1 is the lower quarter and Q4 the upper quarter of this month’s observed values. The actual numeric cut-points are in the GeoJSON metadata and are generated from the data.</p>
       <p>These are relative spectral classes—not official ecological zones, forest types, biomass classes, or evidence that low-NDVI cells were deforested. Missing/low-coverage areas are left transparent instead of being assigned a class. A cell’s GeoJSON emissions fields are null because no cell-level emissions estimate exists.</p>
@@ -67,13 +77,13 @@
       <div style="overflow-x:auto"><table><thead><tr><th>Field</th><th>Meaning</th><th>Why null</th></tr></thead><tbody>
         <tr><td><code>gross_emissions_co2e_all_gases__Mg</code></td><td>Gross emissions for included greenhouse gases, expressed as CO₂-equivalent mass.</td><td>No complete, validated activity-data and gas-specific inventory.</td></tr>
         <tr><td><code>gross_emissions_co2e_non_co2__Mg</code></td><td>Non-CO₂ gases (such as CH₄/N₂O) expressed as CO₂e under a defined conversion basis.</td><td>No local gas flux/activity data and appropriate emission factors.</td></tr>
-        <tr><td><code>gross_emissions_co2e_co2_only__Mg</code></td><td>Gross CO₂ emissions only, expressed as CO₂e.</td><td>No validated disturbed/burned area tied to carbon-stock loss or combustion.</td></tr>
+        <tr><td><code>gross_emissions_co2e_co2_only__Mg</code></td><td>Gross CO₂ emissions only, expressed as CO₂e.</td><td>MCD64A1 detected no valid burned pixels Jan–Aug and is not in the catalog for Sep–Oct; no carbon-stock loss or combustion estimate is available.</td></tr>
       </tbody></table></div>
-      <p>Zero would mean a measured or defensibly estimated absence of emissions; that was not established. Therefore missing values must not be changed to zero. If future values are produced, the all-gases total must use a documented boundary and avoid double-counting CO₂ and non-CO₂ components. NASA MODIS photosynthesis estimates are separate uptake indicators and do not fill these emissions fields.</p>
+      <p>Zero would mean a measured or defensibly estimated absence of emissions; that was not established. Therefore missing values must not be changed to zero. If future values are produced, the all-gases total must use a documented boundary and avoid double-counting CO₂ and non-CO₂ components. NASA MODIS photosynthesis and burned-area screening are separate indicators and do not fill these emissions fields.</p>
       <h3>Open-data fire-emissions check · 4 November 2026</h3>
       <p>The <a href="https://ads.atmosphere.copernicus.eu/datasets/cams-global-fire-emissions-gfas">CAMS GFAS v1.4.2 dataset</a> advertises 2026 daily/hourly modeled fire emissions on a 0.1° grid, including CO₂, CH₄ and N₂O. GFAS estimates emissions from satellite fire-radiative power, dry matter burned, and biome-specific emission factors. The open dataset was assessed, but no GFAS files were retrieved: the official <a href="https://cds.climate.copernicus.eu/how-to-api">CDS API instructions</a> require an account, personal access token, and manual acceptance of the dataset terms; no token was configured in this environment.</p>
       <p>With authenticated access, monthly fire-only masses could be spatially and temporally integrated over RFO grid-cell intersections and converted to CO₂e using a declared IPCC global-warming-potential basis. This would be a coarse-resolution model estimate for fires only—not a complete reserve gross-emissions inventory—and cannot fill the requested all-source totals by itself. The monthly data files record this source review and retrieval status.</p>
-      <p>Other open fire/disturbance sources also have limits for this period: the NASA FIRMS Area API needs a free MAP_KEY and reports active-fire detections rather than emissions; the cataloged ESA FireCCI51 burned-area series ends in 2020; and Hansen Global Forest Change v1.13 reports annual loss through 2025. The previously checked Global Forest Watch alerts API also required a key. None supplied retrieved RFO monthly emissions for January–October 2026.</p>
+      <p>Other open fire/disturbance sources also have limits for this period: the NASA FIRMS Area API needs a free MAP_KEY and reports active-fire detections rather than emissions; MCD64A1 provides burned-area screening only through August in the current catalog; the cataloged ESA FireCCI51 burned-area series ends in 2020; and Hansen Global Forest Change v1.13 reports annual loss through 2025. The previously checked Global Forest Watch alerts API also required a key. None supplied retrieved RFO monthly emissions for January–October 2026.</p>
       <h3>Evidence needed for a defensible estimate</h3>
       <ul><li>Validated monthly land conversion, degradation and burned-area activity data;</li><li>pre- and post-disturbance biomass/soil carbon stocks by pool, with local validation;</li><li>appropriate DRC/ecosystem emission factors, combustion/decay treatment, and applicable CH₄/N₂O factors;</li><li>a cited global-warming-potential time horizon and uncertainty/quality controls.</li></ul>
     </section>
@@ -82,6 +92,7 @@
       <div style="overflow-x:auto"><table><thead><tr><th>Mission/product</th><th>What this repository contains</th><th>Not established by these data</th></tr></thead><tbody>
         <tr><td>Sentinel-2 L2A</td><td>60 processed tile-month scenes; 100 m monthly NDVI/EVI mosaics.</td><td>Carbon stocks, emissions, or validated disturbance area.</td></tr>
         <tr><td>NASA Terra MODIS MOD17A2H.061</td><td>36 RFO-intersecting 500 m eight-day composites; modelled GPP and net photosynthesis processed for Jan 1–Oct 15.</td><td>Carbon stock, net ecosystem sequestration, emissions, or full October total; QA coverage varies.</td></tr>
+        <tr><td>NASA/USGS MODIS MCD64A1.061</td><td>Eight public 500 m monthly Burn_Date/QA products processed for Jan–Aug; no QA-valid burned pixels detected.</td><td>Sep–Oct products absent from catalog; cannot detect every small/obscured fire or calculate emissions.</td></tr>
         <tr><td>Landsat Collection 2 L2</td><td>70 scene catalog entries.</td><td>No Landsat rasters or change areas were processed.</td></tr>
         <tr><td>Sentinel-1 RTC</td><td>231 scene catalog entries.</td><td>No radar backscatter or disturbance analysis was processed.</td></tr>
         <tr><td>GEDI L2A V003 / NISAR L2 GCOV</td><td>9 / 95 intersecting CMR footprint metadata records.</td><td>Measurement files, biomass estimates, or emissions were not processed.</td></tr>
@@ -96,10 +107,12 @@
         <li><a href="OWR_Carbon_2026.md">Full assessment, citations, and uncertainty discussion</a></li>
         <li><a href="OWR_Emissions_Metadata_2026.json">Machine-readable emissions and satellite metadata</a></li>
         <li><a href="OWR_MODIS_Carbon_2026.csv">NASA MODIS GPP/net-photosynthesis values and coverage</a></li>
+        <li><a href="OWR_MODIS_Burned_Area_2026.csv">NASA MODIS burned-area results and availability</a> · <a href="OWR_MODIS_Burned_Area_Rasters_2026.zip">RFO-clipped Burn_Date/QA imagery</a></li>
         <li><a href="OWR_Mission_Catalog_2026.csv">Mission catalog coverage and limitations</a></li>
         <li><a href="scripts/build_rfo_zones.py">Reproducible script for the October NDVI zone GeoJSON</a></li>
         <li><a href="scripts/build_modis_carbon_2026.py">Reproducible NASA MODIS carbon script</a></li>
-        <li><a href="https://planetarycomputer.microsoft.com/dataset/sentinel-2-l2a">Sentinel-2 L2A collection</a> · <a href="https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-17A2H-061">NASA MODIS MOD17A2H.061 collection</a> · <a href="https://cmr.earthdata.nasa.gov/search/granules">NASA CMR granule search</a> · <a href="https://www.ipcc-nggip.iges.or.jp/public/2019rf/vol4.html">IPCC AFOLU guidance</a></li>
+        <li><a href="scripts/build_modis_burned_area_2026.py">Reproducible NASA MODIS burned-area script</a></li>
+        <li><a href="https://planetarycomputer.microsoft.com/dataset/sentinel-2-l2a">Sentinel-2 L2A collection</a> · <a href="https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-17A2H-061">NASA MODIS MOD17A2H.061 collection</a> · <a href="https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-64A1-061">NASA/USGS MODIS MCD64A1.061 burned-area collection</a> · <a href="https://cmr.earthdata.nasa.gov/search/granules">NASA CMR granule search</a> · <a href="https://www.ipcc-nggip.iges.or.jp/public/2019rf/vol4.html">IPCC AFOLU guidance</a></li>
       </ul>
     </section>
   </main>

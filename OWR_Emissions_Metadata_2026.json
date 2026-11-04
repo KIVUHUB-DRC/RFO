@@ -1,7 +1,7 @@
 {
   "dataset_title": "Okapi Wildlife Reserve monthly gross greenhouse-gas emissions data status",
   "dataset_id": "OWR-EMISSIONS-2026-01-10",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "created_utc": "2026-11-04",
   "last_reviewed_utc": "2026-11-04",
   "reporting_period": {
@@ -33,7 +33,7 @@
     "gross_emissions_co2e_co2_only__Mg": {
       "type": "number|null",
       "unit": "Mg CO2e",
-      "definition": "Gross CO2 emissions only for the specified month and reserve polygon. Null means not quantifiable; no validated emission event area, carbon-stock loss, or combustion estimate was available."
+      "definition": "Gross CO2 emissions only for the specified month and reserve polygon. Null means not quantifiable; MODIS burned-area screening does not establish combustion emissions or associated carbon-stock loss."
     },
     "data_status": {
       "type": "string",
@@ -43,7 +43,26 @@
       "definition": "The reporting month was assessed but no defensible gross-emissions amount can be calculated from the data reviewed."
     },
     "satellite_observation_columns": {
-      "definition": "Contextual scene counts, Sentinel-2 vegetation indices, and separate NASA MODIS photosynthesis estimates. Sentinel-2 indices are not carbon flux; MODIS photosynthesis is modelled carbon uptake, not emissions."
+      "definition": "Contextual scene counts, Sentinel-2 vegetation indices, and separate NASA MODIS photosynthesis and burned-area screening. Sentinel-2 indices are not carbon flux; photosynthesis is modelled uptake and burned area is not emissions."
+    },
+    "modis_burned_area_ha": {
+      "type": "number|null",
+      "unit": "ha",
+      "definition": "QA-screened MCD64A1.061 500 m burned-pixel area. Zero means no eligible product pixels were detected, not proof of no fire or zero emissions; unavailable months remain null."
+    },
+    "modis_burned_area_valid_coverage_pct": {
+      "type": "number|null",
+      "unit": "percent",
+      "definition": "QA-valid land pixels as a share of RFO pixel centers in the monthly MCD64A1 image."
+    },
+    "modis_burned_pixel_count": {
+      "type": "integer|null",
+      "unit": "pixel count",
+      "definition": "Number of MCD64A1 burned pixels with valid land/data quality bits inside the RFO."
+    },
+    "modis_burned_area_status": {
+      "type": "string",
+      "definition": "MCD64A1 image processing/availability status; NOT_PUBLISHED_IN_CATALOG_AS_OF_2026-11-04 means missing, not zero."
     }
   },
   "satellite_data_inventory": [
@@ -60,6 +79,13 @@
       "measurement_use": "Eight-day modelled gross primary productivity (GPP) and net photosynthesis (PSN) summarized monthly as Mg C",
       "limitation": "Not carbon stock, net ecosystem sequestration, net ecosystem exchange, or emissions. Values are area-expanded from MODLAND-QC-good pixels; monthly QA coverage ranges from 28.248% to 99.796%, and October has only 15 of 31 days.",
       "source_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-17A2H-061"
+    },
+    {
+      "sensor": "NASA/USGS MODIS MCD64A1.061",
+      "coverage": "Eight monthly 500 m RFO-intersecting products from 2026-01 through 2026-08; no September or October item was listed in the queried catalog as of 2026-11-04",
+      "measurement_use": "QA-screened monthly burned-pixel area and RFO-clipped Burn_Date/QA rasters",
+      "limitation": "No QA-valid burned pixels were detected in the RFO in the available months. This does not rule out small, obscured, under-canopy, or low-intensity fires. Burned area does not determine carbon loss or gas emissions.",
+      "source_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-64A1-061"
     },
     {
       "sensor": "Landsat Collection 2 Level-2",
@@ -145,6 +171,28 @@
     "output_file": "OWR_MODIS_Carbon_2026.csv",
     "reproduction_script": "scripts/build_modis_carbon_2026.py"
   },
+  "satellite_burned_area_assessment": {
+    "source": "NASA/USGS MCD64A1.061",
+    "collection_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-64A1-061",
+    "product_description": "Terra+Aqua monthly global 500 m burned-area product with Burn_Date and QA bands.",
+    "source_window": {
+      "first_observation": "2026-01-01",
+      "last_available_month": "2026-08",
+      "unavailable_months": [
+        "2026-09",
+        "2026-10"
+      ],
+      "catalog_checked_utc": "2026-11-04"
+    },
+    "spatial_method": "The RFO polygon is projected to the MODIS sinusoidal equal-area grid. Pixel centers inside the reserve are retained. Burn_Date and QA COGs are clipped and stored as two-band GeoTIFFs.",
+    "quality_method": "A burned pixel must have Burn_Date 1-366 and both QA bit 0 (land) and bit 1 (valid observation) set. Area is the count of such pixels multiplied by the equal-area grid-cell area; no spatial extrapolation is applied.",
+    "results": "No QA-valid burned pixels were detected within the RFO for January-August 2026, with 99.991-99.992% valid land-pixel coverage. September and October were absent from the queried STAC catalog and are blank, not zero.",
+    "interpretation": "A coarse satellite burned-area screening result only. Zero detected pixels do not prove the absence of all fire, particularly small, obscured, under-canopy, or low-intensity fire. Burned area alone cannot quantify affected biomass, combustion, carbon-pool loss, or emissions.",
+    "output_file": "OWR_MODIS_Burned_Area_2026.csv",
+    "clipped_raster_archive": "OWR_MODIS_Burned_Area_Rasters_2026.zip",
+    "clipped_raster_directory": "data/modis_burned_area_2026",
+    "reproduction_script": "scripts/build_modis_burned_area_2026.py"
+  },
   "open_data_assessment": {
     "assessment_date_utc": "2026-11-04",
     "candidate_dataset": "CAMS global biomass burning emissions based on fire radiative power (GFAS)",
@@ -183,6 +231,11 @@
   },
   "other_open_data_reviewed": [
     {
+      "source": "NASA/USGS MODIS MCD64A1.061 burned area",
+      "url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-64A1-061",
+      "review_result": "Public monthly Burn_Date and QA Cloud-Optimized GeoTIFFs for January-August 2026 were retrieved, clipped to RFO, and processed. No QA-valid burned pixels were detected; the catalog query returned no September-October RFO products by 2026-11-04. See OWR_MODIS_Burned_Area_2026.csv and the clipped raster archive. Burn area is not emissions."
+    },
+    {
       "source": "NASA Terra MODIS MOD17A2H.061",
       "url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-17A2H-061",
       "review_result": "Public 500 m eight-day GPP and net-photosynthesis COG assets were retrieved and summarized over the RFO. Monthly estimates and spatial/time coverage are in OWR_MODIS_Carbon_2026.csv. The products are modelled uptake indicators, not stock, net ecosystem sequestration, or emissions; October data end on October 15."
@@ -209,7 +262,7 @@
     }
   ],
   "calculation_method": {
-    "current": "No reserve-wide gross-emissions values or GFAS fire-only values were calculated. Requested reserve-wide fields remain null rather than inserting zero or treating an inaccessible model product as retrieved data.",
+    "current": "No reserve-wide gross-emissions values or GFAS fire-only values were calculated. MCD64A1 provides a burned-area screening result of zero QA-valid burned pixels for January-August; September-October products were not in the queried catalog. These data do not determine fire emissions or other carbon losses. Requested gross-emissions fields remain null rather than being inferred from burned area, vegetation indices, or modeled photosynthesis.",
     "experimental_fire_only_candidate": "If GFAS 1.4.2 is retrieved, it can support an explicitly labeled, coarse-resolution modeled fire-only estimate, not the complete reserve gross-emissions fields. The requested total fields must remain null unless a full-source accounting boundary is supported.",
     "required_for_quantification": [
       "Retrieve and archive the requested CAMS GFAS dates through authenticated CDS/ADS access after accepting the dataset terms; retain product version and coverage metadata.",
@@ -229,11 +282,14 @@
     "RFO_Oct2026_NDVI_Zones.geojson",
     "OWR_Carbon_2026.md",
     "OWR_Carbon_2026.sqlite",
+    "OWR_MODIS_Burned_Area_2026.csv",
+    "OWR_MODIS_Burned_Area_Rasters_2026.zip",
     "README.md",
     "method.html",
-    "data.html"
+    "data.html",
+    "scripts/build_modis_burned_area_2026.py"
   ],
-  "citation": "NASA CMR, NASA Terra MODIS MOD17A2H.061, Microsoft Planetary Computer STAC, CAMS GFAS, NASA FIRMS, ESA CCI FireCCI, Hansen/UMD Global Forest Change, and Global Forest Watch catalog/API documentation; see source-specific retrieval status and limitations. Catalog coverage and model availability are not evidence of retrieved RFO values.",
+  "citation": "NASA CMR, NASA Terra MODIS MOD17A2H.061, NASA/USGS MODIS MCD64A1.061, Microsoft Planetary Computer STAC, CAMS GFAS, NASA FIRMS, ESA CCI FireCCI, Hansen/UMD Global Forest Change, and Global Forest Watch catalog/API documentation; see source-specific retrieval status and limitations. Catalog coverage and model availability are not evidence of retrieved RFO values.",
   "spatial_satellite_layer": {
     "file": "RFO_Oct2026_NDVI_Zones.geojson",
     "reporting_month": "2026-10",

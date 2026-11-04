@@ -420,6 +420,7 @@
             <div class="mission-list">
               <div class="mission"><div><div class="mission-name">Sentinel-2 L2A</div><div class="mission-desc">60 tile-month scenes processed to NDVI/EVI</div></div><span class="mission-count">666 scenes</span></div>
               <div class="mission"><div><div class="mission-name">NASA Terra MODIS</div><div class="mission-desc">500 m eight-day GPP and net photosynthesis processed; Oct data through 15th</div></div><span class="mission-count">36 composites</span></div>
+              <div class="mission"><div><div class="mission-name">NASA/USGS MODIS burned area</div><div class="mission-desc">500 m monthly QA-screened burned-area images; products currently through August</div></div><span class="mission-count">8 months</span></div>
               <div class="mission"><div><div class="mission-name">Landsat Collection 2</div><div class="mission-desc">Scene inventory only; no raster indices computed</div></div><span class="mission-count">70 scenes</span></div>
               <div class="mission"><div><div class="mission-name">Sentinel-1 RTC</div><div class="mission-desc">Scene inventory only; no backscatter metrics computed</div></div><span class="mission-count">231 scenes</span></div>
               <div class="mission"><div><div class="mission-name">GEDI / NISAR</div><div class="mission-desc">CMR footprint metadata intersects; measurement files not processed</div></div><span class="mission-count">9 / 95</span></div>
@@ -432,6 +433,12 @@
           <p class="panel-intro">Area-expanded model estimates · Mg C · monthly dates and quality coverage in the downloadable data</p>
           <p>January–September estimates sum to <strong>30.29 Mt C GPP</strong> and <strong>20.73 Mt C net photosynthesis</strong>. October adds <strong>1.84 Mt C GPP</strong> and <strong>1.29 Mt C net photosynthesis</strong> for <strong>October 1–15 only</strong>; the latest available RFO composite ends October 15. MODIS QA coverage ranges from 28.2% to 99.8%, so low-coverage monthly extrapolations—especially September—are uncertain.</p>
           <p class="emissions-note"><strong>Not emissions or net sequestration.</strong> MODIS GPP is modelled gross photosynthetic uptake; PSN subtracts plant maintenance respiration but not ecosystem respiration, disturbance emissions, or soil-carbon changes. These values do not fill stock, sequestration, emissions, or net-balance fields. <a href="OWR_MODIS_Carbon_2026.csv">Download monthly data</a> · <a href="OWR_Emissions_Metadata_2026.json">Methods and coverage</a>.</p>
+        </article>
+        <article class="panel emissions-panel">
+          <h3>NASA MODIS burned-area screening</h3>
+          <p class="panel-intro">MCD64A1.061 · 500 m · QA-screened pixels clipped to the RFO boundary</p>
+          <p>No QA-valid burned pixels were detected in the available January–August 2026 products (99.991–99.992% valid land-pixel coverage). September–October products were not yet present in the catalog on 4 November; those months are unknown, not zero. This coarse product cannot rule out small or obscured fires and does not determine emissions.</p>
+          <p class="emissions-note"><a href="OWR_MODIS_Burned_Area_2026.csv">Download monthly results</a> · <a href="OWR_MODIS_Burned_Area_Rasters_2026.zip">Download clipped imagery</a> · <a href="method.html">Read methods and caveats</a>.</p>
         </article>
       </section>
 
