@@ -4,8 +4,8 @@ Public, preliminary, boundary-based screening of the Okapi Wildlife Reserve (RFO
 
 ## Public project pages
 
-- **[Landing page](https://kivuhub-drc.github.io/RFO/)** — overview, Leaflet reserve map, monthly satellite summary, and carbon-emissions status.
-- **[Map-focused landing page](https://kivuhub-drc.github.io/RFO/landing.html)** — full-screen reserve boundary and October relative-NDVI zone map, with a dated emissions-source status.
+- **[Bilingual landing page](https://kivuhub-drc.github.io/RFO/)** — responsive reserve map, interactive Sentinel-2 and MODIS charts, current emissions status, and an English/French language toggle.
+- **[Map-focused landing page](https://kivuhub-drc.github.io/RFO/landing.html)** — full-screen reserve boundary and October relative-NDVI zone map, also available in English and French.
 - **[Carbon-emissions section](https://kivuhub-drc.github.io/RFO/#emissions)** — monthly all-gases, non-CO₂, and CO₂-only data status.
 - **[Methods](https://kivuhub-drc.github.io/RFO/method.html)** — plain-language and scientific description of boundary handling, remote-sensing processing, emissions-data limits, and zone interpretation.
 - **[Interactive map, MODIS charts, and downloads](https://kivuhub-drc.github.io/RFO/data.html)** — October 2026 NDVI relative-quartile map, monthly MODIS GPP/net-photosynthesis and burned-area charts, and source data downloads.
@@ -28,6 +28,12 @@ Public, preliminary, boundary-based screening of the Okapi Wildlife Reserve (RFO
 | [`data/processed/OWR_Satellite_Scenes_2026.csv`](data/processed/OWR_Satellite_Scenes_2026.csv) | Satellite scene and selected NASA CMR granule-footprint inventory. Catalog records do not necessarily represent processed measurements. |
 | [`data/processed/OWR_Mission_Catalog_2026.csv`](data/processed/OWR_Mission_Catalog_2026.csv) | Mission-specific catalog/footprint counts, processing state, sources, and limitations. |
 | [`data/processed/OWR_Carbon_2026.csv`](data/processed/OWR_Carbon_2026.csv) | Monthly accounting export with MODIS uptake and burned-area screening; unmeasured stock, sequestration, emissions, and balance fields remain blank. |
+
+## Landing-page charts and language
+
+The primary landing page loads the published CSVs directly and renders keyboard-accessible, interactive monthly charts for MODIS GPP/PSN, MODIS valid area-time coverage, Sentinel-2 NDVI, and QA-screened burned area. Selecting a chart point shows its month and observation coverage. Missing September–October burned-area products are marked unavailable, not zero; October MODIS photosynthesis covers 1–15 October. These charts visualize screening indicators only and do not estimate emissions or net ecosystem carbon balance. The **FR · Français** control translates the primary landing page; the map-focused `landing.html` page has the same language toggle.
+
+The available 2026 results are reviewed through **4 November 2026**. Ten monthly gross-emissions totals remain unquantified; MODIS photosynthesis is modelled uptake and MCD64A1 burned-area screening does not quantify fire emissions. See the [interactive chart page](https://kivuhub-drc.github.io/RFO/), [data dictionary](docs/DATA_DICTIONARY.md), and [methods](method.html) for definitions and caveats.
 
 ### Requested gross-emissions fields
 

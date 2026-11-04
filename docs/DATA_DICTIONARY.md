@@ -8,6 +8,19 @@
 - **Units:** gross emissions are Mg CO₂e; MODIS photosynthesis values are Mg C; MODIS burned area is ha. NDVI/EVI are dimensionless.
 - **Null policy:** blank CSV values and SQL `NULL` are unknown/not quantified, never zero unless an explicit zero was measured.
 
+## Public charts and interface
+
+The root landing page (`index.html`) and map-focused page (`landing.html`) provide an English/French toggle. The landing-page monthly charts are generated in the browser from the committed CSV sources rather than separate chart data:
+
+| Visualization | Source fields | Interpretation |
+|---|---|---|
+| MODIS GPP / PSN trend | `modis_gpp_area_expanded_Mg_C_observed_days`, `modis_psn_area_expanded_Mg_C_observed_days` in `OWR_MODIS_Carbon_2026.csv` | Area-expanded modelled photosynthesis estimates in Mg C for observed dates. October is 1–15 October; not net ecosystem sequestration or emissions. |
+| MODIS area-time coverage | `gpp_spatiotemporal_coverage_pct_full_month` and `observed_days` in `OWR_MODIS_Carbon_2026.csv` | Percentage of the complete month’s reserve area-days with quality-screened data; low coverage increases extrapolation uncertainty. |
+| Sentinel-2 NDVI trend | `ndvi_mean`, `clear_land_coverage_pct`, `month` in `OWR_Satellite_2026.csv` | Monthly mean vegetation-condition index and clear-land coverage; not biomass or carbon flux. |
+| MODIS burned-area status | `modis_burned_area_ha`, `valid_area_coverage_pct`, `product_status` in `OWR_MODIS_Burned_Area_2026.csv` | Zero QA-valid detections for available January–August scenes; September–October are not in the queried catalog and must be displayed as unavailable, not zero. |
+
+Chart points are keyboard- and pointer-selectable; the selected-month detail includes values and available coverage. All gross-emissions fields remain blank/not quantifiable across the requested ten months. No graph transforms uptake or burned-area screening into an emissions estimate.
+
 ## `OWR_Emissions_2026.csv`
 
 | Column | Type / unit | Definition |

@@ -305,6 +305,7 @@
     .map-data-note { margin: 7px 3px 0; color: #52655c; font-size: 10px; line-height: 1.4; }
     .map-data-note strong { color: var(--ink); }
     .map-data-note a { color: #356447; font-weight: 650; }
+    .language-toggle{border:1px solid rgba(237,224,188,.48);border-radius:8px;background:rgba(255,255,255,.07);color:#f2dfb6;padding:7px 10px;font-size:11px;font-weight:750;cursor:pointer}.language-toggle:hover,.language-toggle:focus-visible{background:rgba(226,190,119,.15);outline:2px solid #dfc17f;outline-offset:2px}
     main { padding-bottom: 0; }
     footer { display: none; }
     @media (max-width: 560px) {
@@ -329,6 +330,7 @@
           </span>
           <span>Okapi Wildlife Reserve</span>
         </a>
+        <button class="language-toggle" id="language-toggle" type="button" aria-label="Switch to French">FR · Français</button>
         <div class="nav">
           <a href="#overview">Overview</a>
           <a href="#satellite">Satellite data</a>
@@ -346,19 +348,19 @@
       <section class="map-card" aria-labelledby="map-title">
         <div class="map-heading">
           <div>
-            <h2 id="map-title">Okapi Wildlife Reserve · October NDVI zones</h2>
-            <p>2 km cells clipped to WDPA 124389 boundary · toggle layers with the map control</p>
+            <h2 id="map-title" data-i18n="mapTitle">Okapi Wildlife Reserve · October NDVI zones</h2>
+            <p data-i18n="mapSubtitle">2 km cells clipped to WDPA 124389 boundary · toggle layers with the map control</p>
           </div>
           <div class="map-status"><span class="status-dot" aria-hidden="true"></span><span id="map-status" role="status">Loading map data…</span></div>
         </div>
         <div id="map" role="region" aria-label="Interactive map of the Okapi Wildlife Reserve boundary and satellite zones">
-          <div class="map-note"><strong>Map interpretation:</strong> Colors show relative October NDVI quartiles only—not emissions, carbon stocks, or confirmed disturbance. Gray indicates cells below the 25% clear-observation threshold.</div>
+          <div class="map-note"><strong data-i18n="mapInterpretation">Map interpretation:</strong> <span data-i18n="mapNote">Colors show relative October NDVI quartiles only—not emissions, carbon stocks, or confirmed disturbance. Gray indicates cells below the 25% clear-observation threshold.</span></div>
         </div>
         <div class="map-caption">
-          <span>NDVI: Sentinel-2 L2A · 100 m pixels summarized in 2 km cells</span>
+          <span data-i18n="mapCaption">NDVI: Sentinel-2 L2A · 100 m pixels summarized in 2 km cells</span>
           <span>Basemap © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap contributors</a></span>
         </div>
-        <p class="map-data-note"><strong>Emissions data check · 4 Nov 2026:</strong> CAMS GFAS v1.4.2 provides a candidate 2026 fire-only model (0.1° daily CO₂/CH₄/N₂O), but download needs a CDS/ADS account, personal API token, and manual terms acceptance. It was not retrievable here and would not cover all gross-emission sources. Requested totals remain unknown, not zero. <a href="data/processed/OWR_Emissions_Metadata_2026.json">Details</a> · <a href="https://ads.atmosphere.copernicus.eu/datasets/cams-global-fire-emissions-gfas" target="_blank" rel="noopener noreferrer">CAMS GFAS</a>.</p>
+        <p class="map-data-note"><strong data-i18n="emissionsCheck">Emissions data check · 4 Nov 2026:</strong> <span data-i18n="emissionsNote">CAMS GFAS v1.4.2 provides a candidate 2026 fire-only model (0.1° daily CO₂/CH₄/N₂O), but download needs a CDS/ADS account, personal API token, and manual terms acceptance. It was not retrievable here and would not cover all gross-emission sources. Requested totals remain unknown, not zero.</span> <a href="data/processed/OWR_Emissions_Metadata_2026.json" data-i18n="details">Details</a> · <a href="https://ads.atmosphere.copernicus.eu/datasets/cams-global-fire-emissions-gfas" target="_blank" rel="noopener noreferrer">CAMS GFAS</a>.</p>
       </section>
 
       <section id="overview" aria-labelledby="overview-title">
@@ -542,6 +544,29 @@
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script>
     const map = L.map('map', { scrollWheelZoom: false, zoomControl: true });
+    const mapColors = ['#33694c', '#84ad73', '#e4b85c', '#164b37'];
+    const text = {
+      en: {
+        mapTitle:'Okapi Wildlife Reserve · October NDVI zones',mapSubtitle:'2 km cells clipped to WDPA 124389 boundary · toggle layers with the map control',mapInterpretation:'Map interpretation:',mapNote:'Colors show relative October NDVI quartiles only—not emissions, carbon stocks, or confirmed disturbance. Gray indicates cells below the 25% clear-observation threshold.',mapCaption:'NDVI: Sentinel-2 L2A · 100 m pixels summarized in 2 km cells',emissionsCheck:'Emissions data check · 4 Nov 2026:',emissionsNote:'CAMS GFAS v1.4.2 provides a candidate 2026 fire-only model (0.1° daily CO₂/CH₄/N₂O), but download needs a CDS/ADS account, personal API token, and manual terms acceptance. It was not retrievable here and would not cover all gross-emission sources. Requested totals remain unknown, not zero.',details:'Details',loading:'Loading map data…',loaded:'mapped cells',scenes:'selected scenes',failed:'Map data unavailable',zoneLayer:'Satellite NDVI zones',boundaryLayer:'Reserve boundary',legendTitle:'October NDVI · relative quartiles',notMapped:'Not mapped (<25% coverage)',popupCell:'Cell',meanNdvi:'Mean NDVI',meanEvi:'Mean EVI',clearCoverage:'Clear-land coverage',emissions:'Gross emissions: not quantifiable',switchLabel:'Switch to French',pageTitle:'Map & Downloads | Okapi Wildlife Reserve'
+      },
+      fr: {
+        mapTitle:'Réserve de faune à okapis · zones NDVI d’octobre',mapSubtitle:'Cellules de 2 km découpées selon la limite WDPA 124389 · activer les couches avec le contrôle cartographique',mapInterpretation:'Interprétation de la carte :',mapNote:'Les couleurs indiquent uniquement les quartiles relatifs du NDVI d’octobre, et non les émissions, les stocks de carbone ou une perturbation confirmée. Le gris signale une couverture d’observation valide inférieure à 25 %.',mapCaption:'NDVI : Sentinel-2 L2A · pixels de 100 m résumés en cellules de 2 km',emissionsCheck:'État des données d’émissions · 4 nov. 2026 :',emissionsNote:'CAMS GFAS v1.4.2 est un modèle candidat pour les incendies de 2026 (grille de 0,1°, données quotidiennes CO₂/CH₄/N₂O), mais son téléchargement nécessite un compte CDS/ADS, un jeton API personnel et l’acceptation manuelle des conditions. Les données n’ont pas pu être obtenues ici et ne couvriraient pas toutes les sources d’émissions brutes. Les totaux demandés restent inconnus, et non nuls.',details:'Détails',loading:'Chargement des données cartographiques…',loaded:'cellules cartographiées',scenes:'scènes sélectionnées',failed:'Données cartographiques indisponibles',zoneLayer:'Zones NDVI satellitaires',boundaryLayer:'Limite de la réserve',legendTitle:'NDVI d’octobre · quartiles relatifs',notMapped:'Non cartographié (<25 % de couverture)',popupCell:'Cellule',meanNdvi:'NDVI moyen',meanEvi:'EVI moyen',clearCoverage:'Couverture sans nuages',emissions:'Émissions brutes : non quantifiables',switchLabel:'Switch to English',pageTitle:'Carte et téléchargements | Réserve de faune à okapis'
+      }
+    };
+    let language='en', zoneData, classification, zoneLayer, outlines, layerControl, legendControl, selectedScenes=0;
+    const tr=key=>text[language][key]||text.en[key]||key;
+    document.getElementById('language-toggle').addEventListener('click',()=>{
+      language=language==='en'?'fr':'en';
+      document.documentElement.lang=language;
+      document.querySelectorAll('[data-i18n]').forEach(element=>{element.textContent=tr(element.dataset.i18n);});
+      const button=document.getElementById('language-toggle');
+      button.textContent=language==='en'?'FR · Français':'EN · English';
+      button.setAttribute('aria-label',tr('switchLabel'));
+      document.title=tr('pageTitle');
+      if(zoneData)renderLayers();
+      if(zoneLayer)updatePopups();
+      document.getElementById('map-status').textContent=zoneData?`${zoneData.features.length.toLocaleString()} ${tr('loaded')} · ${selectedScenes} ${tr('scenes')}`:tr('loading');
+    });
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 18,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -552,14 +577,13 @@
       fetch(new URL('data/processed/RFO_Oct2026_NDVI_Zones.geojson', document.baseURI)).then(readJson),
       fetch(new URL('data/raw/RFO%20Limit.json', document.baseURI)).then(readJson)
     ]).then(([zones, boundary]) => {
-        const colors = ['#33694c', '#84ad73', '#e4b85c', '#164b37'];
-        const meta = zones.metadata || {};
-        const classification = meta.classification || {};
-        const breaks = [classification.q25_ndvi, classification.q50_ndvi, classification.q75_ndvi];
-        const outlines = L.geoJSON(boundary, {
+        zoneData=zones;
+        classification=zones.metadata?.classification||{};
+        selectedScenes=zones.metadata?.selected_scenes||0;
+        outlines = L.geoJSON(boundary, {
           style: { color: '#18372d', weight: 2, opacity: .9, fillOpacity: 0 }
         });
-        const zoneLayer = L.geoJSON(zones, {
+        zoneLayer = L.geoJSON(zones, {
           style: feature => ({
             color: '#fff',
             weight: .55,
@@ -570,29 +594,20 @@
           onEachFeature: (feature, layer) => {
             const p = feature.properties || {};
             layer.bindPopup(
-              `<div class="popup-title">${escapeHtml(p.zone_label || 'Relative NDVI zone')}</div>` +
-              `<div class="popup-copy">Cell ${escapeHtml(p.zone_id || 'N/A')} · ${escapeHtml(p.month || '2026-10')}</div>` +
-              `<div>Mean NDVI: ${Number(p.ndvi_mean).toFixed(3)}<br>` +
-              `Mean EVI: ${Number(p.evi_mean).toFixed(3)}<br>` +
-              `Clear-land coverage: ${Number(p.valid_coverage_pct).toFixed(1)}%<br>` +
-              'Gross emissions: not quantifiable</div>'
+              popupContent(p)
             );
           }
         });
-        L.control.layers(null, {
-          'Satellite NDVI zones': zoneLayer,
-          'Reserve boundary': outlines
-        }, { collapsed: false }).addTo(map);
         zoneLayer.addTo(map);
         outlines.addTo(map);
         const bounds = zoneLayer.getBounds().isValid() ? zoneLayer.getBounds() : outlines.getBounds();
         map.fitBounds(bounds, { padding: [16, 16] });
-        addLegend(colors, breaks, classification.labels || []);
+        renderLayers();
         document.getElementById('map-status').textContent =
-          `${zones.features.length.toLocaleString()} mapped cells · ${meta.selected_scenes} scenes`;
+          `${zones.features.length.toLocaleString()} ${tr('loaded')} · ${selectedScenes} ${tr('scenes')}`;
       })
       .catch(error => {
-        document.getElementById('map-status').textContent = 'Map data unavailable';
+        document.getElementById('map-status').textContent = tr('failed');
         document.getElementById('map').insertAdjacentHTML(
           'beforeend',
           `<div style="position:absolute;z-index:1000;left:50%;top:50%;transform:translate(-50%,-50%);max-width:85%;padding:14px 18px;background:#fff;border-radius:10px;box-shadow:0 4px 18px #24372d22;color:#654b35;font-size:13px;text-align:center">${escapeHtml(error.message)}<br>Serve this page with the reserve boundary and NDVI zone GeoJSON.</div>`
@@ -605,9 +620,16 @@
       return response.json();
     }
 
-    function addLegend(colors, breaks, labels) {
-      const legend = L.control({ position: 'bottomleft' });
-      legend.onAdd = () => {
+    function renderLayers() {
+      if(layerControl)map.removeControl(layerControl);
+      layerControl=L.control.layers(null,{
+        [tr('zoneLayer')]:zoneLayer,
+        [tr('boundaryLayer')]:outlines
+      },{collapsed:false}).addTo(map);
+      if(legendControl)map.removeControl(legendControl);
+      const breaks=[classification.q25_ndvi,classification.q50_ndvi,classification.q75_ndvi];
+      legendControl = L.control({ position: 'bottomleft' });
+      legendControl.onAdd = () => {
         const div = L.DomUtil.create('div', 'legend');
         const ranges = [
           `≤ ${Number(breaks[0]).toFixed(3)}`,
@@ -615,15 +637,30 @@
           `${Number(breaks[1]).toFixed(3)}–${Number(breaks[2]).toFixed(3)}`,
           `> ${Number(breaks[2]).toFixed(3)}`
         ];
-        div.innerHTML = '<div class="legend-title">October NDVI · relative quartiles</div>' +
+        const labels=language==='fr'?['Q1 · NDVI relatif le plus faible','Q2 · NDVI relatif modéré','Q3 · NDVI relatif élevé','Q4 · NDVI relatif le plus élevé']:(classification.labels||[]);
+        div.innerHTML = `<div class="legend-title">${tr('legendTitle')}</div>` +
           labels.map((label, index) =>
-            `<div class="legend-row"><span class="swatch" style="background:${colors[index]}"></span>` +
+            `<div class="legend-row"><span class="swatch" style="background:${mapColors[index]}"></span>` +
             `<span>${escapeHtml(label)} · ${ranges[index]}</span></div>`
           ).join('') +
-          '<div class="legend-row"><span class="swatch na-swatch"></span><span>Not mapped (&lt;25% coverage)</span></div>';
+          `<div class="legend-row"><span class="swatch na-swatch"></span><span>${tr('notMapped')}</span></div>`;
         return div;
       };
-      legend.addTo(map);
+      legendControl.addTo(map);
+    }
+
+    function popupContent(properties) {
+      const frenchLabels=['Q1 · NDVI relatif le plus faible','Q2 · NDVI relatif modéré','Q3 · NDVI relatif élevé','Q4 · NDVI relatif le plus élevé'];
+      const label=language==='fr'?frenchLabels[(properties.ndvi_quartile||1)-1]:(properties.zone_label||'Relative NDVI zone');
+      return `<div class="popup-title">${escapeHtml(label)}</div>`+
+        `<div class="popup-copy">${tr('popupCell')} ${escapeHtml(properties.zone_id||'N/A')} · ${escapeHtml(properties.month||'2026-10')}</div>`+
+        `<div>${tr('meanNdvi')}: ${Number(properties.ndvi_mean).toFixed(3)}<br>`+
+        `${tr('meanEvi')}: ${Number(properties.evi_mean).toFixed(3)}<br>`+
+        `${tr('clearCoverage')}: ${Number(properties.valid_coverage_pct).toFixed(1)}%<br>${tr('emissions')}</div>`;
+    }
+
+    function updatePopups() {
+      zoneLayer.eachLayer(layer=>layer.bindPopup(popupContent(layer.feature.properties)));
     }
 
     function escapeHtml(value) {
