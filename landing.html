@@ -314,6 +314,13 @@
       .map-card { padding: 8px; }
       #map { height: calc(100dvh - 192px); min-height: 260px; }
     }
+    .shell,.topbar{width:min(1600px,calc(100% - 32px))}
+    .hero,.topbar{height:58px}
+    .content{padding:6px 6px 0}
+    .map-card{padding:8px}
+    .map-heading{padding:0 2px 6px}
+    #map{height:calc(100dvh - 178px)}
+    @media(max-width:560px){.shell,.topbar{width:calc(100% - 16px)}.hero,.topbar{height:52px}.content{padding:4px 4px 0}.map-card{padding:6px}#map{height:calc(100dvh - 160px);min-height:260px}}
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       *, *::before, *::after { transition-duration: .01ms !important; }
