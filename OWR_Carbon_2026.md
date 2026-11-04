@@ -34,7 +34,7 @@ Stock values are in metric tonnes of carbon (C); CO₂-equivalent mass is calcul
 
 ## Boundary and spatial method
 
-The feature in [`RFO_WDOECM_Nov2026_Public_124389_shp-polygons.json`](RFO_WDOECM_Nov2026_Public_124389_shp-polygons.json) is a valid Polygon with 3,439 exterior-ring coordinates, `SITE_ID = 124389`, and name “Okapi Wildlife Reserve.” Its geometry bounds are approximately 27.985–29.084°E and 0.965–2.478°N.
+The feature in [`RFO Limit.json`](RFO%20Limit.json) is a valid Polygon with 3,439 exterior-ring coordinates, `SITE_ID = 124389`, and name “Okapi Wildlife Reserve.” Its geometry bounds are approximately 27.985–29.084°E and 0.965–2.478°N.
 
 Area was measured geodesically on the WGS84 ellipsoid. For the requested 15 km leakage-pressure zone, the polygon was projected to UTM zone 35N (EPSG:32635), buffered by 15,000 m, and the reserve itself removed [1]:
 
@@ -161,7 +161,7 @@ The reserve’s large area and intact Ituri forest make it important for maintai
 
 ## Scientific sources and technical references
 
-1. **Reserve boundary.** WDPA site 124389, RFO GeoJSON, `RFO_WDOECM_Nov2026_Public_124389_shp-polygons.json` (local repository source; boundary geometry and feature attributes).
+1. **Reserve boundary.** WDPA site 124389, RFO GeoJSON, [`RFO Limit.json`](RFO%20Limit.json) (local repository source; boundary geometry and feature attributes).
 2. **UNESCO World Heritage Centre.** “Okapi Wildlife Reserve,” World Heritage List site 718. Site description and management context. [https://whc.unesco.org/en/list/718/](https://whc.unesco.org/en/list/718/).
 3. **Hubau, W., et al. (2020).** “Asynchronous carbon sink saturation in African and Amazonian tropical forests.” *Nature*, 579(7797), 80–87. African plot-network estimate of aboveground live-biomass sink and its historical trend; regional, not reserve-specific. [https://doi.org/10.1038/s41586-020-2035-0](https://doi.org/10.1038/s41586-020-2035-0).
 4. **Saatchi, S. S., et al. (2011).** “Benchmark map of forest carbon stocks in tropical regions across three continents.” *Proceedings of the National Academy of Sciences*, 108(24), 9899–9904. Early-2000s pantropical live-biomass map combining plots, lidar, and satellite imagery. [https://doi.org/10.1073/pnas.1019576108](https://doi.org/10.1073/pnas.1019576108).
