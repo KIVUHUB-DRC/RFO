@@ -158,7 +158,7 @@
       .shell { width: min(100% - 30px, 1180px); }
       .topbar { height: 64px; }
       .nav { gap: 13px; font-size: 11px; }
-      .nav a:not(.nav-cta) { display: none; }
+      .nav a:not(.nav-cta):not(.nav-emissions):not(.nav-methods):not(.nav-data) { display: none; }
       .hero { min-height: 490px; padding-top: 125px; }
       h1 { font-size: 45px; }
       .hero p { font-size: 15px; }
@@ -197,6 +197,9 @@
         <div class="nav">
           <a href="#overview">Overview</a>
           <a href="#satellite">Satellite data</a>
+          <a class="nav-emissions" href="#emissions">Carbon emissions</a>
+          <a class="nav-methods" href="method.html">Methods</a>
+          <a class="nav-data" href="data.html">Map & downloads</a>
           <a class="nav-cta" href="OWR_Carbon_2026.md">Full assessment ↗</a>
         </div>
       </nav>
@@ -370,6 +373,21 @@
             <span class="resource-arrow" aria-hidden="true">↗</span><span class="resource-kicker">Data metadata</span>
             <span class="resource-title">Read field definitions & methods</span>
             <span class="resource-desc">Units, coverage, provenance, limitations, and requirements for future estimates.</span>
+          </a>
+          <a class="resource stat-card" href="method.html">
+            <span class="resource-arrow" aria-hidden="true">↗</span><span class="resource-kicker">Methods tab</span>
+            <span class="resource-title">How the analysis works</span>
+            <span class="resource-desc">Plain-language and scientific description of sensors, calculations, zones, and uncertainty.</span>
+          </a>
+          <a class="resource stat-card" href="data.html">
+            <span class="resource-arrow" aria-hidden="true">↗</span><span class="resource-kicker">Data tab</span>
+            <span class="resource-title">Explore the mapped zones</span>
+            <span class="resource-desc">Open the interactive map, legend, and complete downloadable evidence package.</span>
+          </a>
+          <a class="resource stat-card" href="README.md">
+            <span class="resource-arrow" aria-hidden="true">↗</span><span class="resource-kicker">Documentation</span>
+            <span class="resource-title">Repository README & data dictionary</span>
+            <span class="resource-desc">Find the project guide, data definitions, sources, downloads, and reproducibility details.</span>
           </a>
         </div>
       </section>

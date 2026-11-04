@@ -133,8 +133,27 @@
     "OWR_Satellite_2026.csv",
     "OWR_Satellite_Scenes_2026.csv",
     "OWR_Mission_Catalog_2026.csv",
+    "RFO_Oct2026_NDVI_Zones.geojson",
     "OWR_Carbon_2026.md",
-    "OWR_Carbon_2026.sqlite"
+    "OWR_Carbon_2026.sqlite",
+    "README.md",
+    "method.html",
+    "data.html"
   ],
-  "citation": "NASA CMR and Microsoft Planetary Computer STAC catalog metadata; see per-sensor source URLs and limitations. Satellite data availability and vegetation-condition indices are not direct greenhouse-gas flux measurements."
+  "citation": "NASA CMR and Microsoft Planetary Computer STAC catalog metadata; see per-sensor source URLs and limitations. Satellite data availability and vegetation-condition indices are not direct greenhouse-gas flux measurements.",
+  "spatial_satellite_layer": {
+    "file": "RFO_Oct2026_NDVI_Zones.geojson",
+    "reporting_month": "2026-10",
+    "retained_cells": 3070,
+    "zone_resolution_m": 2000,
+    "minimum_valid_coverage_pct": 25,
+    "mean_valid_coverage_pct_of_retained_cells": 88.48,
+    "relative_ndvi_quartile_breaks": [
+      0.468411,
+      0.484149,
+      0.496819
+    ],
+    "zone_generation_script": "scripts/build_rfo_zones.py",
+    "interpretation": "Relative October NDVI screening zones only. These are not validated ecological, degradation, biomass, or emissions classes."
+  }
 }

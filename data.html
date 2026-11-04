@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123c32">
+  <meta name="description" content="Interactive 2 km October 2026 Sentinel-2 NDVI screening zones and downloadable Okapi Wildlife Reserve data.">
+  <title>Map & Downloads | Okapi Wildlife Reserve</title>
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="preconnect" href="https://tile.openstreetmap.org">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <style>
+    :root{--ink:#17352e;--muted:#62736c;--forest:#123c32;--green:#235d4a;--paper:#f5f6f0;--line:#e4e9e1;--white:#fff}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+    a{color:var(--green)}.shell{width:min(1120px,calc(100% - 40px));margin:auto}
+    header{background:var(--forest);color:#fff;padding:19px 0}.nav{display:flex;justify-content:space-between;align-items:center;gap:15px}.brand{font-weight:750;color:#fff;text-decoration:none}.links{display:flex;gap:20px;flex-wrap:wrap;font-size:13px}.links a{color:#dbe8df;text-decoration:none}
+    .hero{background:linear-gradient(120deg,#123c32,#215640);color:#fff;padding:52px 0 42px}.eyebrow{text-transform:uppercase;letter-spacing:.14em;color:#d9c188;font-size:11px;font-weight:750}h1{font-size:clamp(34px,5vw,51px);letter-spacing:-.05em;line-height:1.08;margin:9px 0}.hero p{margin:0;color:#d7e3dc;max-width:740px}
+    main{padding:27px 0 65px}.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:17px;box-shadow:0 12px 36px #17352e0b}.map-head{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:1px 3px 14px}.map-head h2{margin:0;font-size:18px;letter-spacing:-.025em}.map-head p{margin:3px 0 0;color:var(--muted);font-size:12px}.status{font-size:11px;color:var(--muted);white-space:nowrap}#map{height:570px;border-radius:10px;background:#e8eee6}.caption{font-size:11px;color:var(--muted);padding:11px 3px 0}
+    .legend{position:absolute;z-index:500;left:28px;bottom:28px;background:#fff;padding:12px 14px;border:1px solid #dfe6dc;border-radius:9px;box-shadow:0 4px 18px #20352b20;min-width:190px;font-size:11px}.legend-title{font-weight:750;margin-bottom:6px;color:var(--ink)}.legend-row{display:flex;align-items:center;gap:8px;margin:5px 0;color:#52655c}.swatch{width:13px;height:13px;border:1px solid #fff;box-shadow:0 0 0 1px #cbd4c8;border-radius:3px;flex:none}.na-swatch{background:repeating-linear-gradient(135deg,#fff,#fff 3px,#cbd3ca 3px,#cbd3ca 5px)}
+    .notice{margin:17px 0 0;border-radius:10px;background:#fff7e9;border:1px solid #ead8b8;color:#654f2e;padding:14px 16px;font-size:12px}.notice strong{color:#493616}
+    .section-heading{margin:42px 0 14px}.section-heading h2{margin:4px 0;font-size:27px;letter-spacing:-.04em}.section-heading p{margin:0;color:var(--muted);font-size:13px}
+    .downloads{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.download{background:#fff;border:1px solid var(--line);border-radius:12px;padding:17px;text-decoration:none;box-shadow:0 5px 18px #17352e08}.download:hover{border-color:#b9cbb8;transform:translateY(-1px)}.download .type{font-size:10px;text-transform:uppercase;letter-spacing:.11em;font-weight:750;color:#52785a}.download strong{display:block;color:var(--ink);font-size:14px;margin:5px 0 3px}.download span:last-child{font-size:11px;color:var(--muted)}
+    .table-wrap{overflow:auto;background:#fff;border:1px solid var(--line);border-radius:12px}table{width:100%;border-collapse:collapse;font-size:12px;min-width:700px}th,td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}th{background:#f4f7f2;color:#53675d;text-transform:uppercase;font-size:10px;letter-spacing:.06em}code{font-size:.92em;overflow-wrap:anywhere}
+    footer{padding:22px 0 32px;border-top:1px solid var(--line);color:var(--muted);font-size:11px}footer a{text-decoration:none;font-weight:650}
+    .leaflet-popup-content-wrapper{border-radius:9px}.leaflet-popup-content{font-size:12px;line-height:1.5}.popup-title{font-weight:750;color:var(--forest)}.popup-muted{color:#617168}
+    @media(max-width:720px){.shell{width:calc(100% - 28px)}.downloads{grid-template-columns:1fr}.map-head{align-items:flex-start}#map{height:470px}.legend{left:18px;bottom:18px}.links{gap:11px;font-size:11px}}
+    @media(max-width:480px){.nav{align-items:flex-start}.map-head{display:block}.status{display:block;margin-top:8px}#map{height:430px}.hero{padding:38px 0 32px}}
+  </style>
+</head>
+<body>
+  <header><div class="shell nav"><a class="brand" href="index.html">Okapi Wildlife Reserve</a><nav class="links" aria-label="Main navigation"><a href="index.html#emissions">Carbon emissions</a><a href="method.html">Methods</a><a href="data.html" aria-current="page">Map & downloads</a></nav></div></header>
+  <div class="hero"><div class="shell"><div class="eyebrow">Boundary-based open data</div><h1>Explore the reserve.<br>Download the evidence.</h1><p>October 2026 Sentinel-2 vegetation-condition zones, clipped to the RFO boundary, alongside the monthly observations, catalog inventory, and emissions data status.</p></div></div>
+  <main class="shell">
+    <section class="panel" aria-labelledby="map-title">
+      <div class="map-head"><div><h2 id="map-title">October 2026 relative NDVI zones</h2><p>2 km grid · polygons clipped to RFO reserve boundary</p></div><div class="status" id="status" role="status">Loading zone data…</div></div>
+      <div id="map" role="region" aria-label="Leaflet map of relative NDVI quartile screening zones within the Okapi Wildlife Reserve"></div>
+      <div class="caption">Basemap © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap contributors</a> · Analysis boundary: WDPA site 124389 · Data source: Sentinel-2 L2A, Microsoft Planetary Computer</div>
+    </section>
+    <div class="notice"><strong>Map interpretation:</strong> Colors show relative quartiles of October NDVI in retained 2 km cells—not emissions, carbon stocks, forest condition classes, or confirmed disturbance. Gray/hatched is not mapped because cloud-free observation coverage was below 25%. The thresholds are specific to this month and are shown in the legend.</div>
+    <section class="section-heading"><div class="eyebrow" style="color:#567860">Downloads</div><h2>Data and documentation</h2><p>The RFO boundary remains the source geometry; the derived GeoJSON adds satellite indicators per grid cell. Missing emission values are left blank, not set to zero.</p></section>
+    <div class="downloads">
+      <a class="download" href="RFO_Oct2026_NDVI_Zones.geojson" download><span class="type">Spatial data · GeoJSON</span><strong>October NDVI zones</strong><span>2 km RFO-clipped cells, NDVI/EVI, clear-pixel coverage, relative quartile, and null emissions fields.</span></a>
+      <a class="download" href="RFO%20Limit.json" download><span class="type">Boundary · GeoJSON</span><strong>RFO reserve boundary</strong><span>WDPA site 124389 geometry and source properties.</span></a>
+      <a class="download" href="OWR_Emissions_2026.csv" download><span class="type">Emissions status · CSV</span><strong>Monthly gross-emissions fields</strong><span>January–October 2026 values and satellite context; quantities remain unknown where unquantifiable.</span></a>
+      <a class="download" href="OWR_Emissions_Metadata_2026.json" download><span class="type">Metadata · JSON</span><strong>Field definitions & provenance</strong><span>Units, data sources, limitations, and requirements for emission estimates.</span></a>
+      <a class="download" href="OWR_Satellite_2026.csv" download><span class="type">Monthly indicators · CSV</span><strong>Sentinel-2 NDVI/EVI</strong><span>Monthly 100 m area means, cloud-free coverage, and optical/radar scene counts.</span></a>
+      <a class="download" href="OWR_Satellite_Scenes_2026.csv" download><span class="type">Scene inventory · CSV</span><strong>Satellite and footprint records</strong><span>Catalog metadata for Sentinel-2, Landsat, Sentinel-1, GEDI, and NISAR.</span></a>
+      <a class="download" href="OWR_Mission_Catalog_2026.csv" download><span class="type">Mission inventory · CSV</span><strong>Mission catalog status</strong><span>Mission-level coverage, RFO footprint intersections, and processing limitations.</span></a>
+      <a class="download" href="OWR_Carbon_2026.csv" download><span class="type">Carbon accounting · CSV</span><strong>Original monthly accounting table</strong><span>Boundary context and original carbon fields, left blank wherever unmeasured.</span></a>
+      <a class="download" href="OWR_Carbon_2026.sqlite" download><span class="type">Database · SQLite</span><strong>Monthly carbon & satellite tables</strong><span>Accounting records, observations, source registry, and gross-emissions status.</span></a>
+      <a class="download" href="OWR_Carbon_2026.md"><span class="type">Report · Markdown</span><strong>Full assessment</strong><span>Evidence synthesis, calculation methods, references, and caveats.</span></a>
+      <a class="download" href="OWR_Carbon_2026.docx" download><span class="type">Report · Word</span><strong>Formatted assessment</strong><span>Download the professional report document.</span></a>
+      <a class="download" href="scripts/build_rfo_zones.py" download><span class="type">Reproducibility · Script</span><strong>Zone-generation script</strong><span>Python code for querying the October imagery and building the derived zone GeoJSON.</span></a>
+      <a class="download" href="README.md"><span class="type">Repository guide</span><strong>README & project documentation</strong><span>Start here for the project pages, data dictionary, source links, and methods.</span></a>
+      <a class="download" href="DATA_DICTIONARY.md"><span class="type">Documentation · Markdown</span><strong>Data dictionary</strong><span>Column definitions, units, spatial classes, database tables, and null-value policy.</span></a>
+    </div>
+    <section class="section-heading"><div class="eyebrow" style="color:#567860">Zone symbology</div><h2>What the colors indicate</h2><p>Quartile cut-points are calculated from October values of included cells at data generation time.</p></section>
+    <div class="table-wrap"><table><thead><tr><th>Map color</th><th>Relative class</th><th>Interpretation</th><th>Emission meaning</th></tr></thead><tbody>
+      <tr><td>Green · Q1</td><td>Lower relative NDVI</td><td>Lowest quarter of observed October cell means.</td><td>None; emissions remain null.</td></tr>
+      <tr><td>Light green · Q2</td><td>Moderate relative NDVI</td><td>Second quarter of observed October cell means.</td><td>None; emissions remain null.</td></tr>
+      <tr><td>Amber · Q3</td><td>Higher relative NDVI</td><td>Third quarter of observed October cell means.</td><td>None; emissions remain null.</td></tr>
+      <tr><td>Dark green · Q4</td><td>Highest relative NDVI</td><td>Highest quarter of observed October cell means.</td><td>None; emissions remain null.</td></tr>
+      <tr><td>Not drawn</td><td>Insufficient observations</td><td>Less than 25% of reserve grid-cell pixels were valid and clear.</td><td>Not assessed.</td></tr>
+    </tbody></table></div>
+    <p style="font-size:12px;color:#62736c">For plain-language and scientific methods, see the <a href="method.html">Methods page</a>. A vegetation index is not a carbon-flux measurement.</p>
+  </main>
+  <footer><div class="shell">Preliminary spatial screening only · <a href="index.html">Home</a> · <a href="method.html">Methods</a></div></footer>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script>
+    const colors = ['#33694c', '#84ad73', '#e4b85c', '#164b37'];
+    const map = L.map('map', { scrollWheelZoom: false });
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    map.setView([1.7, 28.5], 8);
+
+    Promise.all([
+      fetch('RFO_Oct2026_NDVI_Zones.geojson').then(readJson),
+      fetch('RFO%20Limit.json').then(readJson)
+    ]).then(([zones, boundary]) => {
+      const meta = zones.metadata || {};
+      const classes = meta.classification || {};
+      const breaks = [classes.q25_ndvi, classes.q50_ndvi, classes.q75_ndvi];
+      const outlines = L.geoJSON(boundary, {
+        interactive: false,
+        style: { color: '#18372d', weight: 2, opacity: .9, fillOpacity: 0 }
+      }).addTo(map);
+      const zoneLayer = L.geoJSON(zones, {
+        style: feature => ({
+          color: '#ffffff',
+          weight: .55,
+          opacity: .7,
+          fillColor: colors[(feature.properties.ndvi_quartile || 1) - 1],
+          fillOpacity: .72
+        }),
+        onEachFeature: (feature, layer) => {
+          const p = feature.properties;
+          layer.bindPopup(
+            `<div class="popup-title">${escapeHtml(p.zone_label)}</div>` +
+            `<div class="popup-muted">Cell ${escapeHtml(p.zone_id)} · ${escapeHtml(p.month)}</div>` +
+            `<div>Mean NDVI: ${Number(p.ndvi_mean).toFixed(3)}<br>Mean EVI: ${Number(p.evi_mean).toFixed(3)}<br>` +
+            `Clear-land coverage: ${Number(p.valid_coverage_pct).toFixed(1)}%<br>` +
+            `Gross emissions: not quantifiable</div>`
+          );
+        }
+      }).addTo(map);
+      const bounds = zoneLayer.getBounds().isValid() ? zoneLayer.getBounds() : outlines.getBounds();
+      map.fitBounds(bounds, { padding: [12, 12] });
+      addLegend(breaks, classes.labels || []);
+      document.getElementById('status').textContent =
+        `${zones.features.length.toLocaleString()} mapped cells · ${meta.selected_scenes} selected scenes`;
+    }).catch(error => {
+      document.getElementById('status').textContent = 'Data could not be loaded';
+      console.error('Unable to load the RFO zone data:', error);
+    });
+
+    function readJson(response) {
+      if (!response.ok) throw new Error(`Request failed (${response.status})`);
+      return response.json();
+    }
+    function addLegend(breaks, labels) {
+      const legend = L.control({ position: 'bottomleft' });
+      legend.onAdd = () => {
+        const div = L.DomUtil.create('div', 'legend');
+        const ranges = [
+          `≤ ${Number(breaks[0]).toFixed(3)}`,
+          `${Number(breaks[0]).toFixed(3)}–${Number(breaks[1]).toFixed(3)}`,
+          `${Number(breaks[1]).toFixed(3)}–${Number(breaks[2]).toFixed(3)}`,
+          `> ${Number(breaks[2]).toFixed(3)}`
+        ];
+        div.innerHTML = '<div class="legend-title">October NDVI · relative quartiles</div>' +
+          labels.map((label, index) =>
+            `<div class="legend-row"><span class="swatch" style="background:${colors[index]}"></span>` +
+            `<span>${escapeHtml(label)} · ${ranges[index]}</span></div>`
+          ).join('') +
+          '<div class="legend-row"><span class="swatch na-swatch"></span><span>Not mapped (&lt;25% coverage)</span></div>';
+        return div;
+      };
+      legend.addTo(map);
+    }
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, character => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      })[character]);
+    }
+  </script>
+</body>
+</html>

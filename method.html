@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123c32">
+  <meta name="description" content="Plain-language and scientific methods for the Okapi Wildlife Reserve satellite screening and greenhouse-gas data.">
+  <title>Methods | Okapi Wildlife Reserve</title>
+  <style>
+    :root{--ink:#17352e;--muted:#62736c;--forest:#123c32;--green:#235d4a;--paper:#f5f6f0;--line:#e4e9e1;--white:#fff}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+    a{color:var(--green)}.shell{width:min(980px,calc(100% - 40px));margin:auto}
+    header{background:var(--forest);color:#fff;padding:22px 0}.nav{display:flex;justify-content:space-between;align-items:center;gap:14px}.brand{font-weight:750;text-decoration:none;color:#fff}.links{display:flex;gap:20px;flex-wrap:wrap;font-size:13px}.links a{color:#dbe8df;text-decoration:none}
+    .hero{padding:64px 0 52px;background:linear-gradient(120deg,#123c32,#215640);color:#fff}.eyebrow{text-transform:uppercase;letter-spacing:.14em;color:#d9c188;font-size:11px;font-weight:750}h1{font-size:clamp(38px,6vw,58px);letter-spacing:-.05em;line-height:1.05;margin:12px 0}.hero p{max-width:680px;color:#d7e3dc}
+    main{padding:28px 0 70px}.notice{background:#fff7e9;border:1px solid #ead8b8;border-radius:12px;padding:17px 19px;color:#634d2d;margin:0 0 22px}.notice strong{color:#493616}
+    section{background:#fff;border:1px solid var(--line);border-radius:14px;padding:24px 27px;margin:15px 0;box-shadow:0 8px 24px #17352e08}h2{font-size:23px;letter-spacing:-.035em;margin:0 0 9px}h3{font-size:16px;margin:20px 0 5px}p{margin:8px 0;color:#465b52}ul,ol{padding-left:22px;color:#465b52}li{margin:5px 0}
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.card{background:#f4f7f2;border-radius:10px;padding:15px}.card h3{margin:0 0 5px;font-size:14px}.card p{font-size:13px;margin:0}
+    table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:10px 9px;border-bottom:1px solid var(--line);vertical-align:top}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#607168}
+    code{font-size:.9em;background:#f0f3ee;padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}.formula{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;background:#eff4ed;padding:12px 14px;border-radius:8px;display:block;margin:9px 0;color:#244a38;overflow-wrap:anywhere}
+    .footer{padding:22px 0 35px;border-top:1px solid var(--line);color:var(--muted);font-size:12px}.footer a{font-weight:650;text-decoration:none}
+    @media(max-width:650px){.shell{width:calc(100% - 28px)}.hero{padding:45px 0 35px}.links{gap:10px;font-size:11px}.nav{align-items:flex-start}.grid{grid-template-columns:1fr}section{padding:20px 17px}table{font-size:11px}th,td{padding:8px 5px}}
+  </style>
+</head>
+<body>
+  <header><div class="shell nav"><a class="brand" href="index.html">Okapi Wildlife Reserve</a><nav class="links" aria-label="Main navigation"><a href="index.html#emissions">Emissions</a><a href="method.html" aria-current="page">Methods</a><a href="data.html">Map & downloads</a></nav></div></header>
+  <div class="hero"><div class="shell"><div class="eyebrow">Methods & data notes · January–October 2026</div><h1>How to read<br>the evidence.</h1><p>A transparent explanation of what was observed, how the satellite layers were summarized, and why the emissions values are still unknown.</p></div></div>
+  <main class="shell">
+    <div class="notice"><strong>Key result:</strong> We have satellite observations and vegetation indices, but no validated inventory of forest disturbance, fire, carbon-pool loss, or greenhouse-gas flux. The three monthly gross-emissions fields are blank by design—not zero.</div>
+    <section>
+      <h2>In simple terms</h2>
+      <p>Satellites take pictures or radar measurements; some instruments also sample gases in the atmosphere. These observations can show vegetation reflectance, help identify where a canopy may have changed, measure forest structure, or detect atmospheric gas concentrations. None of those observations alone tells us how many megagrams of greenhouse gases the reserve emitted in a month.</p>
+      <p>To estimate emissions responsibly, we need to know what area changed, what carbon was stored there before the change, how much was released and when, and—where relevant—how much methane (CH₄) and nitrous oxide (N₂O) were produced. Satellite scenes help build that evidence, but they must be combined with validated land-change data, carbon-stock information, emission factors, and uncertainty estimates.</p>
+    </section>
+    <section>
+      <h2>Scientific workflow used</h2>
+      <ol>
+        <li><strong>Define the boundary.</strong> Use the supplied RFO GeoJSON polygon for WDPA site 124389, “Okapi Wildlife Reserve.” Reserve-wide analysis excludes the separate 15 km external ring unless stated. Grid polygons are clipped to this boundary.</li>
+        <li><strong>Find observations.</strong> Search Microsoft Planetary Computer’s STAC catalog for Sentinel-2 L2A, Landsat Collection 2 Level-2, and Sentinel-1 RTC scenes that intersect the reserve during 1 January–31 October 2026. Query NASA CMR for granule metadata and intersect returned footprints with the reserve polygon.</li>
+        <li><strong>Screen Sentinel-2 pixels.</strong> Select the lowest catalog-cloud-cover scene for each of the six intersecting MGRS tiles in each month. Sign public cloud-optimized assets, align red (B04), near-infrared (B08), blue (B02), and Scene Classification Layer assets on a 100 m EPSG:32635 grid, and fill overlapping cells from lower- to higher-cloud scenes.</li>
+        <li><strong>Mask and calculate indices.</strong> Retain SCL classes 4 (vegetation) and 5 (bare soil); exclude cloud, shadow, water, other classes, nonpositive reflectance, and invalid index values. Reflectance is scaled by 0.0001.</li>
+        <li><strong>Summarize.</strong> Calculate one monthly reserve-level mean for NDVI/EVI and the percentage of reserve grid cells with clear observations. For the downloadable spatial layer, average October 100 m pixels into 2 km grid cells clipped to the reserve. Cells with less than 25% valid clear-land coverage are not mapped.</li>
+        <li><strong>Separate observation from inference.</strong> NDVI/EVI describe spectral vegetation condition. They are not direct estimates of biomass, carbon uptake, CO₂ emissions, CH₄/N₂O flux, or disturbance cause.</li>
+      </ol>
+      <span class="formula">NDVI = (B08 − B04) / (B08 + B04)</span>
+      <span class="formula">EVI = 2.5 × (B08 − B04) / (B08 + 6 × B04 − 7.5 × B02 + 1)</span>
+      <p>Both indices are dimensionless. NDVI contrasts near-infrared and red reflectance; EVI also uses blue reflectance and adjusts for background and atmospheric effects. Their usefulness and sensitivity vary with canopy, clouds, soil, water, and acquisition conditions.</p>
+    </section>
+    <section>
+      <h2>What the 2 km map zones mean</h2>
+      <p>Each mapped shape is a 2 km grid cell clipped to the reserve boundary. Its October NDVI and EVI are means of valid, clear-land 100 m observations within that cell. Cell colors indicate <strong>relative quartiles of October NDVI among included cells</strong>: Q1 is the lower quarter and Q4 the upper quarter of this month’s observed values. The actual numeric cut-points are in the GeoJSON metadata and are generated from the data.</p>
+      <p>These are relative spectral classes—not official ecological zones, forest types, biomass classes, or evidence that low-NDVI cells were deforested. Missing/low-coverage areas are left transparent instead of being assigned a class. A cell’s GeoJSON emissions fields are null because no cell-level emissions estimate exists.</p>
+    </section>
+    <section>
+      <h2>Gross-emissions fields</h2>
+      <p>The CSV preserves January through October 2026 and defines the three requested fields in Mg CO₂e. They remain empty (SQL <code>NULL</code>) and carry status <code>NOT_QUANTIFIABLE</code> each month.</p>
+      <div style="overflow-x:auto"><table><thead><tr><th>Field</th><th>Meaning</th><th>Why null</th></tr></thead><tbody>
+        <tr><td><code>gross_emissions_co2e_all_gases__Mg</code></td><td>Gross emissions for included greenhouse gases, expressed as CO₂-equivalent mass.</td><td>No complete, validated activity-data and gas-specific inventory.</td></tr>
+        <tr><td><code>gross_emissions_co2e_non_co2__Mg</code></td><td>Non-CO₂ gases (such as CH₄/N₂O) expressed as CO₂e under a defined conversion basis.</td><td>No local gas flux/activity data and appropriate emission factors.</td></tr>
+        <tr><td><code>gross_emissions_co2e_co2_only__Mg</code></td><td>Gross CO₂ emissions only, expressed as CO₂e.</td><td>No validated disturbed/burned area tied to carbon-stock loss or combustion.</td></tr>
+      </tbody></table></div>
+      <p>Zero would mean a measured or defensibly estimated absence of emissions; that was not established. Therefore missing values must not be changed to zero. If future values are produced, the all-gases total must use a documented boundary and avoid double-counting CO₂ and non-CO₂ components.</p>
+      <h3>Evidence needed for a defensible estimate</h3>
+      <ul><li>Validated monthly land conversion, degradation and burned-area activity data;</li><li>pre- and post-disturbance biomass/soil carbon stocks by pool, with local validation;</li><li>appropriate DRC/ecosystem emission factors, combustion/decay treatment, and applicable CH₄/N₂O factors;</li><li>a cited global-warming-potential time horizon and uncertainty/quality controls.</li></ul>
+    </section>
+    <section>
+      <h2>Sensor coverage and interpretation</h2>
+      <div style="overflow-x:auto"><table><thead><tr><th>Mission/product</th><th>What this repository contains</th><th>Not established by these data</th></tr></thead><tbody>
+        <tr><td>Sentinel-2 L2A</td><td>60 processed tile-month scenes; 100 m monthly NDVI/EVI mosaics.</td><td>Carbon stocks, flux, or validated disturbance area.</td></tr>
+        <tr><td>Landsat Collection 2 L2</td><td>70 scene catalog entries.</td><td>No Landsat rasters or change areas were processed.</td></tr>
+        <tr><td>Sentinel-1 RTC</td><td>231 scene catalog entries.</td><td>No radar backscatter or disturbance analysis was processed.</td></tr>
+        <tr><td>GEDI L2A V003 / NISAR L2 GCOV</td><td>9 / 95 intersecting CMR footprint metadata records.</td><td>Measurement files, biomass estimates, or emissions were not processed.</td></tr>
+        <tr><td>OCO-2 / OCO-3</td><td>Metadata searches returned nearby-box granules; no returned footprint polygon intersected RFO.</td><td>No local atmospheric retrieval; XCO₂ is not a reserve-scale emission flux.</td></tr>
+        <tr><td>GOSAT / GOSAT-2 / TanSat / ESA Biomass</td><td>Queried archive status and mission availability are documented.</td><td>No analyzed, reserve-specific emissions estimate from these missions.</td></tr>
+      </tbody></table></div>
+    </section>
+    <section>
+      <h2>Sources and further detail</h2>
+      <ul>
+        <li><a href="OWR_Carbon_2026.md">Full assessment, citations, and uncertainty discussion</a></li>
+        <li><a href="OWR_Emissions_Metadata_2026.json">Machine-readable emissions and satellite metadata</a></li>
+        <li><a href="OWR_Mission_Catalog_2026.csv">Mission catalog coverage and limitations</a></li>
+        <li><a href="scripts/build_rfo_zones.py">Reproducible script for the October NDVI zone GeoJSON</a></li>
+        <li><a href="https://planetarycomputer.microsoft.com/dataset/sentinel-2-l2a">Sentinel-2 L2A collection</a> · <a href="https://cmr.earthdata.nasa.gov/search/granules">NASA CMR granule search</a> · <a href="https://www.ipcc-nggip.iges.or.jp/public/2019rf/vol4.html">IPCC AFOLU guidance</a></li>
+      </ul>
+    </section>
+  </main>
+  <footer class="footer"><div class="shell">Okapi Wildlife Reserve preliminary screening · <a href="index.html">Return to landing page</a> · <a href="data.html">Open map and downloads</a></div></footer>
+</body>
+</html>
