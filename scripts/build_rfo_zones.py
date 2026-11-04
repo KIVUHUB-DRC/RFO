@@ -20,8 +20,8 @@ from shapely.ops import transform as transform_geometry
 
 
 ROOT = Path(__file__).resolve().parents[1]
-BOUNDARY = ROOT / "RFO Limit.json"
-OUTPUT = ROOT / "RFO_Oct2026_NDVI_Zones.geojson"
+BOUNDARY = ROOT / "data" / "raw" / "RFO Limit.json"
+OUTPUT = ROOT / "data" / "processed" / "RFO_Oct2026_NDVI_Zones.geojson"
 STAC = "https://planetarycomputer.microsoft.com/api/stac/v1"
 PIXEL_M = 100
 ZONE_M = 2_000

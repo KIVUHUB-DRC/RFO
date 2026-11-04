@@ -19,8 +19,8 @@ from shapely.ops import transform as transform_geometry
 
 
 ROOT = Path(__file__).resolve().parents[1]
-BOUNDARY = ROOT / "RFO Limit.json"
-OUTPUT = ROOT / "OWR_MODIS_Carbon_2026.csv"
+BOUNDARY = ROOT / "data" / "raw" / "RFO Limit.json"
+OUTPUT = ROOT / "data" / "processed" / "OWR_MODIS_Carbon_2026.csv"
 STAC = "https://planetarycomputer.microsoft.com/api/stac/v1"
 DATA_CUTOFF = "2026-11-04T23:59:59Z"
 FIRST_MONTH = date(2026, 1, 1)

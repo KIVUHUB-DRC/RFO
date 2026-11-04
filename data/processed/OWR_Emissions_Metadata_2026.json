@@ -12,7 +12,7 @@
   "spatial_scope": {
     "name": "Okapi Wildlife Reserve",
     "site_id": "124389",
-    "boundary_file": "RFO Limit.json",
+    "boundary_file": "data/raw/RFO Limit.json",
     "boundary_source": "Repository WDPA/RFO GeoJSON",
     "geometry_applied": "Reserve polygon; no external buffer included",
     "area_km2_geodesic": 13939.55493440135
@@ -168,7 +168,7 @@
     "coverage": "Full calendar-date coverage is available for January-September. The latest RFO-intersecting Terra composite covers 2026-10-08 through 2026-10-15, so October has 15/31 observed days. Valid-area coverage over observed dates ranges from 28.248% to 99.796%; October's combined date-and-valid-area coverage is 27.786% of the full month.",
     "quality_and_uncertainty": "The area expansion assumes MODLAND-QC-good pixels represent the full reserve for each composite. It is a simple spatial extrapolation, not a validated gap-filling model; low-coverage months are especially uncertain. The output also preserves unexpanded valid-pixel sums and coverage percentages.",
     "interpretation": "GPP and PSN are modelled photosynthetic carbon-uptake indicators. They do not measure reserve carbon stocks, net ecosystem sequestration, net ecosystem exchange, carbon-dioxide-equivalent removals, or greenhouse-gas emissions. Do not use them to populate the gross-emissions, biomass-stock, gross-sequestration, or net-balance fields.",
-    "output_file": "OWR_MODIS_Carbon_2026.csv",
+    "output_file": "data/processed/OWR_MODIS_Carbon_2026.csv",
     "reproduction_script": "scripts/build_modis_carbon_2026.py"
   },
   "satellite_burned_area_assessment": {
@@ -188,9 +188,9 @@
     "quality_method": "A burned pixel must have Burn_Date 1-366 and both QA bit 0 (land) and bit 1 (valid observation) set. Area is the count of such pixels multiplied by the equal-area grid-cell area; no spatial extrapolation is applied.",
     "results": "No QA-valid burned pixels were detected within the RFO for January-August 2026, with 99.991-99.992% valid land-pixel coverage. September and October were absent from the queried STAC catalog and are blank, not zero.",
     "interpretation": "A coarse satellite burned-area screening result only. Zero detected pixels do not prove the absence of all fire, particularly small, obscured, under-canopy, or low-intensity fire. Burned area alone cannot quantify affected biomass, combustion, carbon-pool loss, or emissions.",
-    "output_file": "OWR_MODIS_Burned_Area_2026.csv",
-    "clipped_raster_archive": "OWR_MODIS_Burned_Area_Rasters_2026.zip",
-    "clipped_raster_directory": "data/modis_burned_area_2026",
+    "output_file": "data/processed/OWR_MODIS_Burned_Area_2026.csv",
+    "clipped_raster_archive": "data/imagery/OWR_MODIS_Burned_Area_Rasters_2026.zip",
+    "clipped_raster_directory": "data/imagery/modis_burned_area_2026",
     "reproduction_script": "scripts/build_modis_burned_area_2026.py"
   },
   "open_data_assessment": {
@@ -233,12 +233,12 @@
     {
       "source": "NASA/USGS MODIS MCD64A1.061 burned area",
       "url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-64A1-061",
-      "review_result": "Public monthly Burn_Date and QA Cloud-Optimized GeoTIFFs for January-August 2026 were retrieved, clipped to RFO, and processed. No QA-valid burned pixels were detected; the catalog query returned no September-October RFO products by 2026-11-04. See OWR_MODIS_Burned_Area_2026.csv and the clipped raster archive. Burn area is not emissions."
+      "review_result": "Public monthly Burn_Date and QA Cloud-Optimized GeoTIFFs for January-August 2026 were retrieved, clipped to RFO, and processed. No QA-valid burned pixels were detected; the catalog query returned no September-October RFO products by 2026-11-04. See data/processed/OWR_MODIS_Burned_Area_2026.csv and the clipped raster archive. Burn area is not emissions."
     },
     {
       "source": "NASA Terra MODIS MOD17A2H.061",
       "url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-17A2H-061",
-      "review_result": "Public 500 m eight-day GPP and net-photosynthesis COG assets were retrieved and summarized over the RFO. Monthly estimates and spatial/time coverage are in OWR_MODIS_Carbon_2026.csv. The products are modelled uptake indicators, not stock, net ecosystem sequestration, or emissions; October data end on October 15."
+      "review_result": "Public 500 m eight-day GPP and net-photosynthesis COG assets were retrieved and summarized over the RFO. Monthly estimates and spatial/time coverage are in data/processed/OWR_MODIS_Carbon_2026.csv. The products are modelled uptake indicators, not stock, net ecosystem sequestration, or emissions; October data end on October 15."
     },
     {
       "source": "NASA FIRMS VIIRS/MODIS active fire products",
@@ -274,16 +274,16 @@
       "Report uncertainty and validation results."
     ]
   },
-  "csv_file": "OWR_Emissions_2026.csv",
+  "csv_file": "data/processed/OWR_Emissions_2026.csv",
   "related_files": [
-    "OWR_Satellite_2026.csv",
-    "OWR_Satellite_Scenes_2026.csv",
-    "OWR_Mission_Catalog_2026.csv",
-    "RFO_Oct2026_NDVI_Zones.geojson",
-    "OWR_Carbon_2026.md",
-    "OWR_Carbon_2026.sqlite",
-    "OWR_MODIS_Burned_Area_2026.csv",
-    "OWR_MODIS_Burned_Area_Rasters_2026.zip",
+    "data/processed/OWR_Satellite_2026.csv",
+    "data/processed/OWR_Satellite_Scenes_2026.csv",
+    "data/processed/OWR_Mission_Catalog_2026.csv",
+    "data/processed/RFO_Oct2026_NDVI_Zones.geojson",
+    "reports/OWR_Carbon_2026.md",
+    "data/processed/OWR_Carbon_2026.sqlite",
+    "data/processed/OWR_MODIS_Burned_Area_2026.csv",
+    "data/imagery/OWR_MODIS_Burned_Area_Rasters_2026.zip",
     "README.md",
     "method.html",
     "data.html",
@@ -291,7 +291,7 @@
   ],
   "citation": "NASA CMR, NASA Terra MODIS MOD17A2H.061, NASA/USGS MODIS MCD64A1.061, Microsoft Planetary Computer STAC, CAMS GFAS, NASA FIRMS, ESA CCI FireCCI, Hansen/UMD Global Forest Change, and Global Forest Watch catalog/API documentation; see source-specific retrieval status and limitations. Catalog coverage and model availability are not evidence of retrieved RFO values.",
   "spatial_satellite_layer": {
-    "file": "RFO_Oct2026_NDVI_Zones.geojson",
+    "file": "data/processed/RFO_Oct2026_NDVI_Zones.geojson",
     "reporting_month": "2026-10",
     "retained_cells": 3070,
     "zone_resolution_m": 2000,

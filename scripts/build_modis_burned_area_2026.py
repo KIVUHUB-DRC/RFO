@@ -6,6 +6,7 @@ import json
 from collections import defaultdict
 from datetime import date, datetime
 from pathlib import Path
+from zipfile import ZIP_DEFLATED, ZipFile
 
 import numpy as np
 import planetary_computer
@@ -19,9 +20,10 @@ from shapely.ops import transform as transform_geometry
 
 
 ROOT = Path(__file__).resolve().parents[1]
-BOUNDARY = ROOT / "RFO Limit.json"
-OUTPUT = ROOT / "OWR_MODIS_Burned_Area_2026.csv"
-RASTER_DIR = ROOT / "data" / "modis_burned_area_2026"
+BOUNDARY = ROOT / "data" / "raw" / "RFO Limit.json"
+OUTPUT = ROOT / "data" / "processed" / "OWR_MODIS_Burned_Area_2026.csv"
+RASTER_ARCHIVE = ROOT / "data" / "imagery" / "OWR_MODIS_Burned_Area_Rasters_2026.zip"
+RASTER_DIR = ROOT / "data" / "imagery" / "modis_burned_area_2026"
 STAC = "https://planetarycomputer.microsoft.com/api/stac/v1"
 COLLECTION = "modis-64A1-061"
 FIRST_MONTH = date(2026, 1, 1)
@@ -134,7 +136,7 @@ def write_clip(item, tile, burn_date, qa, inside, transform, profile, month):
             source_item=item["id"],
             source_collection=COLLECTION,
             source_url=item["assets"]["Burn_Date"]["href"],
-            boundary_file=BOUNDARY.name,
+            boundary_file=BOUNDARY.relative_to(ROOT).as_posix(),
             method="RFO-clipped MODIS Burn_Date and QA; pixels outside boundary set to -9999",
         )
     return output.relative_to(ROOT).as_posix()
@@ -271,7 +273,11 @@ def main():
                     ),
                 }
             )
-    print(f"Wrote {OUTPUT} ({len(list(month_ranges()))} months).")
+    RASTER_ARCHIVE.parent.mkdir(parents=True, exist_ok=True)
+    with ZipFile(RASTER_ARCHIVE, "w", ZIP_DEFLATED) as archive:
+        for raster in sorted(RASTER_DIR.glob("*.tif")):
+            archive.write(raster, raster.relative_to(ROOT).as_posix())
+    print(f"Wrote {OUTPUT} ({len(list(month_ranges()))} months) and {RASTER_ARCHIVE}.")
 
 
 if __name__ == "__main__":

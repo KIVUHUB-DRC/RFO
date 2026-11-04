@@ -3,7 +3,7 @@
 ## Reporting scope
 
 - **Reserve:** Okapi Wildlife Reserve, WDPA site 124389.
-- **Boundary:** `RFO Limit.json`; area used in the assessment is approximately 13,939.55 km².
+- **Boundary:** `../data/raw/RFO Limit.json`; area used in the assessment is approximately 13,939.55 km².
 - **Reporting period:** 1 January–31 October 2026.
 - **Units:** gross emissions are Mg CO₂e; MODIS photosynthesis values are Mg C; MODIS burned area is ha. NDVI/EVI are dimensionless.
 - **Null policy:** blank CSV values and SQL `NULL` are unknown/not quantified, never zero unless an explicit zero was measured.
@@ -87,7 +87,7 @@ The original monthly accounting fields for aboveground carbon stock, gross bioma
 
 ### Open 2026 fire-emissions source assessment
 
-CAMS GFAS v1.4.2 advertises hourly/daily modelled biomass-burning emissions from 2026 onward at 0.1° resolution, including CO₂, CH₄, and N₂O flux variables. It is an experimental candidate for fire-only emissions, not total gross reserve emissions. Data retrieval requires a Copernicus CDS/ADS account, personal API token, and manual acceptance of the dataset terms. No token was configured for the 4 November 2026 assessment, so no RFO-clipped values were calculated. See the `open_data_assessment` object in `OWR_Emissions_Metadata_2026.json` and the `emissions_source_audit` SQLite table.
+CAMS GFAS v1.4.2 advertises hourly/daily modelled biomass-burning emissions from 2026 onward at 0.1° resolution, including CO₂, CH₄, and N₂O flux variables. It is an experimental candidate for fire-only emissions, not total gross reserve emissions. Data retrieval requires a Copernicus CDS/ADS account, personal API token, and manual acceptance of the dataset terms. No token was configured for the 4 November 2026 assessment, so no RFO-clipped values were calculated. See the `open_data_assessment` object in `../data/processed/OWR_Emissions_Metadata_2026.json` and the `emissions_source_audit` SQLite table.
 
 Other sources checked: NASA FIRMS active-fire API retrieval requires a MAP_KEY and detections are not emission masses; ESA CCI FireCCI51 ends in 2020; Hansen/UMD Global Forest Change v1.13 covers annual loss through 2025; and the previously checked Global Forest Watch alerts API required a key. None yielded retrieved 2026 RFO gross-emission amounts.
 
@@ -116,4 +116,4 @@ The top-level `metadata.classification` object records numeric quartile threshol
 
 ## Interpretation and limitations
 
-Optical reflectance, radar scenes, lidar footprints, or atmospheric concentration measurements do not directly equal gross emissions. An emissions estimate needs validated monthly activity data, affected carbon pools/stocks, gas-specific emission factors and CO₂e conversion rules, a clear accounting boundary, and uncertainty/quality controls. See [`method.html`](method.html), [`OWR_Emissions_Metadata_2026.json`](OWR_Emissions_Metadata_2026.json), and [`OWR_Carbon_2026.md`](OWR_Carbon_2026.md).
+Optical reflectance, radar scenes, lidar footprints, or atmospheric concentration measurements do not directly equal gross emissions. An emissions estimate needs validated monthly activity data, affected carbon pools/stocks, gas-specific emission factors and CO₂e conversion rules, a clear accounting boundary, and uncertainty/quality controls. See [`method.html`](../method.html), [`OWR_Emissions_Metadata_2026.json`](../data/processed/OWR_Emissions_Metadata_2026.json), and [`OWR_Carbon_2026.md`](../reports/OWR_Carbon_2026.md).

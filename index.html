@@ -317,7 +317,7 @@
           <a class="nav-emissions" href="#emissions">Carbon emissions</a>
           <a class="nav-methods" href="method.html">Methods</a>
           <a class="nav-data" href="data.html">Map & downloads</a>
-          <a class="nav-cta" href="OWR_Carbon_2026.md">Full assessment ↗</a>
+          <a class="nav-cta" href="reports/OWR_Carbon_2026.md">Full assessment ↗</a>
         </div>
       </nav>
       <div class="hero-copy">
@@ -432,13 +432,13 @@
           <h3>NASA MODIS photosynthetic carbon uptake</h3>
           <p class="panel-intro">Area-expanded model estimates · Mg C · monthly dates and quality coverage in the downloadable data</p>
           <p>January–September estimates sum to <strong>30.29 Mt C GPP</strong> and <strong>20.73 Mt C net photosynthesis</strong>. October adds <strong>1.84 Mt C GPP</strong> and <strong>1.29 Mt C net photosynthesis</strong> for <strong>October 1–15 only</strong>; the latest available RFO composite ends October 15. MODIS QA coverage ranges from 28.2% to 99.8%, so low-coverage monthly extrapolations—especially September—are uncertain.</p>
-          <p class="emissions-note"><strong>Not emissions or net sequestration.</strong> MODIS GPP is modelled gross photosynthetic uptake; PSN subtracts plant maintenance respiration but not ecosystem respiration, disturbance emissions, or soil-carbon changes. These values do not fill stock, sequestration, emissions, or net-balance fields. <a href="OWR_MODIS_Carbon_2026.csv">Download monthly data</a> · <a href="OWR_Emissions_Metadata_2026.json">Methods and coverage</a>.</p>
+          <p class="emissions-note"><strong>Not emissions or net sequestration.</strong> MODIS GPP is modelled gross photosynthetic uptake; PSN subtracts plant maintenance respiration but not ecosystem respiration, disturbance emissions, or soil-carbon changes. These values do not fill stock, sequestration, emissions, or net-balance fields. <a href="data/processed/OWR_MODIS_Carbon_2026.csv">Download monthly data</a> · <a href="data/processed/OWR_Emissions_Metadata_2026.json">Methods and coverage</a>.</p>
         </article>
         <article class="panel emissions-panel">
           <h3>NASA MODIS burned-area screening</h3>
           <p class="panel-intro">MCD64A1.061 · 500 m · QA-screened pixels clipped to the RFO boundary</p>
           <p>No QA-valid burned pixels were detected in the available January–August 2026 products (99.991–99.992% valid land-pixel coverage). September–October products were not yet present in the catalog on 4 November; those months are unknown, not zero. This coarse product cannot rule out small or obscured fires and does not determine emissions.</p>
-          <p class="emissions-note"><a href="OWR_MODIS_Burned_Area_2026.csv">Download monthly results</a> · <a href="OWR_MODIS_Burned_Area_Rasters_2026.zip">Download clipped imagery</a> · <a href="method.html">Read methods and caveats</a>.</p>
+          <p class="emissions-note"><a href="data/processed/OWR_MODIS_Burned_Area_2026.csv">Download monthly results</a> · <a href="data/imagery/OWR_MODIS_Burned_Area_Rasters_2026.zip">Download clipped imagery</a> · <a href="method.html">Read methods and caveats</a>.</p>
         </article>
       </section>
 
@@ -477,7 +477,7 @@
               <span class="graph-legend-item"><span class="legend-chip missing" aria-hidden="true"></span>Hatched “N/A” = not quantified (not zero)</span>
             </div>
           </figure>
-          <p class="emissions-note"><strong>Open-data check · 4 Nov 2026.</strong> CAMS GFAS v1.4.2 offers daily, 0.1° modelled fire-emission fluxes for 2026, including CO₂, CH₄ and N₂O. Retrieval requires a CDS/ADS account, personal API token, and manual acceptance of the dataset terms; no token was configured here, so no GFAS values were downloaded or calculated. Even if retrieved, GFAS would provide fire-only estimates—not the full reserve-wide gross emissions requested. All three monthly totals therefore remain unknown, not zero. <a href="OWR_Emissions_Metadata_2026.json">Review the data-access assessment and methods</a> · <a href="https://ads.atmosphere.copernicus.eu/datasets/cams-global-fire-emissions-gfas" target="_blank" rel="noopener noreferrer">CAMS GFAS source ↗</a>.</p>
+          <p class="emissions-note"><strong>Open-data check · 4 Nov 2026.</strong> CAMS GFAS v1.4.2 offers daily, 0.1° modelled fire-emission fluxes for 2026, including CO₂, CH₄ and N₂O. Retrieval requires a CDS/ADS account, personal API token, and manual acceptance of the dataset terms; no token was configured here, so no GFAS values were downloaded or calculated. Even if retrieved, GFAS would provide fire-only estimates—not the full reserve-wide gross emissions requested. All three monthly totals therefore remain unknown, not zero. <a href="data/processed/OWR_Emissions_Metadata_2026.json">Review the data-access assessment and methods</a> · <a href="https://ads.atmosphere.copernicus.eu/datasets/cams-global-fire-emissions-gfas" target="_blank" rel="noopener noreferrer">CAMS GFAS source ↗</a>.</p>
         </article>
       </section>
 
@@ -489,32 +489,32 @@
           </div>
         </div>
         <div class="resources">
-          <a class="resource stat-card" href="OWR_Carbon_2026.docx">
+          <a class="resource stat-card" href="reports/OWR_Carbon_2026.docx">
             <span class="resource-arrow" aria-hidden="true">↗</span><span class="resource-kicker">Full report</span>
             <span class="resource-title">Carbon & Forest Assessment</span>
             <span class="resource-desc">Download the formatted assessment document.</span>
           </a>
-          <a class="resource stat-card" href="OWR_Carbon_2026.md">
+          <a class="resource stat-card" href="reports/OWR_Carbon_2026.md">
             <span class="resource-arrow" aria-hidden="true">↗</span><span class="resource-kicker">Methods & sources</span>
             <span class="resource-title">Read the evidence and caveats</span>
             <span class="resource-desc">Detailed methodology, references, and limitations.</span>
           </a>
-          <a class="resource stat-card" href="OWR_Satellite_2026.csv">
+          <a class="resource stat-card" href="data/processed/OWR_Satellite_2026.csv">
             <span class="resource-arrow" aria-hidden="true">↗</span><span class="resource-kicker">Open data</span>
             <span class="resource-title">Download monthly satellite data</span>
             <span class="resource-desc">NDVI/EVI, clear-land coverage, and scene counts.</span>
           </a>
-          <a class="resource stat-card" href="OWR_MODIS_Carbon_2026.csv">
+          <a class="resource stat-card" href="data/processed/OWR_MODIS_Carbon_2026.csv">
             <span class="resource-arrow" aria-hidden="true">↗</span><span class="resource-kicker">NASA carbon data</span>
             <span class="resource-title">Download MODIS GPP & PSN</span>
             <span class="resource-desc">Monthly modeled photosynthetic carbon uptake, observed dates, and QA coverage.</span>
           </a>
-          <a class="resource stat-card" href="OWR_Emissions_2026.csv">
+          <a class="resource stat-card" href="data/processed/OWR_Emissions_2026.csv">
             <span class="resource-arrow" aria-hidden="true">↗</span><span class="resource-kicker">Emissions dataset</span>
             <span class="resource-title">Download monthly emissions status</span>
             <span class="resource-desc">Requested CO₂e fields, blank where not quantifiable; includes monthly sensor context.</span>
           </a>
-          <a class="resource stat-card" href="OWR_Emissions_Metadata_2026.json">
+          <a class="resource stat-card" href="data/processed/OWR_Emissions_Metadata_2026.json">
             <span class="resource-arrow" aria-hidden="true">↗</span><span class="resource-kicker">Data metadata</span>
             <span class="resource-title">Read field definitions & methods</span>
             <span class="resource-desc">Units, coverage, provenance, limitations, and requirements for future estimates.</span>
@@ -556,7 +556,7 @@
     }).addTo(map);
     map.setView([1.7, 28.5], 8);
 
-    fetch(new URL('RFO%20Limit.json', document.baseURI))
+    fetch(new URL('data/raw/RFO%20Limit.json', document.baseURI))
       .then(response => {
         if (!response.ok) throw new Error(`Boundary request failed (${response.status})`);
         return response.json();
@@ -589,7 +589,7 @@
         document.getElementById('map-status').textContent = 'Boundary unavailable';
         document.getElementById('map').insertAdjacentHTML(
           'beforeend',
-          `<div style="position:absolute;z-index:500;left:50%;top:50%;transform:translate(-50%,-50%);max-width:85%;padding:14px 18px;background:#fff;border-radius:10px;box-shadow:0 4px 18px #24372d22;color:#654b35;font-size:13px;text-align:center">${escapeHtml(error.message)}<br>Serve this page together with <code>RFO Limit.json</code>.</div>`
+          `<div style="position:absolute;z-index:500;left:50%;top:50%;transform:translate(-50%,-50%);max-width:85%;padding:14px 18px;background:#fff;border-radius:10px;box-shadow:0 4px 18px #24372d22;color:#654b35;font-size:13px;text-align:center">${escapeHtml(error.message)}<br>Serve this page together with <code>data/raw/RFO%20Limit.json</code>.</div>`
         );
         console.error('Unable to load the RFO boundary:', error);
       });

@@ -335,7 +335,7 @@
           <a class="nav-emissions" href="#emissions">Carbon emissions</a>
           <a class="nav-methods" href="method.html">Methods</a>
           <a class="nav-data" href="data.html">Map & downloads</a>
-          <a class="nav-cta" href="OWR_Carbon_2026.md">Full assessment ↗</a>
+          <a class="nav-cta" href="reports/OWR_Carbon_2026.md">Full assessment ↗</a>
         </div>
       </nav>
     </div>
@@ -358,7 +358,7 @@
           <span>NDVI: Sentinel-2 L2A · 100 m pixels summarized in 2 km cells</span>
           <span>Basemap © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap contributors</a></span>
         </div>
-        <p class="map-data-note"><strong>Emissions data check · 4 Nov 2026:</strong> CAMS GFAS v1.4.2 provides a candidate 2026 fire-only model (0.1° daily CO₂/CH₄/N₂O), but download needs a CDS/ADS account, personal API token, and manual terms acceptance. It was not retrievable here and would not cover all gross-emission sources. Requested totals remain unknown, not zero. <a href="OWR_Emissions_Metadata_2026.json">Details</a> · <a href="https://ads.atmosphere.copernicus.eu/datasets/cams-global-fire-emissions-gfas" target="_blank" rel="noopener noreferrer">CAMS GFAS</a>.</p>
+        <p class="map-data-note"><strong>Emissions data check · 4 Nov 2026:</strong> CAMS GFAS v1.4.2 provides a candidate 2026 fire-only model (0.1° daily CO₂/CH₄/N₂O), but download needs a CDS/ADS account, personal API token, and manual terms acceptance. It was not retrievable here and would not cover all gross-emission sources. Requested totals remain unknown, not zero. <a href="data/processed/OWR_Emissions_Metadata_2026.json">Details</a> · <a href="https://ads.atmosphere.copernicus.eu/datasets/cams-global-fire-emissions-gfas" target="_blank" rel="noopener noreferrer">CAMS GFAS</a>.</p>
       </section>
 
       <section id="overview" aria-labelledby="overview-title">
@@ -486,27 +486,27 @@
           </div>
         </div>
         <div class="resources">
-          <a class="resource stat-card" href="OWR_Carbon_2026.docx">
+          <a class="resource stat-card" href="reports/OWR_Carbon_2026.docx">
             <span class="resource-arrow" aria-hidden="true">↗</span><span class="resource-kicker">Full report</span>
             <span class="resource-title">Carbon & Forest Assessment</span>
             <span class="resource-desc">Download the formatted assessment document.</span>
           </a>
-          <a class="resource stat-card" href="OWR_Carbon_2026.md">
+          <a class="resource stat-card" href="reports/OWR_Carbon_2026.md">
             <span class="resource-arrow" aria-hidden="true">↗</span><span class="resource-kicker">Methods & sources</span>
             <span class="resource-title">Read the evidence and caveats</span>
             <span class="resource-desc">Detailed methodology, references, and limitations.</span>
           </a>
-          <a class="resource stat-card" href="OWR_Satellite_2026.csv">
+          <a class="resource stat-card" href="data/processed/OWR_Satellite_2026.csv">
             <span class="resource-arrow" aria-hidden="true">↗</span><span class="resource-kicker">Open data</span>
             <span class="resource-title">Download monthly satellite data</span>
             <span class="resource-desc">NDVI/EVI, clear-land coverage, and scene counts.</span>
           </a>
-          <a class="resource stat-card" href="OWR_Emissions_2026.csv">
+          <a class="resource stat-card" href="data/processed/OWR_Emissions_2026.csv">
             <span class="resource-arrow" aria-hidden="true">↗</span><span class="resource-kicker">Emissions dataset</span>
             <span class="resource-title">Download monthly emissions status</span>
             <span class="resource-desc">Requested CO₂e fields, blank where not quantifiable; includes monthly sensor context.</span>
           </a>
-          <a class="resource stat-card" href="OWR_Emissions_Metadata_2026.json">
+          <a class="resource stat-card" href="data/processed/OWR_Emissions_Metadata_2026.json">
             <span class="resource-arrow" aria-hidden="true">↗</span><span class="resource-kicker">Data metadata</span>
             <span class="resource-title">Read field definitions & methods</span>
             <span class="resource-desc">Units, coverage, provenance, limitations, and requirements for future estimates.</span>
@@ -549,8 +549,8 @@
     map.setView([1.7, 28.5], 8);
 
     Promise.all([
-      fetch(new URL('RFO_Oct2026_NDVI_Zones.geojson', document.baseURI)).then(readJson),
-      fetch(new URL('RFO%20Limit.json', document.baseURI)).then(readJson)
+      fetch(new URL('data/processed/RFO_Oct2026_NDVI_Zones.geojson', document.baseURI)).then(readJson),
+      fetch(new URL('data/raw/RFO%20Limit.json', document.baseURI)).then(readJson)
     ]).then(([zones, boundary]) => {
         const colors = ['#33694c', '#84ad73', '#e4b85c', '#164b37'];
         const meta = zones.metadata || {};

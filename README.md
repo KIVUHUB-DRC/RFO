@@ -1,6 +1,6 @@
 # Okapi Wildlife Reserve carbon and satellite assessment
 
-Public, preliminary, boundary-based screening of the Okapi Wildlife Reserve (RFO), Democratic Republic of the Congo. Reporting period: **1 January–31 October 2026**. The project uses the repository boundary `RFO Limit.json` (WDPA site 124389).
+Public, preliminary, boundary-based screening of the Okapi Wildlife Reserve (RFO), Democratic Republic of the Congo. Reporting period: **1 January–31 October 2026**. The project uses the repository boundary `data/raw/RFO Limit.json` (WDPA site 124389).
 
 ## Public project pages
 
@@ -9,25 +9,25 @@ Public, preliminary, boundary-based screening of the Okapi Wildlife Reserve (RFO
 - **[Carbon-emissions section](https://kivuhub-drc.github.io/RFO/#emissions)** — monthly all-gases, non-CO₂, and CO₂-only data status.
 - **[Methods](https://kivuhub-drc.github.io/RFO/method.html)** — plain-language and scientific description of boundary handling, remote-sensing processing, emissions-data limits, and zone interpretation.
 - **[Interactive map and downloads](https://kivuhub-drc.github.io/RFO/data.html)** — October 2026 NDVI relative-quartile map and repository data downloads.
-- **[Data dictionary](DATA_DICTIONARY.md)** — CSV/GeoJSON column definitions, SQLite tables, units, map classes, and null semantics.
-- **[Full assessment](OWR_Carbon_2026.md)** — detailed evidence synthesis, references, assumptions, and limitations.
-- [Word report](OWR_Carbon_2026.docx) · [SQLite database](OWR_Carbon_2026.sqlite)
+- **[Data dictionary](docs/DATA_DICTIONARY.md)** — CSV/GeoJSON column definitions, SQLite tables, units, map classes, and null semantics.
+- **[Full assessment](reports/OWR_Carbon_2026.md)** — detailed evidence synthesis, references, assumptions, and limitations.
+- [Word report](reports/OWR_Carbon_2026.docx) · [SQLite database](data/processed/OWR_Carbon_2026.sqlite)
 
 ## Downloadable data
 
 | File | Contents |
 |---|---|
-| [`RFO Limit.json`](RFO%20Limit.json) | Source reserve polygon and WDPA properties. |
-| [`RFO_Oct2026_NDVI_Zones.geojson`](RFO_Oct2026_NDVI_Zones.geojson) | 2 km grid clipped to the RFO, with October NDVI/EVI, clear-pixel coverage, and relative NDVI quartile class. Emission fields are not inferred from NDVI. |
-| [`OWR_Emissions_2026.csv`](OWR_Emissions_2026.csv) | Ten monthly records with the requested gross emissions fields, status, satellite coverage, and reporting dates. |
-| [`OWR_Emissions_Metadata_2026.json`](OWR_Emissions_Metadata_2026.json) | Data dictionary, units, spatial/time scope, source inventory, limitations, and requirements for future emission estimates. |
-| [`OWR_Satellite_2026.csv`](OWR_Satellite_2026.csv) | Monthly Sentinel-2 NDVI/EVI and clear-pixel coverage; Landsat/Sentinel-1 scene counts and GEDI/NISAR footprint counts. |
-| [`OWR_MODIS_Carbon_2026.csv`](OWR_MODIS_Carbon_2026.csv) | NASA Terra MODIS 500 m eight-day GPP and net-photosynthesis estimates, valid-area coverage, and observed dates. October is available only through 15 October. |
-| [`OWR_MODIS_Burned_Area_2026.csv`](OWR_MODIS_Burned_Area_2026.csv) | NASA/USGS 500 m monthly burned-area screening; zero QA-valid burned pixels detected Jan–Aug. Sep–Oct products were not in the catalog on 4 Nov 2026. |
-| [`OWR_MODIS_Burned_Area_Rasters_2026.zip`](OWR_MODIS_Burned_Area_Rasters_2026.zip) | Eight RFO-clipped, two-band Burn_Date/QA GeoTIFFs from the available January–August MCD64A1 imagery. |
-| [`OWR_Satellite_Scenes_2026.csv`](OWR_Satellite_Scenes_2026.csv) | Satellite scene and selected NASA CMR granule-footprint inventory. Catalog records do not necessarily represent processed measurements. |
-| [`OWR_Mission_Catalog_2026.csv`](OWR_Mission_Catalog_2026.csv) | Mission-specific catalog/footprint counts, processing state, sources, and limitations. |
-| [`OWR_Carbon_2026.csv`](OWR_Carbon_2026.csv) | Monthly accounting export with MODIS uptake and burned-area screening; unmeasured stock, sequestration, emissions, and balance fields remain blank. |
+| [`data/raw/RFO Limit.json`](data/raw/RFO%20Limit.json) | Source reserve polygon and WDPA properties. |
+| [`data/processed/RFO_Oct2026_NDVI_Zones.geojson`](data/processed/RFO_Oct2026_NDVI_Zones.geojson) | 2 km grid clipped to the RFO, with October NDVI/EVI, clear-pixel coverage, and relative NDVI quartile class. Emission fields are not inferred from NDVI. |
+| [`data/processed/OWR_Emissions_2026.csv`](data/processed/OWR_Emissions_2026.csv) | Ten monthly records with the requested gross emissions fields, status, satellite coverage, and reporting dates. |
+| [`data/processed/OWR_Emissions_Metadata_2026.json`](data/processed/OWR_Emissions_Metadata_2026.json) | Data dictionary, units, spatial/time scope, source inventory, limitations, and requirements for future emission estimates. |
+| [`data/processed/OWR_Satellite_2026.csv`](data/processed/OWR_Satellite_2026.csv) | Monthly Sentinel-2 NDVI/EVI and clear-pixel coverage; Landsat/Sentinel-1 scene counts and GEDI/NISAR footprint counts. |
+| [`data/processed/OWR_MODIS_Carbon_2026.csv`](data/processed/OWR_MODIS_Carbon_2026.csv) | NASA Terra MODIS 500 m eight-day GPP and net-photosynthesis estimates, valid-area coverage, and observed dates. October is available only through 15 October. |
+| [`data/processed/OWR_MODIS_Burned_Area_2026.csv`](data/processed/OWR_MODIS_Burned_Area_2026.csv) | NASA/USGS 500 m monthly burned-area screening; zero QA-valid burned pixels detected Jan–Aug. Sep–Oct products were not in the catalog on 4 Nov 2026. |
+| [`data/imagery/OWR_MODIS_Burned_Area_Rasters_2026.zip`](data/imagery/OWR_MODIS_Burned_Area_Rasters_2026.zip) | Eight RFO-clipped, two-band Burn_Date/QA GeoTIFFs from the available January–August MCD64A1 imagery. |
+| [`data/processed/OWR_Satellite_Scenes_2026.csv`](data/processed/OWR_Satellite_Scenes_2026.csv) | Satellite scene and selected NASA CMR granule-footprint inventory. Catalog records do not necessarily represent processed measurements. |
+| [`data/processed/OWR_Mission_Catalog_2026.csv`](data/processed/OWR_Mission_Catalog_2026.csv) | Mission-specific catalog/footprint counts, processing state, sources, and limitations. |
+| [`data/processed/OWR_Carbon_2026.csv`](data/processed/OWR_Carbon_2026.csv) | Monthly accounting export with MODIS uptake and burned-area screening; unmeasured stock, sequestration, emissions, and balance fields remain blank. |
 
 ### Requested gross-emissions fields
 
@@ -37,7 +37,7 @@ All three fields are in **Mg CO₂e per reporting month and RFO boundary**:
 - `gross_emissions_co2e_non_co2__Mg`
 - `gross_emissions_co2e_co2_only__Mg`
 
-They are blank in every month with `data_status=NOT_QUANTIFIABLE`. Blank/null means **unknown or not measured**, not zero. A 4 November 2026 open-data review identified CAMS GFAS v1.4.2 as a candidate 2026 daily/hourly, 0.1° fire-emissions model with CO₂, CH₄, and N₂O variables. Its API requires a CDS/ADS account, personal access token, and manual acceptance of dataset terms; no token was configured, so no model values were retrieved. Moreover, GFAS is fire-only and cannot by itself quantify all-source reserve gross emissions. The monthly CSV and SQLite record this assessment and retrieval status without substituting fire emissions for the requested totals. See the [metadata](OWR_Emissions_Metadata_2026.json), [Methods page](https://kivuhub-drc.github.io/RFO/method.html), [CAMS GFAS dataset](https://ads.atmosphere.copernicus.eu/datasets/cams-global-fire-emissions-gfas), and [API access instructions](https://cds.climate.copernicus.eu/how-to-api).
+They are blank in every month with `data_status=NOT_QUANTIFIABLE`. Blank/null means **unknown or not measured**, not zero. A 4 November 2026 open-data review identified CAMS GFAS v1.4.2 as a candidate 2026 daily/hourly, 0.1° fire-emissions model with CO₂, CH₄, and N₂O variables. Its API requires a CDS/ADS account, personal access token, and manual acceptance of dataset terms; no token was configured, so no model values were retrieved. Moreover, GFAS is fire-only and cannot by itself quantify all-source reserve gross emissions. The monthly CSV and SQLite record this assessment and retrieval status without substituting fire emissions for the requested totals. See the [metadata](data/processed/OWR_Emissions_Metadata_2026.json), [Methods page](https://kivuhub-drc.github.io/RFO/method.html), [CAMS GFAS dataset](https://ads.atmosphere.copernicus.eu/datasets/cams-global-fire-emissions-gfas), and [API access instructions](https://cds.climate.copernicus.eu/how-to-api).
 
 ## October spatial zones and map legend
 
@@ -49,7 +49,7 @@ The corresponding reproducible script is [`scripts/build_rfo_zones.py`](scripts/
 python scripts/build_rfo_zones.py
 ```
 
-It reads `RFO Limit.json` and writes `RFO_Oct2026_NDVI_Zones.geojson`. Cloud availability, public catalogs, and signed URLs can change.
+It reads `data/raw/RFO Limit.json` and writes `data/processed/RFO_Oct2026_NDVI_Zones.geojson`. Cloud availability, public catalogs, and signed URLs can change.
 
 ## Database additions
 
@@ -80,7 +80,7 @@ The SQLite database includes separate `satellite_monthly`, `satellite_scene_inve
 
 ## Scientific sources
 
-The full bibliography is in [`OWR_Carbon_2026.md`](OWR_Carbon_2026.md). Key source catalogs and guidance:
+The full bibliography is in [`reports/OWR_Carbon_2026.md`](reports/OWR_Carbon_2026.md). Key source catalogs and guidance:
 
 - [Microsoft Planetary Computer Sentinel-2 L2A](https://planetarycomputer.microsoft.com/dataset/sentinel-2-l2a)
 - [NASA Terra MODIS MOD17A2H.061 collection](https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-17A2H-061)
